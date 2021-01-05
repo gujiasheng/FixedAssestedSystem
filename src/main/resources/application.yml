@@ -1,0 +1,35 @@
+server:
+  port: 8080 #指定项目访问端口
+  servlet:
+    context-path: / #指定项目路径
+
+spring:
+  thymeleaf:
+    cache: false #关闭thymeleaf缓存，有利于开发阶段的调试
+    prefix: classpath:/templates/ #指定页面的存放位置（默认）
+    suffix: .html #指定页面的后缀（默认）
+    encoding: utf-8
+    mode: LEGACYHTML5
+    servlet:
+      content-type: text/html
+
+  #数据源
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver #驱动类
+    url: jdbc:mysql://localhost:3306/fixedassets?serverTimezone=Asia/Shanghai&characterEncoding=UTF-8
+    username: root
+    password: 123456
+
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml #指定mapper.xml目录
+  type-aliases-package: com.gjs.fixedassets.entity #指定实体类的别名
+  configuration:
+    map-underscore-to-camel-case: true #驼峰命名和下划线命名相互转换
+
+#添加mapper层的sql语句输出
+
+logging:
+  level:
+    com.gjs.fixedassets: debug
+    com.gjs.fixedassets.mapper: debug
