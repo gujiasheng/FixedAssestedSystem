@@ -1,0 +1,156 @@
+<!--/*
+ * @Description TODO
+ * 登录页面
+ * @Author 顾嘉晟
+ * @Date 2021/1/12
+*/-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="css/layui.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <style>
+        body {
+            background: url("images/login_bg.jpg") no-repeat;
+            height: 100%;
+            width: 100%;
+        }
+
+        .main-body {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            left: 50%;
+            top: 40%;
+            margin-left: -150px;
+            margin-top: -100px;
+        }
+
+        .login-top {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+            color: #ffffff;
+            font-weight: bold
+        }
+
+        .item {
+            margin-bottom: 20px;
+            width: 300px;
+            height: 40px;
+        }
+
+        input {
+            width: 300px;
+            height: 45px;
+            border: solid #2e6da4 2px;
+            border-radius: 25px;
+            /*把input背景颜色变成透明*/
+            background-color: transparent;
+            color: white;
+            padding-left: 30px
+        }
+
+        /*修改提示文字的颜色*/
+        input::-webkit-input-placeholder { /* WebKit browsers */
+            color: #86c3ff
+        }
+
+        .login-btn {
+            width: 300px;
+            height: 40px;
+            color: white;
+            border-radius: 30px
+        }
+
+        .layui-icon-username {
+            color: #86c3ff
+        }
+
+        .layui-icon-password {
+            color: #86c3ff
+        }
+
+        .item {
+            position: relative
+        }
+
+        .layui-icon {
+            position: absolute;
+            top: 11px;
+            left: 10px
+        }
+
+        /*使得离子背景拉长*/
+        .pg-canvas {
+            height: 700px;
+        }
+    </style>
+</head>
+<body>
+<div class="main-body">
+    <div class="login-main">
+        <div class="login-top">
+            <span>欢迎登录</span>
+        </div>
+        <form class="layui-form ">
+            <div class="center">
+                <div class="item">
+                    <label class="layui-icon layui-icon-username"></label>
+                    <input type="text" name="account" lay-verify="required" placeholder="请输入登录账号" maxlength="24"
+                           autocomplete="off"/>
+                </div>
+
+                <div class="item">
+                    <label class="layui-icon layui-icon-password "></label>
+                    <input type="password" name="password" lay-verify="required" placeholder="请输入密码" maxlength="20">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <button class="login-btn btn-primary" lay-submit=<"" lay-filter="login">立即登录</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="layui.js" type="text/javascript"></script>
+<script src="jquery-3.4.1.min.js" type="text/javascript"></script>
+<!--引入jquery离子插件-->
+<script src="jquery.particleground.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    // 粒子线条背景
+    $(document).ready(function () {
+        $('body').particleground({
+            dotColor: '#7ec7fd',
+            lineColor: '#7ec7fd'
+
+
+        });
+    });
+
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer;
+
+        // 登录验证
+        form.on('submit(login)', function (data) {
+            data = data.field;
+            if (data.username == '') {
+                layer.msg('用户名不能为空');
+                return false;
+            }
+            if (data.password == '') {
+                layer.msg('密码不能为空');
+                return false;
+            }
+
+            return false;
+        })
+
+    })
+</script>
+</body>
+</html>
