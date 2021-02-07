@@ -1,0 +1,63 @@
+.layui-header .layui-layout-left {
+    left: 255px; /*顶部导航栏 左半部分缩进按钮空出位置*/
+}
+
+a {
+    cursor: pointer; /*让鼠标放在a标签上变成小手*/
+    text-decoration: none;
+}
+
+.layui-header > ul > .layui-nav-item.layui-this, .layuimini-tool i:hover {
+    background-color: #197971; /*给选中的头部导航标签添加背景色*/
+}
+
+.layui-header .layuimini-tool { /*缩进图标背景*/
+    position: absolute;
+    top: 0;
+    left: 225px;
+    width: 60px;
+    height: 100%;
+    line-height: 60px;
+    text-align: center;
+    color: #ffffff !important;
+}
+
+.layui-header .layuimini-tool i { /*缩进图标*/
+    display: block;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    border-radius: 3px;
+    text-align: center;
+    margin-top: 15px;
+    cursor: pointer;
+}
+
+.layui-header .layui-layout-right {
+    right: 50px;
+}
+
+.layui-tab {
+    margin: 0px 0px;
+}
+
+.layui-tab > .layui-tab-title > .layui-this {
+    border-bottom: 3px solid #5FB878;
+
+}
+
+.layui-tab > .layui-tab-title > .layui-this:after {
+
+}
+
+.layui-tab-title > li {
+    border-right: 1px solid #e2e2e2;
+    font-size: 12px;
+    vertical-align: top;
+
+}
+
+#mainindex > .layui-tab-close { /*主页不可关闭*/
+    display: none;
+}
