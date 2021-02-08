@@ -38,16 +38,14 @@ a {
     right: 50px;
 }
 
-.layui-body {
-    overflow-y: hidden;
-}
 .layui-tab {
     margin: 0px 0px;
-    height: 40px;
+
 }
 
 .layui-tab > .layui-tab-title > .layui-this {
     border-bottom: 3px solid #5FB878;
+
 }
 
 .layui-tab > .layui-tab-title > .layui-this:after {
@@ -56,17 +54,17 @@ a {
 
 .layui-tab-title > li {
     border-right: 1px solid #e2e2e2;
-    font-size: 15px;
+    font-size: 12px;
     vertical-align: top;
 
 }
+
 #mainindex > .layui-tab-close { /*主页不可关闭*/
     display: none;
 }
 
 .layui-tab-title i {
     color: grey;
-
 }
 
 .layui-tab-title span {
@@ -74,23 +72,23 @@ a {
 
 }
 
-.layui-footer {
-    text-align: center;
-}
-
 .layui-tab-title li:hover {
     background-color: #e2e2e2
 }
 
-.layui-tab-content { /* 因为有layui-body的 overflow-y:hidden;，所以可以拉长content添加灰色背景*/
-    height: 800px;
-    width: 100%;
-    background-color: #f2f2f2;
+.layui-tab-content {
+    position: absolute;
+    bottom: 0px;
+
 }
 
-.layui-tab-item { /* tab内容拉长显示*/
-
-    position: absolute;
+.layui-nav-item .layui-show {
+    animation: moveTop 1s;
+    -webkit-animation: moveTop 1s;
+    animation-fill-mode: both;
+    -webkit-animation-fill-mode: both;
+    position: relative;
     height: 100%;
-    width: 100%;
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
 }

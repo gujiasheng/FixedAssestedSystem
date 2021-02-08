@@ -59,35 +59,4 @@ layui.use(['element', 'layer', 'jquery'], function () {
         // }
     })
 
-    $('.layui-tab-title-li').each(function () {//遍历tab里的li
-        $(this).click(function () {//点击选项卡变色
-            $('.layui-tab-title-li').find('i').css('color', 'grey');
-            $('.layui-tab-title-li').find('span').css('color', 'grey');
-            $(this).find('i').css('color', 'green');
-            $(this).find('span').css('color', 'black');
-
-        })
-    })
-
-    element.on('tab(myTab)', function (data) {//每次切换tab监听
-        // console.log("djkashdjka")
-    })
-
-    $('.layui-nav-child').find('a').each(function () {//点击右侧导航栏，添加选项卡,第一次打开选项卡，>1次刷新页面
-
-        $(this).click(function () {
-            var tabCount = 1;//tab点击次数计数器
-            if (tabCount == 1) {
-                tabCount = tabCount + 1;
-                let tab = {
-                    title: $(this).find('span').text(),
-                    content: 'login.html'
-                };
-                element.tabAdd('myTab', tab);
-
-            } else {
-                location.reload();
-            }
-        })
-    })
 });
