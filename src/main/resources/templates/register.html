@@ -107,7 +107,7 @@
                             <div class="layui-form-item">
                                 <label for="name" class="layui-form-label">用户名:</label>
                                 <div class="layui-input-block">
-                                    <input id="name" type="text" name=""
+                                    <input id="name" type="text" name="" lay-verify="required"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                     <span class="layui-form-mid layui-word-aux" hidden><span class="redstar"
@@ -117,7 +117,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">密码:</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name=""
+                                    <input type="text" name="" lay-verify="required"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                     <span class="layui-form-mid layui-word-aux" hidden><span class="redstar"
@@ -127,7 +127,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">验证密码:</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name=""
+                                    <input type="text" name="" lay-verify="required"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                     <span class="layui-form-mid layui-word-aux" hidden><span class="redstar"
@@ -137,7 +137,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">企业名称:</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name=""
+                                    <input type="text" name="" lay-verify="required"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                 </div>
@@ -180,8 +180,10 @@
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block" style="left: 25%;">
-                                    <input type="submit" name=""
-                                           class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal">
+                                    <button name=""
+                                            class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal"
+                                            lay-submit=< lay-filter="register">注册
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +203,20 @@
             layer = layui.layer,
             $ = layui.jquery;
 
+        // 登录验证
+        form.on('submit(register)', function (data) {
+            data = data.field;
+            if (data.name == '') {
+                layer.msg('用户名不能为空');
+                return false;
+            }
+            if (data.password == '') {
+                layer.msg('密码不能为空');
+                return false;
+            }
 
+            return false;
+        })
 
     })
 </script>

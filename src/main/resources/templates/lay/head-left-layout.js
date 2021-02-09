@@ -59,34 +59,53 @@ layui.use(['element', 'layer', 'jquery'], function () {
         // }
     })
 
-    $('.layui-tab-title-li').each(function () {//遍历tab里的li
-        $(this).click(function () {//点击选项卡变色
-            $('.layui-tab-title-li').find('i').css('color', 'grey');
-            $('.layui-tab-title-li').find('span').css('color', 'grey');
-            $(this).find('i').css('color', 'green');
-            $(this).find('span').css('color', 'black');
 
-        })
+    //tab选项卡jq
+    element.on('tab(myTab)', function (data) {//每次切换tab监听,用于强调当前选项卡颜色
+        // $('.layui-tab-title-li').each(function () {//遍历tab里的li
+        //     $(this).click(function () {//点击选项卡变色
+        $('.layui-tab-title-li').find('i').css('color', 'grey');
+        $('.layui-tab-title-li').find('span').css('color', 'grey');
+        $(this).find('i').css('color', 'green');//改用CSS的方法
+        $(this).find('span').css('color', 'black');
+
+        //     })
+        // })
     })
-
-    element.on('tab(myTab)', function (data) {//每次切换tab监听
-        // console.log("djkashdjka")
-    })
-
-    $('.layui-nav-child').find('a').each(function () {//点击右侧导航栏，添加选项卡,第一次打开选项卡，>1次刷新页面
+    $('.layui-nav-child').find('a').each(function () {//点击左侧导航栏，添加选项卡
 
         $(this).click(function () {
-            var tabCount = 1;//tab点击次数计数器
-            if (tabCount == 1) {
-                tabCount = tabCount + 1;
+            let title = $(this).text();//获取左侧导航抬头
+            let id = $(this).attr('data-id');
+            let dataUrl = $(this).attr('data-url');
+            let iClass = $(this).find('i').attr('class');//获取左侧导航列表图标
+            let spanText = $(this).find('span').text();//获取左侧导航列表的名字
+
+            let iframelist = $(".iframelist");//所有tab下的子页面
+            //判断tab栏是否存在标签
+            let check = false;
+            let checkId;//保存侧边导航id
                 let tab = {
-                    title: $(this).find('span').text(),
-                    content: 'login.html'
+                    title: '<i class="' + iClass + '"></i><span >' + spanText + '</span>',
+                    content: '<iframe class="iframelist"  tab-id="' + id + '"  src="' + dataUrl + '" width="100%" height="100%"frameborder="0"></iframe>',
+                    id: id
                 };
-                element.tabAdd('myTab', tab);
+            for (let i = 0; i < iframelist.length; i++) {
+                let iframeId = $(iframelist[i]).attr('tab-id');
+                if (iframeId == id) {
+                    check = true;
+                    checkid = iframeId;
+                }
+            }
+            if (check) {//如果已经存在就切换到该页面
+                element.tabChange('myTab', id);
 
             } else {
-                location.reload();
+                element.tabAdd('myTab', tab);
+                $('.layui-tab-title').find('li').each(function () {
+                    $(this).addClass("layui-tab-title-li");
+                })
+                element.tabChange('myTab', id);
             }
         })
     })
