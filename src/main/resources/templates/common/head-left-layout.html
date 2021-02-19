@@ -7,7 +7,7 @@
 */-->
 
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>侧边栏头部导航模板</title>
@@ -68,7 +68,7 @@
                     <li class="layui-nav-item">
                         <a data-id="1"> <i class="fa fa-home"></i><span class="layui-nav-item-span">选项一</span></a>
                         <dl class="layui-nav-child">
-                            <dd><a class="layui-nav-item-a" data-id="11" data-url="../login.html"><i
+                            <dd><a class="layui-nav-item-a" data-id="11" data-url="/tologin"><i
                                     class="fa fa-home"></i><span class="layui-nav-item-span">列表一</span></a></dd>
                             <dd><a class="layui-nav-item-a" data-id="12" data-url="../login.html"><i
                                     class="fa fa-home"></i><span class="layui-nav-item-span">列表二</span></a></dd>
@@ -79,7 +79,7 @@
                     <li class="layui-nav-item">
                         <a data-id="2"> <i class="fa fa-user-o"></i><span class="layui-nav-item-span">选项一</span></a>
                         <dl class="layui-nav-child">
-                            <dd><a class="layui-nav-item-a" data-id="21" data-url="../register.html"><i
+                            <dd><a class="layui-nav-item-a" data-id="21" data-url="../login.html"><i
                                     class="fa fa-home"></i><span class="layui-nav-item-span">列表一</span></a></dd>
                             <dd><a class="layui-nav-item-a" data-id="22" data-url="../register.html"><i
                                     class="fa fa-home"></i><span class="layui-nav-item-span">列表二</span></a></dd>
@@ -87,7 +87,6 @@
                                     class="fa fa-home"></i><span class="layui-nav-item-span">列表三</span></a></dd>
                         </dl>
                     </li>
-
                 </ul>
             </div>
         </div>
@@ -101,38 +100,140 @@
                         <i class="fa fa-home" style="color: green"></i>
                         <span style="color: black;">主页</span>
                     </li>
-                    <li class="layui-tab-title-li"><i class="fa fa-home"></i><span>用户基本管理</span></li>
-
                 </ul>
                 <div class="layui-tab-content">
                     <div class="layui-tab-item layui-show">
-
-                        <iframe id="iframeMain" src="https://www.baidu.com" width="100%" height="100%"
+                        <iframe id="iframeMain" th:src="@{/tologin}" width="100%" height="100%"
                                 frameborder="0"></iframe>
-
                     </div>
-                    <div class="layui-tab-item">
-                        <iframe id="iframeMain2" src="https://www.baidu.com" width="100%" height="100%"
-                                frameborder="0"></iframe>
-
-                    </div>
-
                 </div>
             </div>
-
-
         </div>
         <!-- 底部固定区域 -->
         <div class="layui-footer layui-bg-cyan">
             底部固定区域
         </div>
-
     </div>
 </div>
-
-
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
-<script type="text/javascript" src="../lay/head-left-layout.js"></script><!--顶部，左侧导航，底部JS-->
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['element', 'layer', 'jquery'], function () {
+        var element = layui.element,
+            layer = layui.layer,
+            $ = layui.jquery;
+
+        /*缩进控件jq*/
+        var isShow = true;//判断是否显示
+        $('.layuimini-tool').click(function () {
+            $('.layui-side-scroll span').each(function () {//遍历所有右侧span是否隐藏
+                if ($(this).is(':hidden')) {
+                    $(this).css('display', '');
+                } else {
+                    $(this).css('display', 'none');
+                }
+            });
+            $('.layui-header .head-logo').each(function () {//同上
+                if ($(this).is(':hidden')) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            })
+            //判断isshow状态
+            if (isShow) {
+                $('.layui-layout-admin .layui-side').width(60);//设置左侧栏宽度
+                $('.layui-side-scroll').width(60);
+                $('.layui-nav-tree').width(60);
+                $('.layui-layout-admin .layui-logo').width(60);//设置logo宽度
+                $('.layui-footer').css('left', 60 + 'px');//把底部拉长
+                $('.layuimini-tool').css('left', 80 + 'px');//向左移动缩进控件
+                $('.layui-layout-left').css('left', 110 + 'px');
+                $('.layui-nav-item span').css('display', 'none');//下拉列表中列表显示隐藏设置
+                $('.layui-header .layui-nav-more').css('display', '');
+                $('.layui-body').css('left', 60 + 'px');
+                isShow = false;
+            } else {
+                $('.layui-layout-admin .layui-side').width(200);
+                $('.layui-side-scroll').width(200);
+                $('.layui-nav-tree').width(200);
+                $('.layui-layout-admin .layui-logo').width(200);
+                $('.layui-footer').css('left', 200 + 'px');
+                $('.layuimini-tool').css('left', 225 + 'px');//移动缩进工具
+                $('.layui-layout-left').css('left', 255 + 'px');
+                $('.layui-nav-item span').css('display', '');
+                $('.layui-body').css('left', 200 + 'px');
+                isShow = true;
+            }
+
+
+        });
+
+        $('.layui-nav-item-span').each(function () {//如果左侧导航栏隐藏鼠标悬浮在隐藏图标上提示文字
+            // if($(this).css('display')=='none'){
+            $(this.parentNode).mouseenter(function () {
+                var spanText = $(this).text();
+                //可以用$(this).text()和 $(this).val()获取span内的值但 val()获取的是当前的值如果span被隐藏获取到的会是空
+                layer.tips(spanText, this, {time: 900});//提示框停留时间
+            })
+            // }
+        })
+
+
+        //tab选项卡jq
+        element.on('tab(myTab)', function (data) {//每次切换tab监听,用于强调当前选项卡颜色
+            // $('.layui-tab-title-li').each(function () {//遍历tab里的li
+            //     $(this).click(function () {//点击选项卡变色
+            $('.layui-tab-title-li').find('i').css('color', 'grey');
+            $('.layui-tab-title-li').find('span').css('color', 'grey');
+            $(this).find('i').css('color', 'green');//改用CSS的方法
+            $(this).find('span').css('color', 'black');
+
+            //     })
+            // })
+        })
+        $('.layui-nav-child').find('a').each(function () {//点击左侧导航栏，添加选项卡
+
+            $(this).click(function () {
+                let title = $(this).text();//获取左侧导航抬头
+                let id = $(this).attr('data-id');
+                let dataUrl = $(this).attr('data-url');
+                let iClass = $(this).find('i').attr('class');//获取左侧导航列表图标
+                let spanText = $(this).find('span').text();//获取左侧导航列表的名字
+
+                let iframelist = $(".iframelist");//所有tab下的子页面
+                //判断tab栏是否存在标签
+                let check = false;
+                let checkId;//保存侧边导航id
+                let tab = {
+                    title: '<i class="' + iClass + '"></i><span >' + spanText + '</span>',
+                    content: '<iframe class="iframelist" id=' + id + ' tab-id="' + id + '"  src="' + dataUrl + '" width="100%" height="100%"frameborder="0"></iframe>',
+                    id: id
+                };
+                for (let i = 0; i < iframelist.length; i++) {
+                    let iframeId = $(iframelist[i]).attr('tab-id');
+                    if (iframeId == id) {
+                        check = true;
+                        checkid = iframeId;
+                    }
+                }
+                if (check) {//如果已经存在就切换到该页面
+                    element.tabChange('myTab', id);
+                    var parent_body = window.parent;
+                    var iframe1 = parent_body.document.getElementById(id);
+                    iframe1.contentWindow.location.reload(true);
+                } else {
+                    element.tabAdd('myTab', tab);
+                    $('.layui-tab-title').find('li').each(function () {
+                        $(this).addClass("layui-tab-title-li");
+                    })
+                    element.tabChange('myTab', id);
+                }
+            })
+        })
+    });
+
+
+</script><!--顶部，左侧导航，底部JS,不能通过外部引入，不然地址会出错-->
 
 </body>
 </html>

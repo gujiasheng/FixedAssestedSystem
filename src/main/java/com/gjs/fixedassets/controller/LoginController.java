@@ -7,8 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class LoginController {
 
 
-    @GetMapping("tologin")
+    @GetMapping("/tologin")
     public String toLogin() {
         return "login";
+    }
+
+    @GetMapping("/toregister")
+    public String toRegister() {
+        return "register";
+    }
+
+    @GetMapping("/toheadleft")
+    public String toheadleft() {
+        return "/common/head-left-layout";
     }
 }
