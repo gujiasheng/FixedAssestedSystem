@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /*
  * @Description TODO
  * 公司实体
@@ -14,7 +16,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Company {
+public class Company implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 公司id
      */

@@ -21,4 +21,11 @@ public class LoginController {
     public String toheadleft() {
         return "/common/head-left-layout";
     }
+
+    @GetMapping("/touserlist")
+    public String touserlist() {
+        return "/admin/userlist";
+    }
+
+
 }
