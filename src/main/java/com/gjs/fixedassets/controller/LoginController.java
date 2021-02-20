@@ -1,11 +1,15 @@
 package com.gjs.fixedassets.controller;
 
+import com.gjs.fixedassets.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class LoginController {
-
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/tologin")
     public String toLogin() {
@@ -24,6 +28,7 @@ public class LoginController {
 
     @GetMapping("/touserlist")
     public String touserlist() {
+
         return "/admin/userlist";
     }
 

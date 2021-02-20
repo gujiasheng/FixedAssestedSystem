@@ -11,7 +11,8 @@
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
-        <div class="layui-form layui-card-header " style="height:100%">
+        <form id="usersearch" method="post">
+            <div class="layui-form layui-card-header " style="height:100%">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">用户名:</label>
@@ -44,13 +45,18 @@
                 </div>
             </div>
         </div>
-
+        </form>
         <div class="layui-card-body">
             <div style="padding-left: 20px">
-                <button class="layui-btn">删除</button>
+                <button class="layui-btn layui-btn-danger">一键删除</button>
                 <button class="layui-btn">添加</button>
             </div>
             <table id="userList" lay-filter="userTable"></table>
+            <!--templet内容-->
+            <script type="text/html" id="usermanagetool">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
         </div>
     </div>
 </div>
@@ -58,21 +64,22 @@
 
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" th:inline="javascript">
-    layui.use(['form', 'element', 'table'], function () {
+    layui.use(['form', 'element', 'table', 'layer', 'laypage'], function () {
         var form = layui.form,
             layer = layui.layer,
-            table = layui.table;
+            table = layui.table,
+            element = layui.element,
+            laypage = layui.laypage;
 
         //    表格数据展示
         table.render(
             {
                 elem: '#userList'//指定table
                 , url: '/selectAllUserByCompanyId'
-                , page: true//开启分页
                 , cols: [
                     [
                         {type: 'checkbox', fixed: 'left'}
-                        , {field: 'userName', title: '用户名', fixed: 'left', unresize: true, sort: true}
+                        , {field: 'userName', title: '用户名', fixed: 'left'}
                         , {
                         field: 'gender', title: '性别', edit: 'text',
                         templet: function (data) {
@@ -85,15 +92,22 @@
                     }
                         , {field: 'userPhone', title: '电话'}
                         , {field: 'userEmail', title: '邮箱', templet: '#leixing'}
-                        , {field: 'departmentId', title: '部门'}
+                        , {field: 'departmentName', title: '部门', templet: '<div>{{d.department.departmentName}}</div>'}
                         , {field: 'jobId', title: '职位'}
-                        , {fixed: 'right', title: '操作', toolbar: '#barDemo'}
+                        , {
+                        fixed: 'right', title: '操作', toolbar: '#usermanagetool'
+                    }
                         // ,{field:'name',title:'用户名'}测试
                         // ,{field:'password',title:'密码'}
-
                     ]
                 ]
-
+                , request: {
+                    pageName: 'page' //页码的参数名称，默认：page
+                    , limitName: 'limit' //每页数据量的参数名，默认：limit
+                }
+                , limits: [10, 15, 20, 25, 50, 100]
+                , limit: 10
+                , page: true
 
             }
         )

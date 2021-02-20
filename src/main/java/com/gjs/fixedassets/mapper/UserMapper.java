@@ -7,7 +7,10 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    List<User> selectByCompanyId(Integer companyId);
+    // 获取分页数据
+    List<User> selectByCompanyId(Integer companyId, Integer page, Integer limit);
 
+    //查询用户总数据
+    List<User> selectAllUserCount(Integer companyId);
 
 }

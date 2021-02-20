@@ -94,6 +94,12 @@ public class User implements Serializable {
      */
     private Integer companyId;
 
+    private Department department;
+
+    /**
+     * 工号
+     */
+    private Integer workId;
     /*
      * @Description TODO
      * 用户角色枚举类
