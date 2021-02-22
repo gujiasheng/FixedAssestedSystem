@@ -12,7 +12,7 @@
 <div class="layui-fluid">
     <div class="layui-card">
 
-            <div class="layui-form layui-card-header " style="height:100%">
+        <div class="layui-form layui-card-header " style="height:100%">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">用户名:</label>
@@ -73,7 +73,7 @@
         <div class="layui-card-body">
             <div style="padding-left: 20px">
                 <button class="layui-btn layui-btn-danger">一键停用</button>
-                <button class="layui-btn">添加</button>
+                <button class="layui-btn" id="openUserAdd">添加</button>
             </div>
             <table id="userList" lay-filter="userTable"></table>
             <!--templet内容-->
@@ -159,6 +159,40 @@
                     searchroleId: $('#searchroleId').val()
                 }
             })
+        })
+
+
+        //点击添加打开useradd子页面
+        $('#openUserAdd').click(function () {
+            layer.open({
+                type: 2,
+                area: ['500px', '450px'],
+                fixed: false, //不固定
+                maxmin: true,
+                title: '人员添加',
+                // content: 'useradd.html',
+                resize: false,
+                content: '/touseradd'
+            });
+        })
+
+        //点击编辑打开useredit子页面,使用layui的表格监听
+        table.on('tool(userTable)', function (obj) {
+            var data = obj.data;
+            var userId = obj.data.userId;//每个对象的主键
+            // console.log(data);
+            if (obj.event == 'edit') {
+                layer.open({
+                    type: 2,
+                    area: ['500px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    title: '人员编辑',
+                    // content: 'useredit.html',
+                    resize: false,
+                    content: '/touseredit' + userId
+                });
+            }
         })
 
 

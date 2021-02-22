@@ -3,6 +3,7 @@ package com.gjs.fixedassets.controller;
 import com.gjs.fixedassets.entity.Department;
 import com.gjs.fixedassets.entity.Job;
 import com.gjs.fixedassets.entity.Role;
+import com.gjs.fixedassets.entity.User;
 import com.gjs.fixedassets.service.DepartmentService;
 import com.gjs.fixedassets.service.JobService;
 import com.gjs.fixedassets.service.RoleService;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -51,5 +53,29 @@ public class LoginController {
         return "/admin/userlist";
     }
 
+    @GetMapping("/touseradd")
+    public String touseradd(Model model) {
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        model.addAttribute("departmentList", departmentList);
+        List<Role> roleList = roleService.selectAllRole();
+        model.addAttribute("roleList", roleList);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        model.addAttribute("jobList", jobList);
+        return "/admin/useradd";
+    }
+
+    @GetMapping("/touseredit{userId}")
+    public String touseredit(Model model, @PathVariable("userId") Integer userId) {
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        model.addAttribute("departmentList", departmentList);
+        List<Role> roleList = roleService.selectAllRole();
+        model.addAttribute("roleList", roleList);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        model.addAttribute("jobList", jobList);
+        User selectUserByUserId = userService.selectUserByUserId(userId);
+        model.addAttribute("user", selectUserByUserId);
+//        System.out.println(selectUserByUserId);
+        return "/admin/useredit";
+    }
 
 }

@@ -101,13 +101,13 @@
             <div class="center">
                 <div class="item">
                     <label class="layui-icon layui-icon-username"></label>
-                    <input type="text" name="account" lay-verify="required" placeholder="请输入登录账号" maxlength="24"
+                    <input type="text" id="userName" name="userName" placeholder="请输入登录账号" maxlength="24"
                            autocomplete="off"/>
                 </div>
 
                 <div class="item">
                     <label class="layui-icon layui-icon-password "></label>
-                    <input type="password" name="password" lay-verify="required" placeholder="请输入密码" maxlength="20">
+                    <input type="password" name="password" placeholder="请输入密码" maxlength="20">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -131,17 +131,30 @@
 
     layui.use(['form'], function () {
         var form = layui.form,
-            layer = layui.layer;
+            layer = layui.layer,
+            $ = layui.jquery;
 
         // 登录验证
         form.on('submit(login)', function (data) {
             data = data.field;
-            if (data.username == '') {
-                layer.msg('用户名不能为空');
+            if (data.userName == '') {
+                layer.msg('用户名不能为空', {
+                    icon: 5,
+                    shift: 6,//抖动效果
+                    time: 1000
+                }, function () {
+
+                });
                 return false;
             }
             if (data.password == '') {
-                layer.msg('密码不能为空');
+                layer.msg('密码不能为空', {
+                    icon: 5,
+                    shift: 6,//抖动效果
+                    time: 1000
+                }, function () {
+
+                });
                 return false;
             }
 

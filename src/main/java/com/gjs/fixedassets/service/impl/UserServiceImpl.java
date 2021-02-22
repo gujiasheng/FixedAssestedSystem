@@ -29,5 +29,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectAllUserCount(companyId, userName, phone, departmentId, roleId, isStatus);
     }
 
+    @Override
+    public User selectUserByUserId(Integer userId) {
+        return userMapper.selectUserByUserId(userId);
+    }
+
 
 }

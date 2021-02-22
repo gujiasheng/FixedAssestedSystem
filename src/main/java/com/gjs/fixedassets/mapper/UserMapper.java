@@ -13,4 +13,6 @@ public interface UserMapper {
     //查询用户总数据
     List<User> selectAllUserCount(Integer companyId, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus);
 
+    //根据人员id查人
+    User selectUserByUserId(Integer userId);
 }
