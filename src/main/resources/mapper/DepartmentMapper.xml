@@ -20,4 +20,9 @@
         from department
         where department_id = #{departmentId,jdbcType=INTEGER}
     </select>
+    <select id="selectDepartmentByCompanyId" resultMap="BaseResultMap">
+        select *
+        from department
+        where department.company_id = #{companyId,jdbcType=INTEGER}
+    </select>
 </mapper>

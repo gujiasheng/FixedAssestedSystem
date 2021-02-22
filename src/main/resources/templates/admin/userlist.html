@@ -11,51 +11,75 @@
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
-        <form id="usersearch" method="post">
+
             <div class="layui-form layui-card-header " style="height:100%">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">用户名:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"/>
+                        <input type="text" id="searchUserName" name="searchUserName" placeholder="请输入"
+                               autocomplete="off" class="layui-input"/>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">手机号:</label>
                     <div class="layui-input-block">
-                        <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input"/>
+                        <input type="text" id="searchUserPhone" name="searchUserPhone" placeholder="请输入"
+                               autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">部门:</label>
+                    <div class="layui-input-block">
+                        <select id="searchdepartmentId" name="searchdepartmentId">
+                            <option value="" th:text="--请选择--"></option>
+                            <option th:each="d:${departmentList}"
+                                    th:value="${d.departmentId}"
+                                    th:text="${d.departmentName}">
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">角色:</label>
                     <div class="layui-input-block">
-                        <select name="">
-                            <option>--请选择--</option>
-                            <option>系统管理员</option>
-                            <option>固定资产管理员</option>
-                            <option>固定资产主管会计</option>
-                            <option>普通用户</option>
+                        <select id="searchroleId" name="searchroleId">
+                            <option value="">--请选择--</option>
+                            <option th:each="r:${roleList}"
+                                    th:value="${r.roleId}"
+                                    th:text="${r.roleName}"
+                            ></option>
                         </select>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <button class="layui-btn">
+                    <label class="layui-form-label">账号状态:</label>
+                    <div class="layui-input-block">
+                        <select id="searchIsStatus" name="searchIsStatus">
+                            <option value="">--请选择--</option>
+                            <option value="0">停用</option>
+                            <option value="1">启用</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn" id="searchBTN" type="button">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
         </div>
-        </form>
+
         <div class="layui-card-body">
             <div style="padding-left: 20px">
-                <button class="layui-btn layui-btn-danger">一键删除</button>
+                <button class="layui-btn layui-btn-danger">一键停用</button>
                 <button class="layui-btn">添加</button>
             </div>
             <table id="userList" lay-filter="userTable"></table>
             <!--templet内容-->
             <script type="text/html" id="usermanagetool">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">停用</a>
             </script>
         </div>
     </div>
@@ -64,12 +88,14 @@
 
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" th:inline="javascript">
-    layui.use(['form', 'element', 'table', 'layer', 'laypage'], function () {
+    layui.use(['form', 'element', 'table', 'layer', 'laypage', 'jquery'], function () {
         var form = layui.form,
             layer = layui.layer,
             table = layui.table,
             element = layui.element,
-            laypage = layui.laypage;
+            laypage = layui.laypage,
+            $ = layui.jquery
+        ;
 
         //    表格数据展示
         table.render(
@@ -93,7 +119,18 @@
                         , {field: 'userPhone', title: '电话'}
                         , {field: 'userEmail', title: '邮箱', templet: '#leixing'}
                         , {field: 'departmentName', title: '部门', templet: '<div>{{d.department.departmentName}}</div>'}
-                        , {field: 'jobId', title: '职位'}
+                        , {field: 'jobId', title: '职位', templet: '<div>{{d.job.jobName}}</div>'}
+                        , {field: 'roleId', title: '角色', templet: '<div>{{d.role.roleName}}</div>'}
+                        , {
+                        field: 'isStatus', title: '账号状态', templet: function (data) {
+                            if (data.isStatus == 1) {
+                                return "<span>启用</span>"
+                            } else {
+                                return "<span>停用</span>"
+                            }
+                        }
+                    }
+
                         , {
                         fixed: 'right', title: '操作', toolbar: '#usermanagetool'
                     }
@@ -111,6 +148,19 @@
 
             }
         )
+
+        //  点击搜索按钮，刷新表格
+        $("#searchBTN").click(function () {
+            table.reload('userList', {
+                where: {//查询条件传值到后台
+                    searchUserName: $('#searchUserName').val(),
+                    searchUserPhone: $('#searchUserPhone').val(),
+                    searchdepartmentId: $('#searchdepartmentId').val(),
+                    searchroleId: $('#searchroleId').val()
+                }
+            })
+        })
+
 
     })
 

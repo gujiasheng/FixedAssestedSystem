@@ -80,7 +80,7 @@ public class User implements Serializable {
     /**
      * 用户是否在职
      */
-    private String isStatus;
+    private Integer isStatus;
 
     /**
      * 账户注册时间
@@ -96,6 +96,10 @@ public class User implements Serializable {
 
     private Department department;
 
+    private Job job;
+
+    private Role role;
+
     /**
      * 工号
      */
@@ -107,38 +111,38 @@ public class User implements Serializable {
      * @Date 2021-02-18
      * @params
      * @Return
-     **/
-    public enum Role {
-        SYS_ADMIN(0, "系统管理员"),
-        FIXED_ADMINISTER(1, "固定资产管理"),
-        ACCOUNT_OFFICER(2, "固定资产会计主管"),
-        STAFF(3, "员工");
-
-        private int code;
-        private String value;
-
-        Role(int code, String value) {
-            this.code = code;
-            this.value = value;
-        }
-
-        public static Role getRoleByCode(int code) {
-
-            for (Role role : values()) {
-                if (role.getCode() == code) {
-                    return role;
-                }
-            }
-            return null;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public int getCode() {
-            return code;
-        }
-    }
+//     **/
+//    public enum Role {
+//        SYS_ADMIN(0, "系统管理员"),
+//        FIXED_ADMINISTER(1, "固定资产管理"),
+//        ACCOUNT_OFFICER(2, "固定资产会计主管"),
+//        STAFF(3, "员工");
+//
+//        private int code;
+//        private String value;
+//
+//        Role(int code, String value) {
+//            this.code = code;
+//            this.value = value;
+//        }
+//
+//        public static Role getRoleByCode(int code) {
+//
+//            for (Role role : values()) {
+//                if (role.getCode() == code) {
+//                    return role;
+//                }
+//            }
+//            return null;
+//        }
+//
+//        public String getValue() {
+//            return value;
+//        }
+//
+//        public int getCode() {
+//            return code;
+//        }
+//    }
 
 }
