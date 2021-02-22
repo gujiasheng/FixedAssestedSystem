@@ -2,9 +2,16 @@ package com.gjs.fixedassets.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.gjs.fixedassets.entity.Department;
+import com.gjs.fixedassets.entity.Job;
+import com.gjs.fixedassets.entity.Role;
 import com.gjs.fixedassets.entity.User;
+import com.gjs.fixedassets.service.DepartmentService;
+import com.gjs.fixedassets.service.JobService;
+import com.gjs.fixedassets.service.RoleService;
 import com.gjs.fixedassets.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,10 +24,52 @@ import java.util.Map;
 @Slf4j
 @Controller
 public class UserController {
-    @Resource
+    @Autowired
     private UserService userService;
+    @Autowired
+    private DepartmentService departmentService;
+    @Autowired
+    private RoleService roleService;
+    @Autowired
+    private JobService jobService;
 
+    /*
+     * @Description TODO
+     * 前往人员管理页面
+     * @Author
+     * @Date 2021-02-22
+     * @params
+     * @Return
+     **/
+    @GetMapping("/touserlist")
+    public String touserlist(Model model) {
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        model.addAttribute("departmentList", departmentList);
+        List<Role> roleList = roleService.selectAllRole();
+        model.addAttribute("roleList", roleList);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        model.addAttribute("jobList", jobList);
+        return "/admin/userlist";
+    }
 
+    /*
+     * @Description TODO
+     * 打开人员添加页面
+     * @Author
+     * @Date 2021-02-22
+     * @params
+     * @Return
+     **/
+    @GetMapping("/touseradd")
+    public String touseradd(Model model) {
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        model.addAttribute("departmentList", departmentList);
+        List<Role> roleList = roleService.selectAllRole();
+        model.addAttribute("roleList", roleList);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        model.addAttribute("jobList", jobList);
+        return "/admin/useradd";
+    }
     /*
      * @Description TODO
      * 根据公司id查询该公司所有人
@@ -38,6 +87,7 @@ public class UserController {
                                                         @RequestParam(required = false, defaultValue = "", value = "searchdepartmentId") Integer departmentId,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchroleId") Integer roleId,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchIsStatus") Integer isStatus) {
+//        System.out.println("1:"+userName+" 2: "+phone+" 3: "+departmentId+" 4: "+roleId+" 5: "+isStatus);
         List<User> pageUser = userService.selectByCompanyId(1, page, limit, userName, phone, departmentId, roleId, isStatus);//每页显示的数据
         //获取总数据数量
         List<User> allUser = userService.selectAllUserCount(1, userName, phone, departmentId, roleId, isStatus);
@@ -52,5 +102,26 @@ public class UserController {
         return map;
     }
 
+    /*
+     * @Description TODO
+     * 查询所选需要编辑的人员
+     * @Author
+     * @Date 2021-02-22
+     * @params
+     * @Return
+     **/
+    @GetMapping("/touseredit{userId}")
+    public String touseredit(Model model, @PathVariable("userId") Integer userId) {
 
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        model.addAttribute("departmentList", departmentList);
+        List<Role> roleList = roleService.selectAllRole();
+        model.addAttribute("roleList", roleList);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        model.addAttribute("jobList", jobList);
+        User selectUserByUserId = userService.selectUserByUserId(userId);
+        model.addAttribute("user", selectUserByUserId);
+//        System.out.println(selectUserByUserId);
+        return "/admin/useredit";
+    }
 }

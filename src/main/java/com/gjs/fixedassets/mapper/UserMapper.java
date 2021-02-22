@@ -7,6 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+    //登录
+    User selectUserByNamePSW(String userName, String password);
+
     // 根据分页，条件查询数据
     List<User> selectByCompanyId(Integer companyId, Integer page, Integer limit, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus);
 

@@ -97,7 +97,9 @@
         <div class="login-top">
             <span>欢迎登录</span>
         </div>
-        <form class="layui-form ">
+        <div class="alert alert-danger alert-mg-b" th:style="${msg==null}?'display:none;'"
+             th:text="${msg}"></div>
+        <form class="layui-form" action="/login" method="post">
             <div class="center">
                 <div class="item">
                     <label class="layui-icon layui-icon-username"></label>
@@ -111,7 +113,7 @@
                 </div>
             </div>
             <div class="layui-form-item">
-                <button class="login-btn btn-primary" lay-submit=< lay-filter="login"> >立即登录</button>
+                <button class="login-btn btn-primary" lay-submit lay-filter="login">立即登录</button>
             </div>
         </form>
     </div>
@@ -158,7 +160,7 @@
                 return false;
             }
 
-            return false;
+            return true;
         })
 
     })

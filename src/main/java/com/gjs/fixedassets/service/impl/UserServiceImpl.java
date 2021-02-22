@@ -18,8 +18,15 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    public User selectUserByNamePSW(String userName, String password) {
+        return userMapper.selectUserByNamePSW(userName, password);
+    }
+
+    @Override
     public List<User> selectByCompanyId(Integer companyId, int page, int limit, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus) {
         int startNum = (page - 1) * limit;
+
+
         List<User> lists = userMapper.selectByCompanyId(companyId, startNum, limit, userName, phone, departmentId, roleId, isStatus);
         return lists;
     }
