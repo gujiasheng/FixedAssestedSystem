@@ -18,4 +18,7 @@ public interface UserMapper {
 
     //根据人员id查人
     User selectUserByUserId(Integer userId);
+
+    //添加人员
+    void addUser(User user);
 }

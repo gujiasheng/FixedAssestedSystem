@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<form class="layui-form">
+<form class="layui-form" action="/addUser" method="post">
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>工号:</label>
         <div class="layui-input-inline">
@@ -34,7 +34,6 @@
         <label class="layui-form-label"><span style="color: red">*</span>角色权限:</label>
         <div class="layui-input-inline">
             <select name="roleId">
-
                 <option value=""></option>
                 <option th:each="r:${roleList}"
                         th:value="${r.roleId}"
@@ -84,9 +83,10 @@
             layer = layui.layer,
             $ = layui.jquery;
 
-        // 登录验证
+        // 提交验证
         form.on('submit(useradd)', function (data) {
             data = data.field;
+            //提交验证错误提示
             if (data.userName == '') {
                 layer.msg('用户名不能为空', {
                     icon: 5,
@@ -144,7 +144,11 @@
                 });
                 return false;
             }
-            return false;
+            //获取当前iframe页面索引
+            var currIframe = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(currIframe);
+
+            return true;
         })
 
 

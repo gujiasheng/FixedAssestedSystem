@@ -18,7 +18,7 @@
         <result column="is_status" jdbcType="CHAR" property="isStatus"/>
         <result column="resgistertime" jdbcType="TIMESTAMP" property="resgistertime"/>
         <result column="company_id" jdbcType="INTEGER" property="companyId"/>
-        <result column="work_id" jdbcType="INTEGER" property="workId"/>
+        <result column="work_id" jdbcType="VARCHAR" property="workId"/>
 
         <association property="department" javaType="com.gjs.fixedassets.entity.Department">
             <id column="department_id" jdbcType="INTEGER" property="departmentId"/>
@@ -57,7 +57,7 @@
         <if test="param6 != null and param6 != ''">and user.department_id = #{param6,jdbcType=INTEGER}</if>
         <if test="param7 != null and param7 != ''">and user.role_id = #{param7,jdbcType=INTEGER}</if>
         <if test="param8 != null and param8 != ''">and user.is_status = #{param8,jdbcType=INTEGER}</if>
-        ORDER BY user.is_status DESC
+        ORDER BY user.is_status ASC
         LIMIT #{param2,jdbcType=INTEGER},#{param3,jdbcType=INTEGER}
     </select>
 
@@ -84,5 +84,15 @@
         FROM user
         where user_name=#{param1,jdbcType=VARCHAR} AND password=#{param2,jdbcType=VARCHAR}
     </select>
+    <insert id="addUser" parameterType="User">
+        INSERT INTO `fixedassets`.`user`(`work_id`, `user_name`, `password`, `gender`, `user_face`, `user_phone`,
+        `user_email`, `user_online`,
+        `department_id`, `job_id`, `role_id`, `is_status`, `resgistertime`, `company_id`)
+        VALUES ( #{workId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{gender,jdbcType=VARCHAR}, #{userFace,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER},
+        #{userEmail,jdbcType=VARCHAR},#{userOnline,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER},
+        #{jobId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 1,now(), 1);
+    </insert>
+
 
 </mapper>

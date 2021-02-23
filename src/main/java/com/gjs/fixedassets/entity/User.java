@@ -103,7 +103,7 @@ public class User implements Serializable {
     /**
      * 工号
      */
-    private Integer workId;
+    private String workId;
     /*
      * @Description TODO
      * 用户角色枚举类
