@@ -8,4 +8,6 @@ import java.util.List;
 public interface DepartmentService {
 
     List<Department> selectDepartmentByCompanyId(@Param("companyId") Integer companyId);
+
+    String selectDName(Integer departmentId);
 }

@@ -8,4 +8,5 @@ public interface JobService {
 
     List<Job> selectAllJobByCompanyId(Integer companyId);
 
+    String selectJName(Integer jobId);
 }

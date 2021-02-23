@@ -17,4 +17,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> selectDepartmentByCompanyId(Integer companyId) {
         return departmentMapper.selectDepartmentByCompanyId(companyId);
     }
+
+    @Override
+    public String selectDName(Integer departmentId) {
+        return departmentMapper.selectDName(departmentId);
+    }
 }

@@ -25,4 +25,9 @@
         from department
         where department.company_id = #{companyId,jdbcType=INTEGER}
     </select>
+    <select id="selectDName" resultType="java.lang.String">
+        SELECT department_name
+        FROM department
+        WHERE department_id=#{departmentId,jdbcType=INTEGER}
+    </select>
 </mapper>

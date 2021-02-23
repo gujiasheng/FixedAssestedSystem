@@ -11,4 +11,6 @@ public interface DepartmentMapper {
     Department selectByPrimaryKey(Integer departmentId);
 
     List<Department> selectDepartmentByCompanyId(@Param("companyId") Integer companyId);
+
+    String selectDName(Integer departmentId);
 }

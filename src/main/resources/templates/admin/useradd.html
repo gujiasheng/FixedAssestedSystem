@@ -146,8 +146,9 @@
             }
             //获取当前iframe页面索引
             var currIframe = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(currIframe);
 
+            parent.layer.close(currIframe);
+            window.parent.location.reload();
             return true;
         })
 

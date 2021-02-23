@@ -11,4 +11,6 @@ public interface RoleMapper {
 
     List<Role> selectAllRole();
 
+    String selectRName(Integer roleId);
+
 }

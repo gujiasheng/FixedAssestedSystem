@@ -17,4 +17,11 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> selectAllRole() {
         return roleMapper.selectAllRole();
     }
+
+    @Override
+    public String selectRName(Integer roleId) {
+        return roleMapper.selectRName(roleId);
+    }
+
+
 }

@@ -10,4 +10,6 @@ public interface JobMapper {
     Job selectByPrimaryKey(Integer jobId);
 
     List<Job> selectAllJobByCompanyId(Integer companyId);
+
+    String selectJName(Integer jobId);
 }

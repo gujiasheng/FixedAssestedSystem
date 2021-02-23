@@ -132,7 +132,12 @@ public class UserController {
         model.addAttribute("jobList", jobList);
         User selectUserByUserId = userService.selectUserByUserId(userId);
         model.addAttribute("user", selectUserByUserId);
-//        System.out.println(selectUserByUserId);
+        String departmentName = departmentService.selectDName(selectUserByUserId.getDepartmentId());
+        model.addAttribute("dName", departmentName);
+        String jobName = jobService.selectJName(selectUserByUserId.getJobId());
+        model.addAttribute("jName", jobName);
+        String roleName = roleService.selectRName(selectUserByUserId.getRoleId());
+        model.addAttribute("rName", roleName);
         return "/admin/useredit";
     }
 
@@ -145,8 +150,10 @@ public class UserController {
      * @Return
      **/
     @PostMapping("/addUser")
-    public void addUser(User user, HttpSession session) {
+    public String addUser(User user, HttpSession session) {
 //        System.out.println(user);
         userService.addUser(user);
+
+        return "redirect:/touseradd";
     }
 }

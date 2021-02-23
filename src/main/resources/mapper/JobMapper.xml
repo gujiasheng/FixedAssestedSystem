@@ -25,4 +25,9 @@
         FROM job
         WHERE company_id=#{companyId,jdbcType=INTEGER}
     </select>
+    <select id="selectJName" resultType="java.lang.String">
+        SELECT job_name
+        FROM job
+        WHERE job_id=#{jobId,jdbcType=INTEGER}
+    </select>
 </mapper>

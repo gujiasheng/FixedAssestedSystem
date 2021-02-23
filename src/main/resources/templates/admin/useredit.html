@@ -35,9 +35,8 @@
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>角色权限:</label>
         <div class="layui-input-inline">
-            <select name="roleId">
-                <option th:value="${user.roleId}"></option>
-                <option value=""></option>
+            <select id="roleId" name="roleId">
+                <option th:value="${user.roleId}" th:text="${rName}"></option>
                 <option th:each="r:${roleList}"
                         th:value="${r.roleId}"
                         th:text="${r.roleName}"
@@ -49,8 +48,7 @@
         <label class="layui-form-label"><span style="color: red">*</span>职位:</label>
         <div class="layui-input-inline">
             <select name="jobId">
-                <option th:value="${user.jobId}"></option>
-                <option value=""></option>
+                <option th:value="${user.jobId}" th:text="${jName}" hidden="hidden"></option>
                 <option th:each="j:${jobList}"
                         th:value="${j.jobId}"
                         th:text="${j.jobName}"
@@ -62,8 +60,7 @@
         <label class="layui-form-label"><span style="color: red">*</span>部门:</label>
         <div class="layui-input-inline">
             <select name="departmentId" lay-search>
-                <option th:value="${user.departmentId}"></option>
-                <option value=""></option>
+                <option th:value="${user.departmentId}" th:text="${dName}" hidden="hidden"></option>
                 <option th:each="d:${departmentList}"
                         th:value="${d.departmentId}"
                         th:text="${d.departmentName}"
@@ -86,7 +83,8 @@
             layer = layui.layer,
             $ = layui.jquery;
 
-        // 登录验证
+
+        // 提交验证
         form.on('submit(useradd)', function (data) {
             data = data.field;
             if (data.userName == '') {

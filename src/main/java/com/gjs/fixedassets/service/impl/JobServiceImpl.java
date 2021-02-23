@@ -17,4 +17,9 @@ public class JobServiceImpl implements JobService {
     public List<Job> selectAllJobByCompanyId(Integer companyId) {
         return jobMapper.selectAllJobByCompanyId(companyId);
     }
+
+    @Override
+    public String selectJName(Integer jobId) {
+        return jobMapper.selectJName(jobId);
+    }
 }
