@@ -11,14 +11,17 @@ public interface UserMapper {
     User selectUserByNamePSW(String userName, String password);
 
     // 根据分页，条件查询数据
-    List<User> selectByCompanyId(Integer companyId, Integer page, Integer limit, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus);
+    List<User> selectByCompanyId(Integer companyId, Integer page, Integer limit, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus, String workId);
 
     //查询用户总数据
-    List<User> selectAllUserCount(Integer companyId, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus);
+    List<User> selectAllUserCount(Integer companyId, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus, String workId);
 
     //根据人员id查人
     User selectUserByUserId(Integer userId);
 
     //添加人员
     void addUser(User user);
+
+    //修改人员
+    void updateUser(User user);
 }

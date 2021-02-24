@@ -15,6 +15,13 @@
         <div class="layui-form layui-card-header " style="height:100%">
             <div class="layui-form-item">
                 <div class="layui-inline">
+                    <label class="layui-form-label">工号:</label>
+                    <div class="layui-input-block">
+                        <input type="text" id="searchWorkId" name="searchWorkId" placeholder="请输入"
+                               autocomplete="off" class="layui-input"/>
+                    </div>
+                </div>
+                <div class="layui-inline">
                     <label class="layui-form-label">用户名:</label>
                     <div class="layui-input-block">
                         <input type="text" id="searchUserName" name="searchUserName" placeholder="请输入"
@@ -105,9 +112,10 @@
                 , cols: [
                     [
                         {type: 'checkbox', fixed: 'left'}
+                        , {field: 'workId', title: '工号', fixed: 'left'}
                         , {field: 'userName', title: '用户名', fixed: 'left'}
                         , {
-                        field: 'gender', title: '性别', edit: 'text',
+                        field: 'gender', title: '性别',
                         templet: function (data) {
                             if (data.gender == 1) {
                                 return "<span>男</span>"
@@ -156,7 +164,8 @@
                     searchUserPhone: $('#searchUserPhone').val(),
                     searchdepartmentId: $('#searchdepartmentId').val(),
                     searchroleId: $('#searchroleId').val(),
-                    searchIsStatus: $('#searchIsStatus').val()
+                    searchIsStatus: $('#searchIsStatus').val(),
+                    searchWorkId: $('#searchWorkId').val()
                 }
             })
         })

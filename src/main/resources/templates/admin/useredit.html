@@ -10,7 +10,8 @@
 </head>
 <body>
 
-<form class="layui-form">
+<form class="layui-form" action="/updateUser" method="post">
+    <input type="hidden" name="userId" th:value="${user.userId}">
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>工号:</label>
         <div class="layui-input-inline">
@@ -59,12 +60,22 @@
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>部门:</label>
         <div class="layui-input-inline">
-            <select name="departmentId" lay-search>
+            <select name="departmentId">
                 <option th:value="${user.departmentId}" th:text="${dName}" hidden="hidden"></option>
                 <option th:each="d:${departmentList}"
                         th:value="${d.departmentId}"
                         th:text="${d.departmentName}"
                 ></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color: red">*</span>账号状态:</label>
+        <div class="layui-input-inline">
+            <select name="isStatus">
+                <option th:value="${user.isStatus}" th:text="${user.isStatus}==1?'启用':'停用'" hidden="hidden"></option>
+                <option th:value="${1}">启用</option>
+                <option th:value="${2}">停用</option>
             </select>
         </div>
     </div>
@@ -144,7 +155,12 @@
                 });
                 return false;
             }
-            return false;
+            //获取当前iframe页面索引
+            var currIframe = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(currIframe);
+            window.parent.location.reload();
+
+            return true;
         })
 
 

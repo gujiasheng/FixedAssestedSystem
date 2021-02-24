@@ -23,17 +23,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> selectByCompanyId(Integer companyId, int page, int limit, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus) {
+    public List<User> selectByCompanyId(Integer companyId, int page, int limit, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus, String workId) {
         int startNum = (page - 1) * limit;
 
 
-        List<User> lists = userMapper.selectByCompanyId(companyId, startNum, limit, userName, phone, departmentId, roleId, isStatus);
+        List<User> lists = userMapper.selectByCompanyId(companyId, startNum, limit, userName, phone, departmentId, roleId, isStatus, workId);
         return lists;
     }
 
     @Override
-    public List<User> selectAllUserCount(Integer companyId, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus) {
-        return userMapper.selectAllUserCount(companyId, userName, phone, departmentId, roleId, isStatus);
+    public List<User> selectAllUserCount(Integer companyId, String userName, Integer phone, Integer departmentId, Integer roleId, Integer isStatus, String workId) {
+        return userMapper.selectAllUserCount(companyId, userName, phone, departmentId, roleId, isStatus, workId);
     }
 
     @Override
@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void addUser(User user) {
         userMapper.addUser(user);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        userMapper.updateUser(user);
     }
 
 

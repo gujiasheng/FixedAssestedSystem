@@ -93,13 +93,14 @@ public class UserController {
                                                         @RequestParam(required = false, defaultValue = "", value = "searchdepartmentId") Integer departmentId,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchroleId") Integer roleId,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchIsStatus") Integer isStatus,
+                                                        @RequestParam(required = false, defaultValue = "", value = "searchWorkId") String workId,
                                                         HttpSession session, Model model) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
 
-        List<User> pageUser = userService.selectByCompanyId(1, page, limit, userName, phone, departmentId, roleId, isStatus);//每页显示的数据
+        List<User> pageUser = userService.selectByCompanyId(1, page, limit, userName, phone, departmentId, roleId, isStatus, workId);//每页显示的数据
         //获取总数据数量
-        List<User> allUser = userService.selectAllUserCount(1, userName, phone, departmentId, roleId, isStatus);
+        List<User> allUser = userService.selectAllUserCount(1, userName, phone, departmentId, roleId, isStatus, workId);
         int userCount = allUser.size();
         //用layui的table渲染数据的json有格式要求，需要封装一下
         Map<String, Object> map = new HashMap<>();
@@ -153,7 +154,20 @@ public class UserController {
     public String addUser(User user, HttpSession session) {
 //        System.out.println(user);
         userService.addUser(user);
-
         return "redirect:/touseradd";
+    }
+
+    /*
+     * @Description TODO
+     * 修改人员信息
+     * @Author
+     * @Date 2021-02-23
+     * @params
+     * @Return
+     **/
+    @PostMapping("/updateUser")
+    public String updateUser(User user, HttpSession session) {
+        userService.updateUser(user);
+        return "redirect:/touseredit";
     }
 }
