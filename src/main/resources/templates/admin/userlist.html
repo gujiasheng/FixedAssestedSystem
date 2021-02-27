@@ -79,14 +79,15 @@
 
         <div class="layui-card-body">
             <div style="padding-left: 20px">
-                <button class="layui-btn layui-btn-danger">一键停用</button>
                 <button class="layui-btn" id="openUserAdd">添加</button>
+                <button class="layui-btn ">一键启用</button>
+                <button class="layui-btn layui-btn-danger">一键停用</button>
             </div>
             <table id="userList" lay-filter="userTable"></table>
             <!--templet内容-->
             <script type="text/html" id="usermanagetool">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">停用</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
         </div>
     </div>
@@ -175,7 +176,7 @@
         $('#openUserAdd').click(function () {
             layer.open({
                 type: 2,
-                area: ['500px', '450px'],
+                area: ['500px', '500px'],
                 fixed: false, //不固定
                 maxmin: true,
                 title: '人员添加',
@@ -193,7 +194,7 @@
             if (obj.event == 'edit') {
                 layer.open({
                     type: 2,
-                    area: ['500px', '450px'],
+                    area: ['500px', '500px'],
                     fixed: false, //不固定
                     maxmin: true,
                     title: '人员编辑',

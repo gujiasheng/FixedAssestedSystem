@@ -167,7 +167,56 @@ public class UserController {
      **/
     @PostMapping("/updateUser")
     public String updateUser(User user, HttpSession session) {
+
         userService.updateUser(user);
         return "redirect:/touseredit";
+    }
+
+    /*
+     * @Description TODO
+     * 获取当前登录用户信息
+     * @Author
+     * @Date 2021-02-25
+     * @params
+     * @Return
+     **/
+    @GetMapping("/selectMyAccount")
+    public String selectMyAccount(Model model, HttpSession session) {
+
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+
+        String departmentName = departmentService.selectDName(loginUser.getDepartmentId());
+        model.addAttribute("dName", departmentName);
+        String jobName = jobService.selectJName(loginUser.getJobId());
+        model.addAttribute("jName", jobName);
+        String roleName = roleService.selectRName(loginUser.getRoleId());
+        model.addAttribute("rName", roleName);
+        model.addAttribute("user", user);
+        model.addAttribute("loginUser", loginUser);
+
+
+        return "user/myaccount";
+    }
+
+    /*
+     * @Description TODO
+     * 修改自己的信息
+     * @Author
+     * @Date 2021-02-25
+     * @params
+     * @Return
+     **/
+    @PostMapping("/updateMyaccount")
+    public String updateMyaccount(User user, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        user.setUserId(loginUser.getUserId());
+        user.setCompanyId(loginUser.getCompanyId());
+        user.setUserOnline(loginUser.getUserOnline());
+        user.setIsStatus(loginUser.getIsStatus());
+        userService.updateUser(user);
+        return "redirect:/selectMyAccount";
     }
 }

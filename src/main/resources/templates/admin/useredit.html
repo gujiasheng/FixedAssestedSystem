@@ -48,7 +48,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>职位:</label>
         <div class="layui-input-inline">
-            <select name="jobId">
+            <select id="jobId" name="jobId">
                 <option th:value="${user.jobId}" th:text="${jName}" hidden="hidden"></option>
                 <option th:each="j:${jobList}"
                         th:value="${j.jobId}"
@@ -93,7 +93,6 @@
         var form = layui.form,
             layer = layui.layer,
             $ = layui.jquery;
-
 
         // 提交验证
         form.on('submit(useradd)', function (data) {
