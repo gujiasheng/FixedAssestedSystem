@@ -74,7 +74,7 @@
         <if test="param4 != null and param4 != ''">and user.department_id = #{param4,jdbcType=INTEGER}</if>
         <if test="param5 != null and param5 != ''">and user.role_id = #{param5,jdbcType=INTEGER}</if>
         <if test="param6 != null and param6 != ''">and user.is_status = #{param6,jdbcType=INTEGER}</if>
-        <if test="param7 != null and param6 != ''">and user.work_id = #{param7,jdbcType=VARCHAR}</if>
+        <if test="param7 != null and param7 != ''">and user.work_id = #{param7,jdbcType=VARCHAR}</if>
     </select>
     <select id="selectUserByUserId" resultMap="BaseResultMap">
         select *

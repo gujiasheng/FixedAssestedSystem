@@ -38,7 +38,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">部门:</label>
                     <div class="layui-input-block">
-                        <select id="searchdepartmentId" name="searchdepartmentId">
+                        <select id="searchdepartmentId" name="searchdepartmentId" lay-search>
                             <option value="" th:text="--请选择--"></option>
                             <option th:each="d:${departmentList}"
                                     th:value="${d.departmentId}"

@@ -9,6 +9,132 @@
     <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
 </head>
 <body>
+<div class="layui-fluid">
+    <div class="layui-card">
 
+        <div class="layui-form layui-card-header " style="height:100%">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">部门:</label>
+                    <div class="layui-input-block">
+                        <select id="searchdepartmentName" name="searchdepartmentName" lay-search>
+                            <option value="" th:text="--请选择--"></option>
+                            <option th:each="d:${departmentList}"
+                                    th:value="${d.departmentId}"
+                                    th:text="${d.departmentName}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn" id="searchBTN" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-left: 20px">
+                <button class="layui-btn" id="openDepartmentAdd">添加</button>
+            </div>
+            <table id="departmentList" lay-filter="departmentTable"></table>
+            <!--templet内容-->
+            <script type="text/html" id="departmentmanagetool">
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+            <script type="text/html" id="xuhao">
+                {{d.LAY_TABLE_INDEX+1}}
+            </script>
+        </div>
+    </div>
+</div>
+
+
+<script src="../layui.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['form', 'element', 'table', 'layer', 'laypage', 'jquery'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            element = layui.element,
+            laypage = layui.laypage,
+            $ = layui.jquery
+        ;
+
+        //    表格数据展示
+        table.render(
+            {
+                elem: '#departmentList'//指定table
+                , url: '/selectAllDepartmentByCompanyId'
+                , cols: [
+                    [
+                        {field: 'ID', title: '序号', templet: '#xuhao', fixed: 'left'}
+                        , {field: 'departmentName', title: '部门名', fixed: 'left'}
+                        , {field: 'departmentManager', title: '部门负责人', templet: '<div>{{d.user.userName}}</div>'}
+                        , {field: 'departmentPhone', title: '部门电话'}
+                        , {
+                        fixed: 'right', title: '操作', toolbar: '#departmentmanagetool'
+                    }
+                    ]
+                ]
+                , request: {
+                    pageName: 'page' //页码的参数名称，默认：page
+                    , limitName: 'limit' //每页数据量的参数名，默认：limit
+                }
+                , limits: [10, 15, 20, 25, 50, 100]
+                , limit: 10
+                , page: true
+
+            }
+        )
+
+        //  点击搜索按钮，刷新表格
+        $("#searchBTN").click(function () {
+            table.reload('departmentList', {
+                where: {//查询条件传值到后台
+                    searchdepartmentName: $('#searchdepartmentName').val(),
+
+                }
+            })
+        })
+
+        //
+        // //点击添加打开useradd子页面
+        // $('#openUserAdd').click(function () {
+        //     layer.open({
+        //         type: 2,
+        //         area: ['500px', '500px'],
+        //         fixed: false, //不固定
+        //         maxmin: true,
+        //         title: '部门添加',
+        //         // content: 'useradd.html',
+        //         resize: false,
+        //         content: '/todepartmentadd'
+        //     });
+        // })
+        //
+        // //点击编辑打开useredit子页面,使用layui的表格监听
+        // table.on('tool(departmentTable)', function (obj) {
+        //     var data = obj.data;
+        //     var departmentId = obj.data.departmentId;//每个对象的主键
+        //     // console.log(data);
+        //     if (obj.event == 'edit') {
+        //         layer.open({
+        //             type: 2,
+        //             area: ['500px', '500px'],
+        //             fixed: false, //不固定
+        //             maxmin: true,
+        //             title: '部门编辑',
+        //             // content: 'useredit.html',
+        //             resize: false,
+        //             content: '/todepartmentedit' + departmentId
+        //         });
+        //     }
+        // })
+    })
+
+</script>
 </body>
 </html>

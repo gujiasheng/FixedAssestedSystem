@@ -8,10 +8,31 @@
         <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
         <result column="company_id" jdbcType="INTEGER" property="companyId"/>
         <result column="department_manager" jdbcType="INTEGER" property="departmentManager"/>
+        <result column="department_manager_2" jdbcType="INTEGER" property="departmentManager2"/>
+        <result column="department_phone" jdbcType="INTEGER" property="departmentPhone"/>
+
+        <association property="user" javaType="com.gjs.fixedassets.entity.User">
+            <id column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="gender" jdbcType="CHAR" property="gender"/>
+            <result column="user_face" jdbcType="VARCHAR" property="userFace"/>
+            <result column="user_phone" jdbcType="INTEGER" property="userPhone"/>
+            <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+            <result column="user_online" jdbcType="CHAR" property="userOnline"/>
+            <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+            <result column="job_id" jdbcType="INTEGER" property="jobId"/>
+            <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+            <result column="is_status" jdbcType="CHAR" property="isStatus"/>
+            <result column="resgistertime" jdbcType="TIMESTAMP" property="resgistertime"/>
+            <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+            <result column="work_id" jdbcType="VARCHAR" property="workId"/>
+        </association>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        department_id, department_name, company_id, department_manager
+        department_id, department_name, company_id, department_manager, department_manager_2,
+        department_phone
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -23,11 +44,32 @@
     <select id="selectDepartmentByCompanyId" resultMap="BaseResultMap">
         select *
         from department
+        LEFT JOIN user ON department.department_manager=user.user_id
         where department.company_id = #{companyId,jdbcType=INTEGER}
+        <if test="departmentId != null and departmentId != ''">and department.department_id =
+            #{departmentId,jdbcType=INTEGER}
+        </if>
+        LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
     </select>
     <select id="selectDName" resultType="java.lang.String">
         SELECT department_name
         FROM department
         WHERE department_id=#{departmentId,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllDepartmentCount" resultType="com.gjs.fixedassets.entity.Department">
+        select *
+        from department
+        LEFT JOIN user ON department.department_manager=user.user_id
+        where department.company_id = #{companyId,jdbcType=INTEGER}
+        <if test="departmentId != null and departmentId != ''">and department.department_id =
+            #{departmentId,jdbcType=INTEGER}
+        </if>
+
+    </select>
+    <select id="selectDepartmentByCompanyId2" resultMap="BaseResultMap">
+        select *
+        from department
+        LEFT JOIN user ON department.department_manager=user.user_id
+        where department.company_id = #{companyId,jdbcType=INTEGER}
     </select>
 </mapper>

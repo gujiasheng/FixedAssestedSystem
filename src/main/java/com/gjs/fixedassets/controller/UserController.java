@@ -44,7 +44,7 @@ public class UserController {
      **/
     @GetMapping("/touserlist")
     public String touserlist(Model model) {
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
         model.addAttribute("departmentList", departmentList);
         List<Role> roleList = roleService.selectAllRole();
         model.addAttribute("roleList", roleList);
@@ -68,7 +68,7 @@ public class UserController {
      **/
     @GetMapping("/touseradd")
     public String touseradd(Model model) {
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
         model.addAttribute("departmentList", departmentList);
         List<Role> roleList = roleService.selectAllRole();
         model.addAttribute("roleList", roleList);
@@ -125,7 +125,7 @@ public class UserController {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
 
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1);
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
         model.addAttribute("departmentList", departmentList);
         List<Role> roleList = roleService.selectAllRole();
         model.addAttribute("roleList", roleList);
