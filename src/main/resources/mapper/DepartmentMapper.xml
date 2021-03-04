@@ -37,8 +37,7 @@
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
-        select
-        <include refid="Base_Column_List"/>
+        select *
         from department
         where department_id = #{departmentId,jdbcType=INTEGER}
     </select>
@@ -75,7 +74,7 @@
         LEFT JOIN user ON department.department_manager=user.user_id
         where department.company_id = #{companyId,jdbcType=INTEGER}
     </select>
-    <insert id="addDepartment">
+    <insert id="addDepartment" parameterType="Department">
         INSERT INTO `fixedassets`.`department`(`department_name`, `company_id`, `department_manager`,
         `department_manager_2`, `department_phone`,`department_show_id`)
         VALUES ( #{departmentName,jdbcType=VARCHAR}, 1, #{departmentManager,jdbcType=INTEGER},
@@ -84,6 +83,17 @@
         #{departmentShowId,jdbcType=INTEGER});
 
     </insert>
+    <delete id="deleteDepartment" parameterType="Department">
+        DELETE FROM department where department_id = #{department,jdbcType=INTEGER}
+    </delete>
+    <update id="updateDepartment" parameterType="Department">
+        UPDATE `fixedassets`.`department` SET
+        `department_name` = #{departmentName,jdbcType=VARCHAR},
+        `department_manager` = #{departmentManager,jdbcType=INTEGER},
+        `department_phone` = #{departmentPhone,jdbcType=INTEGER},
+        `department_show_id` = #{departmentShowId,jdbcType=INTEGER}
+        WHERE `department_id` = #{departmentId,jdbcType=INTEGER};
+    </update>
 
 
 </mapper>

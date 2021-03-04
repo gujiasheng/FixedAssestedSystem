@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -91,9 +88,9 @@ public class DepartmentController {
      **/
     @GetMapping("/toAddDepartment")
     public String toadddepartment(Model model) {
-
         List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
         model.addAttribute("departmentList", departmentList);
+
         return "department/departmentadd";
     }
 
@@ -132,5 +129,52 @@ public class DepartmentController {
         return "redirect:/toAddDepartment";
     }
 
+    /*
+     * @Description TODO
+     *  前往部门修改页面
+     * @Author
+     * @Date 2021-03-04
+     * @params
+     * @Return
+     **/
+    @GetMapping("toDepartmentedit{departmentId}")
+    public String editDepartment(Model model, @PathVariable("departmentId") Integer departmentId, HttpSession session) {
+        Department department = departmentService.selectByPrimaryKey(departmentId);
 
+        User manager = userService.selectUserByUserId(department.getDepartmentManager());
+        department.setDepartmentManagerObj(manager);
+        model.addAttribute("department", department);
+
+        return "department/departmentedit";
+    }
+
+    /*
+     * @Description TODO
+     * 部门删除
+     * @Author
+     * @Date 2021-03-04
+     * @params
+     * @Return
+     **/
+    @PostMapping("/deleteDepartment{departmentId}")
+    @ResponseBody
+    public String deleteDepartment(Model model, @PathVariable("departmentId") Integer departmentId) {
+        departmentService.deleteDepartment(departmentId);
+        return null;
+    }
+
+    /*
+     * @Description TODO
+     * 部门修改
+     * @Author
+     * @Date 2021-03-04
+     * @params
+     * @Return
+     **/
+    @PostMapping("/editDepartment")
+    @ResponseBody
+    public String editDepartment(Model model, HttpSession session, Department department) {
+        departmentService.updateDepartment(department);
+        return null;
+    }
 }

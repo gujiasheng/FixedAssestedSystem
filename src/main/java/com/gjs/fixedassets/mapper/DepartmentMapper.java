@@ -20,4 +20,10 @@ public interface DepartmentMapper {
 
     //添加部门
     void addDepartment(Department department);
+
+    //删除部门
+    void deleteDepartment(Integer department);
+
+    //修改部门信息
+    void updateDepartment(Department department);
 }

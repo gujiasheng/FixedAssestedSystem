@@ -17,4 +17,10 @@ public interface DepartmentService {
     List<Department> selectDepartmentByCompanyId2(@Param("companyId") Integer companyId);
 
     void addDepartment(Department department);
+
+    Department selectByPrimaryKey(Integer departmentId);
+
+    void deleteDepartment(Integer department);
+
+    void updateDepartment(Department department);
 }
