@@ -1,12 +1,10 @@
 package com.gjs.fixedassets.mapper;
 
 import com.gjs.fixedassets.entity.Department;
-import com.gjs.fixedassets.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-
 @Mapper
 public interface DepartmentMapper {
     Department selectByPrimaryKey(Integer departmentId);
@@ -20,4 +18,6 @@ public interface DepartmentMapper {
     //部门下拉列表
     List<Department> selectDepartmentByCompanyId2(@Param("companyId") Integer companyId);
 
+    //添加部门
+    void addDepartment(Department department);
 }

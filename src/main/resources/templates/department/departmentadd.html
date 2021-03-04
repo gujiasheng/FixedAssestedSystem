@@ -10,85 +10,73 @@
 </head>
 <body>
 
-<form class="layui-form" action="/addUser" method="post">
+<form class="layui-form" action="/addDepartment" method="post">
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>工号:</label>
+        <label class="layui-form-label"><span style="color: red">*</span>部门编号:</label>
         <div class="layui-input-inline">
-            <input type="text" id="workId" name="workId" placeholder="请输入工号" autocomplete="off" class="layui-input">
+            <input type="text" name="departmentShowId" placeholder="请输入部门编号" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>用户名:</label>
+        <label class="layui-form-label"><span style="color: red">*</span>部门名:</label>
         <div class="layui-input-inline">
-            <input type="text" name="userName" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+            <input type="text" name="departmentName" placeholder="请输入部门名" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>密码:</label>
+        <label class="layui-form-label">负责人:</label>
         <div class="layui-input-inline">
-            <input type="password" name="password" autocomplete="off" class="layui-input" value="123">
-        </div>
-        <div class="layui-form-mid layui-word-aux">默认密码:123</div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>角色权限:</label>
-        <div class="layui-input-inline">
-            <select name="roleId">
-                <option value=""></option>
-                <option th:each="r:${roleList}"
-                        th:value="${r.roleId}"
-                        th:text="${r.roleName}"
-                ></option>
+            <select id="departmentManager" name="departmentManager" lay-search>
+                <option value="">工号——姓名</option>
             </select>
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>职位:</label>
+        <label class="layui-form-label">部门电话:</label>
         <div class="layui-input-inline">
-            <select name="jobId">
+            <input type="text" name="departmentPhone" placeholder="请输入部门电话" autocomplete="off" class="layui-input">
+        </div>
+    </div>
 
-                <option value=""></option>
-                <option th:each="j:${jobList}"
-                        th:value="${j.jobId}"
-                        th:text="${j.jobName}"
-                ></option>
-            </select>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>部门:</label>
-        <div class="layui-input-inline">
-            <select name="departmentId" lay-search>
-
-                <option value=""></option>
-                <option th:each="d:${departmentList}"
-                        th:value="${d.departmentId}"
-                        th:text="${d.departmentName}"
-                ></option>
-            </select>
-        </div>
-    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="useradd">立即提交</button>
+            <button class="layui-btn" lay-submit lay-filter="departmentadd">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
-<script src="../jquery-3.4.1.min.js" type="text/javascript"></script>
+<!--<script src="../jquery-3.4.1.min.js" type="text/javascript"></script>-->
 <script type="text/javascript">
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer,
-            $ = layui.jquery;
+            $ = layui.jquery
+        element = layui.element;
+
+        //动态获取用户下拉列表
+        $.ajax({
+            url: '/ajaxGetUser',
+            dataType: 'json',
+            type: "get",
+            success: function (data) {
+                $.each(data, function (index, item) {
+
+                    $("#departmentManager").append("<option value='" + item.userId + "'>" + item.workId + '——' + item.userName + "</option>");
+
+                });
+                layui.form.render("select");
+            }
+
+
+        })
 
         // 提交验证
-        form.on('submit(useradd)', function (data) {
+        form.on('submit(departmentadd)', function (data) {
             data = data.field;
             //提交验证错误提示
-            if (data.userName == '') {
-                layer.msg('用户名不能为空', {
+            if (data.departmentName == '') {
+                layer.msg('部门名不能为空', {
                     icon: 5,
                     anim: 6,//抖动效果
                     time: 1500//持续时间
@@ -96,54 +84,16 @@
                 });
                 return false;
             }
-            if (data.password == '') {
-                layer.msg('密码不能为空', {
+            if (data.departmentShowId == '') {
+                layer.msg('部门编号不能为空', {
                     icon: 5,
-                    shift: 6,//抖动效果
+                    anim: 6,//抖动效果
                     time: 1500//持续时间
                 }, function () {
                 });
                 return false;
             }
-            if (data.workId == '') {
-                layer.msg('工号不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
-                });
-                return false;
-            }
-            if (data.roleId == '') {
-                layer.msg('角色权限不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
 
-                });
-                return false;
-            }
-            if (data.jobId == '') {
-                layer.msg('职位不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
-
-                });
-                return false;
-            }
-            if (data.departmentId == '') {
-                layer.msg('部门不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
-
-                });
-                return false;
-            }
             //获取当前iframe页面索引
             var currIframe = parent.layer.getFrameIndex(window.name);
 

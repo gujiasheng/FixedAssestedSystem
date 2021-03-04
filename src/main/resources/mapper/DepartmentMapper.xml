@@ -10,8 +10,9 @@
         <result column="department_manager" jdbcType="INTEGER" property="departmentManager"/>
         <result column="department_manager_2" jdbcType="INTEGER" property="departmentManager2"/>
         <result column="department_phone" jdbcType="INTEGER" property="departmentPhone"/>
+        <result column="department_show_id" jdbcType="INTEGER" property="departmentShowId"/>
 
-        <association property="user" javaType="com.gjs.fixedassets.entity.User">
+        <association property="departmentManagerObj" javaType="com.gjs.fixedassets.entity.User">
             <id column="user_id" jdbcType="INTEGER" property="userId"/>
             <result column="user_name" jdbcType="VARCHAR" property="userName"/>
             <result column="password" jdbcType="VARCHAR" property="password"/>
@@ -32,7 +33,7 @@
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
         department_id, department_name, company_id, department_manager, department_manager_2,
-        department_phone
+        department_phone, department_show_id
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -49,7 +50,9 @@
         <if test="departmentId != null and departmentId != ''">and department.department_id =
             #{departmentId,jdbcType=INTEGER}
         </if>
+        ORDER BY department.department_show_id
         LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+
     </select>
     <select id="selectDName" resultType="java.lang.String">
         SELECT department_name
@@ -72,4 +75,15 @@
         LEFT JOIN user ON department.department_manager=user.user_id
         where department.company_id = #{companyId,jdbcType=INTEGER}
     </select>
+    <insert id="addDepartment">
+        INSERT INTO `fixedassets`.`department`(`department_name`, `company_id`, `department_manager`,
+        `department_manager_2`, `department_phone`,`department_show_id`)
+        VALUES ( #{departmentName,jdbcType=VARCHAR}, 1, #{departmentManager,jdbcType=INTEGER},
+        #{departmentManager2,jdbcType=INTEGER},
+        #{departmentPhone,jdbcType=INTEGER},
+        #{departmentShowId,jdbcType=INTEGER});
+
+    </insert>
+
+
 </mapper>

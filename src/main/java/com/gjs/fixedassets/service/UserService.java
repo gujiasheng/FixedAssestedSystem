@@ -24,4 +24,8 @@ public interface UserService {
     //修改人员
     void updateUser(User user);
 
+    //下拉列表
+    List<User> selectAllUserByCompanyId(Integer companyId);
+
+
 }

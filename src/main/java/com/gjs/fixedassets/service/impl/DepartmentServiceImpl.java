@@ -34,4 +34,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> selectDepartmentByCompanyId2(Integer companyId) {
         return departmentMapper.selectDepartmentByCompanyId2(companyId);
     }
+
+    @Override
+    public void addDepartment(Department department) {
+        departmentMapper.addDepartment(department);
+    }
 }

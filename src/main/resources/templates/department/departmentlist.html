@@ -44,9 +44,9 @@
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
-            <script type="text/html" id="xuhao">
-                {{d.LAY_TABLE_INDEX+1}}
-            </script>
+            <!--<script type="text/html" id="xuhao">-->
+            <!--{{d.LAY_TABLE_INDEX+1}}-->
+            <!--</script>-->
         </div>
     </div>
 </div>
@@ -70,10 +70,15 @@
                 , url: '/selectAllDepartmentByCompanyId'
                 , cols: [
                     [
-                        {field: 'ID', title: '序号', templet: '#xuhao', fixed: 'left'}
+                        {field: 'departmentShowId', title: '部门序号', fixed: 'left'}
                         , {field: 'departmentName', title: '部门名', fixed: 'left'}
-                        , {field: 'departmentManager', title: '部门负责人', templet: '<div>{{d.user.userName}}</div>'}
-                        , {field: 'departmentPhone', title: '部门电话'}
+                        , {
+                        field: 'departmentManager',
+                        title: '部门负责人',
+                        templet: '<div>{{d.departmentManagerObj.userName}}</div>',
+                        fixed: 'left'
+                    }
+                        , {field: 'departmentPhone', title: '部门电话', fixed: 'left'}
                         , {
                         fixed: 'right', title: '操作', toolbar: '#departmentmanagetool'
                     }
@@ -100,20 +105,20 @@
             })
         })
 
-        //
-        // //点击添加打开useradd子页面
-        // $('#openUserAdd').click(function () {
-        //     layer.open({
-        //         type: 2,
-        //         area: ['500px', '500px'],
-        //         fixed: false, //不固定
-        //         maxmin: true,
-        //         title: '部门添加',
-        //         // content: 'useradd.html',
-        //         resize: false,
-        //         content: '/todepartmentadd'
-        //     });
-        // })
+
+        //点击添加打开departmentadd子页面
+        $('#openDepartmentAdd').click(function () {
+            layer.open({
+                type: 2,
+                area: ['500px', '400px'],
+                fixed: false, //不固定
+                maxmin: true,
+                title: '部门添加',
+                // content: 'useradd.html',
+                resize: false,
+                content: '/toAddDepartment'
+            });
+        })
         //
         // //点击编辑打开useredit子页面,使用layui的表格监听
         // table.on('tool(departmentTable)', function (obj) {

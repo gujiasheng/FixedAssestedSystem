@@ -30,7 +30,20 @@ public class Department implements Serializable {
     private Integer departmentManager;
 
     private static final long serialVersionUID = 1L;
+    /**
+     * 部门第二负责人
+     */
     private Integer departmentManager2;
+    /**
+     * 部门电话
+     */
     private Integer departmentPhone;
-    private User user;
+    /**
+     * 部门显示id
+     */
+    private Integer departmentShowId;
+    /**
+     * 用户对象
+     */
+    private User departmentManagerObj;
 }

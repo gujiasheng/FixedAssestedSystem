@@ -62,7 +62,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">账号状态:</label>
                     <div class="layui-input-block">
-                        <select id="searchIsStatus" name="searchIsStatus">
+                        <select id="searchIsStatus" name="searchIsStatus" lay-search>
                             <option value="">--请选择--</option>
                             <option th:value="${qiyong}" th:text="启用"></option>
                             <option th:value="${tingyong}" th:text="停用"></option>
