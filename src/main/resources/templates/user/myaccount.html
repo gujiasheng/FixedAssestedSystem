@@ -34,7 +34,7 @@
                     <div class="layui-form-mid layui-word-aux"></div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">部门:</label>
+                    <label class="layui-form-label"><span style="color: red">*</span>部门:</label>
                     <div class="layui-input-inline">
                         <select name="departmentId" lay-search>
                             <option th:value="${user.departmentId}" th:text="${dName}"></option>
@@ -100,18 +100,12 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">头像</label>
-                    <div class="layui-input-inline">
-                        <input name="userFace" id="LAY_avatarSrc" placeholder="图片地址"
-                               class="layui-input">
-                    </div>
-                    <div class="layui-input-inline layui-btn-container" style="width: auto;">
-                        <button type="button" class="layui-btn layui-btn-primary" id="faceUpload">
-                            <i class="layui-icon"></i>上传图片
-                        </button>
-                        <input class="layui-upload-file" type="file" name="file">
-                        <button class="layui-btn layui-btn-primary" id="faceDownload">查看图片</button>
+                    <div class="layui-upload">
+                        <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+                        <button type="button" class="layui-btn" id="test9">开始上传</button>
                     </div>
                 </div>
+
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机</label>
                     <div class="layui-input-inline">
@@ -134,7 +128,8 @@
                 <!--</div>-->
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button class="layui-btn" lay-submit="" lay-filter="myaccountedit">确认修改</button>
+                        <button id="myaccountedit" class="layui-btn" lay-submit="" lay-filter="myaccountedit">确认修改
+                        </button>
                         <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
                     </div>
                 </div>
@@ -143,6 +138,7 @@
         </div>
     </div>
 </form>
+
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
 <script src="../jquery-3.4.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -152,26 +148,34 @@
             $ = layui.jquery,
             upload = layui.upload;
 
+        //选完文件后不自动上传
         upload.render({
-            elem: '#faceUpload'
-            , url: 'https://httpbin.org/post'
-        })
+            elem: '#test8'
+            , url: 'https://httpbin.org/post' //改成您自己的上传接口
+            , auto: false
+            //,multiple: true
+            , bindAction: '#test100'
+            , done: function (res) {
+                layer.msg('上传成功');
+                console.log(res)
+            }
+        });
 
         form.on('submit(myaccountedit)', function (data) {
             data = data.field;
 
 
         })
-        // var oldpassword = [[${user.password}]];
-        // var newpassword = [[${loginUser.password}]];
-        //
-        // if (oldpassword != newpassword) {
-        //
-        //     window.parent.layer.alert('当前账号密码已修改请重新登录', {icon: 6}, function () {//自定义关闭时间跳回登录页面
-        //         window.parent.location.href = "http://localhost:8080/tologin";
-        //     })
-        //
-        // }
+        var oldpassword = [[${user.password}]];
+        var newpassword = [[${loginUser.password}]];
+
+        if (oldpassword != newpassword) {
+
+            window.parent.layer.alert('当前账号密码已修改请重新登录', {icon: 6}, function () {//自定义关闭时间跳回登录页面
+                window.parent.location.href = "/tologin";
+            })
+
+        }
     })
 </script>
 </body>

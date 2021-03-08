@@ -166,10 +166,11 @@ public class UserController {
      * @Return
      **/
     @PostMapping("/updateUser")
+    @ResponseBody
     public String updateUser(User user, HttpSession session) {
 
         userService.updateUser(user);
-        return "redirect:/touseredit";
+        return null;
     }
 
     /*
@@ -219,4 +220,5 @@ public class UserController {
         userService.updateUser(user);
         return "redirect:/selectMyAccount";
     }
+
 }
