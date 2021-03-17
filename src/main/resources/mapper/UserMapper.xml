@@ -34,6 +34,14 @@
             <result column="company_id" jdbcType="INTEGER" property="companyId"/>
         </association>
 
+        <association property="company" javaType="com.gjs.fixedassets.entity.Company">
+            <id column="company_id" jdbcType="INTEGER" property="companyId"/>
+            <result column="company_name" jdbcType="VARCHAR" property="companyName"/>
+            <result column="company_industry_id" jdbcType="INTEGER" property="companyIndustryId"/>
+            <result column="company_nature_id" jdbcType="INTEGER" property="companyNatureId"/>
+            <result column="company_email" jdbcType="VARCHAR" property="companyEmail"/>
+        </association>
+
         <association property="role" javaType="com.gjs.fixedassets.entity.Role">
             <id column="role_id" jdbcType="INTEGER" property="roleId"/>
             <result column="role_name" jdbcType="VARCHAR" property="roleName"/>
@@ -79,6 +87,7 @@
     <select id="selectUserByUserId" resultMap="BaseResultMap">
         select *
         from user
+        left join company on company.company_id=user.company_id
         where user_id=#{userId,jdbcType=INTEGER}
     </select>
     <select id="selectUserByNamePSW" resultMap="BaseResultMap">

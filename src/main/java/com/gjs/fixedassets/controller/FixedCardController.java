@@ -1,21 +1,22 @@
 package com.gjs.fixedassets.controller;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.gjs.fixedassets.entity.*;
 import com.gjs.fixedassets.service.DepartmentService;
 import com.gjs.fixedassets.service.FixedcardService;
 import com.gjs.fixedassets.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.WebProperties;
+
 import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.handler.UserRoleAuthorizationInterceptor;
+
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,6 +31,7 @@ public class FixedCardController {
 
     @Autowired
     private UserService userService;
+
 
     /*
      * @Description TODO
@@ -56,6 +58,13 @@ public class FixedCardController {
         model.addAttribute("ul", userList);
         Map<Integer, String> unitMap = Unit.toUnitMap();
         model.addAttribute("un", unitMap);
+        model.addAttribute("companyName", user.getCompany().getCompanyName());
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+
+        model.addAttribute("nowDateVal", formatter.format(date));
+        model.addAttribute("nowDateText", formatter.format(date).toString());
+        model.addAttribute("maker", user.getUserName());
         return "fixedassetcard/FixedAssetCardAdd";
     }
 

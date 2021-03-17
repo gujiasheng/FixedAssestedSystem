@@ -99,7 +99,10 @@ public class User implements Serializable {
     private Job job;
 
     private Role role;
-
+    /**
+     * 所属公司信息
+     */
+    private Company company;
     /**
      * 工号
      */

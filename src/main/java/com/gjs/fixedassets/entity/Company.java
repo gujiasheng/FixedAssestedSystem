@@ -1,24 +1,14 @@
 package com.gjs.fixedassets.entity;
 
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
-/*
- * @Description TODO
- * 公司实体
- * @Author 顾嘉晟
- * @Date 2021-02-18
- *
- **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Company implements Serializable {
-    private static final long serialVersionUID = 1L;
-
     /**
      * 公司id
      */
@@ -43,4 +33,6 @@ public class Company implements Serializable {
      * 公司邮箱
      */
     private String companyEmail;
+
+    private static final long serialVersionUID = 1L;
 }

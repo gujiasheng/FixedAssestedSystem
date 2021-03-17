@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<form class="layui-form" action="/updateUser" method="post">
+<form class="layui-form" action="/updateUser" method="post" lay-filter="editFilter">
     <input type="hidden" name="userId" th:value="${user.userId}">
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>工号:</label>
@@ -37,7 +37,7 @@
         <label class="layui-form-label"><span style="color: red">*</span>角色权限:</label>
         <div class="layui-input-inline">
             <select id="roleId" name="roleId">
-                <option th:value="${user.roleId}" th:text="${rName}"></option>
+                <!--<option th:value="${user.roleId}" th:text="${rName}"></option>-->
                 <option th:each="r:${roleList}"
                         th:value="${r.roleId}"
                         th:text="${r.roleName}"
@@ -49,7 +49,7 @@
         <label class="layui-form-label"><span style="color: red">*</span>职位:</label>
         <div class="layui-input-inline">
             <select id="jobId" name="jobId">
-                <option th:value="${user.jobId}" th:text="${jName}" hidden="hidden"></option>
+                <!--<option th:value="${user.jobId}" th:text="${jName}" hidden="hidden"></option>-->
                 <option th:each="j:${jobList}"
                         th:value="${j.jobId}"
                         th:text="${j.jobName}"
@@ -61,7 +61,7 @@
         <label class="layui-form-label"><span style="color: red">*</span>部门:</label>
         <div class="layui-input-inline">
             <select name="departmentId">
-                <option th:value="${user.departmentId}" th:text="${dName}" hidden="hidden"></option>
+                <!--<option th:value="${user.departmentId}" th:text="${dName}" hidden="hidden"></option>-->
                 <option th:each="d:${departmentList}"
                         th:value="${d.departmentId}"
                         th:text="${d.departmentName}"
@@ -73,7 +73,7 @@
         <label class="layui-form-label"><span style="color: red">*</span>账号状态:</label>
         <div class="layui-input-inline">
             <select name="isStatus">
-                <option th:value="${user.isStatus}" th:text="${user.isStatus}==1?'启用':'停用'" hidden="hidden"></option>
+                <!--<option th:value="${user.isStatus}" th:text="${user.isStatus}==1?'启用':'停用'" hidden="hidden"></option>-->
                 <option th:value="${1}">启用</option>
                 <option th:value="${2}">停用</option>
             </select>
@@ -93,7 +93,12 @@
         var form = layui.form,
             layer = layui.layer,
             $ = layui.jquery;
-
+        form.val("editFilter", {
+            "roleId": [[${user.roleId}]],
+            "departmentId": [[${user.departmentId}]],
+            "isStatus": [[${user.isStatus}]],
+            "jobId": [[${user.jobId}]]
+        })
         // 提交验证
         form.on('submit(useradd)', function (data) {
             data = data.field;

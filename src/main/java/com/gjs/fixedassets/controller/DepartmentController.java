@@ -10,6 +10,7 @@ import com.mysql.cj.xdevapi.JsonArray;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONArray;
 import org.apache.ibatis.annotations.Mapper;
+import org.omg.CORBA.OBJ_ADAPTER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Controller;
@@ -151,12 +152,15 @@ public class DepartmentController {
      **/
     @GetMapping("toDepartmentedit{departmentId}")
     public String editDepartment(Model model, @PathVariable("departmentId") Integer departmentId, HttpSession session) {
-        Department department = departmentService.selectByPrimaryKey(departmentId);
+        Object obj = session.getAttribute("user");
+        User loginUser = (User) obj;
 
+        Department department = departmentService.selectByPrimaryKey(departmentId);
+        List<User> userList = userService.selectAllUserByCompanyId(loginUser.getCompanyId());
         User manager = userService.selectUserByUserId(department.getDepartmentManager());
         department.setDepartmentManagerObj(manager);
         model.addAttribute("department", department);
-
+        model.addAttribute("ul", userList);
         return "department/departmentedit";
     }
 

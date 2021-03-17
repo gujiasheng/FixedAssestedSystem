@@ -140,7 +140,7 @@
                         }
                     }
                         , {
-                        fixed: 'right', title: '操作', toolbar: '#usermanagetool'
+                        unresize: true, width: 150, title: '操作', toolbar: '#usermanagetool'
                     }
                         // ,{field:'name',title:'用户名'}测试
                         // ,{field:'password',title:'密码'}
@@ -177,6 +177,7 @@
             layer.open({
                 type: 2,
                 area: ['500px', '500px'],
+                offset: ['100px', '300px'],
                 fixed: false, //不固定
                 maxmin: true,
                 title: '人员添加',
@@ -195,6 +196,7 @@
                 layer.open({
                     type: 2,
                     area: ['500px', '500px'],
+                    offset: ['100px', '300px'],
                     fixed: false, //不固定
                     maxmin: true,
                     title: '人员编辑',

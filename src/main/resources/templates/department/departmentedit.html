@@ -10,7 +10,7 @@
 </head>
 <body>
 
-<form class="layui-form" action="/editDepartment" method="post">
+<form class="layui-form" action="/editDepartment" method="post" lay-filter="editFilter">
     <input type="hidden" name="departmentId" placeholder="请输入部门编号" autocomplete="off" class="layui-input"
            th:value="${department.departmentId}">
     <div class="layui-form-item">
@@ -31,10 +31,10 @@
         <label class="layui-form-label">负责人:</label>
         <div class="layui-input-inline">
             <select id="departmentManager" name="departmentManager" lay-search>
-
+                <option value="">工号——姓名</option>
                 <option th:value="${department.departmentManager}"
                         th:text="${department.departmentManagerObj.workId}+'----'+${department.departmentManagerObj.userName}"></option>
-                <option value="">工号——姓名</option>
+
             </select>
         </div>
     </div>
@@ -74,6 +74,11 @@
                 layui.form.render("select");
             }
         })
+        //给select赋初值
+        form.val("editFilter", {
+            "departmentManager": [[${department.departmentManager}]]
+        })
+
         // 提交验证
         form.on('submit(departmentedit)', function (data) {
             data = data.field;
