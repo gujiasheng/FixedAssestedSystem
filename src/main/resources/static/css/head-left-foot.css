@@ -46,10 +46,10 @@ a {
     height: 40px;
 }
 
-.layui-tab > .layui-tab-title > .layui-this {
-    border-bottom: 3px solid #5FB878;
+/*.layui-tab > .layui-tab-title > .layui-this {*/
+/*border-bottom: 3px solid #5FB878;*/
 
-}
+/*}*/
 
 .layui-tab > .layui-tab-title > .layui-this i:first-child {
     color: green;
