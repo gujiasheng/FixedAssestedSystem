@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjs.fixedassets.mapper.FixedcardMapper">
+    <resultMap id="BaseResultMap" type="com.gjs.fixedassets.entity.Fixedcard">
+        <!--@mbg.generated-->
+        <!--@Table fixedcard-->
+        <id column="fixedcard_id" jdbcType="INTEGER" property="fixedcardId"/>
+        <result column="fixed_id" jdbcType="VARCHAR" property="fixedId"/>
+        <result column="fixed_name" jdbcType="VARCHAR" property="fixedName"/>
+        <result column="fixedtype_id" jdbcType="INTEGER" property="fixedtypeId"/>
+        <result column="acquisition_date" jdbcType="DATE" property="acquisitionDate"/>
+        <result column="working_life" jdbcType="INTEGER" property="workingLife"/>
+        <result column="increment_id" jdbcType="INTEGER" property="incrementId"/>
+        <result column="fixed_scale" jdbcType="VARCHAR" property="fixedScale"/>
+        <result column="use_status" jdbcType="INTEGER" property="useStatus"/>
+        <result column="accrued_month" jdbcType="INTEGER" property="accruedMonth"/>
+        <result column="measure_unit" jdbcType="INTEGER" property="measureUnit"/>
+        <result column="account" jdbcType="DOUBLE" property="account"/>
+        <result column="total_amount" jdbcType="DOUBLE" property="totalAmount"/>
+        <result column="unit_price" jdbcType="DOUBLE" property="unitPrice"/>
+        <result column="depreciation_method_id" jdbcType="INTEGER" property="depreciationMethodId"/>
+        <result column="current_location" jdbcType="VARCHAR" property="currentLocation"/>
+        <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+        <result column="person_charge" jdbcType="INTEGER" property="personCharge"/>
+        <result column="fixed_status" jdbcType="INTEGER" property="fixedStatus"/>
+        <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+        <result column="entry_date" jdbcType="DATE" property="entryDate"/>
+        <result column="start_working_date" jdbcType="DATE" property="startWorkingDate"/>
+        <result column=" estimated_residual_value" jdbcType="DOUBLE" property="estimatedResidualValue"/>
+        <result column="accumulated_depreciation" jdbcType="DOUBLE" property="accumulatedDepreciation"/>
+        <result column="monthly_depreciation_rate" jdbcType="DOUBLE" property="monthlyDepreciationRate"/>
+        <result column="monthly_depreciation" jdbcType="DOUBLE" property="monthlyDepreciation"/>
+        <result column="net_worth" jdbcType="DOUBLE" property="netWorth"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        fixedcard_id, fixed_id, fixed_name, fixedtype_id, acquisition_date, working_life,
+        increment_id, fixed_scale, use_status, accrued_month, measure_unit, account, total_amount,
+        unit_price, depreciation_method_id, current_location, department_id, person_charge,
+        fixed_status, company_id, entry_date, start_working_date, ` estimated_residual_value`,
+        accumulated_depreciation, monthly_depreciation_rate, monthly_depreciation, net_worth
+    </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        <!--@mbg.generated-->
+        select
+        <include refid="Base_Column_List"/>
+        from fixedcard
+        where fixedcard_id = #{fixedcardId,jdbcType=INTEGER}
+    </select>
+    <insert id="insertFixedAsssetCard" parameterType="Fixedcard">
+        INSERT INTO `fixedassets`.`fixedcard`
+        ( `fixed_id`, `fixed_name`, `fixedtype_id`, `acquisition_date`, `working_life`, `increment_id`,
+        `fixed_scale`, `use_status`, `accrued_month`, `measure_unit`, `account`, `total_amount`, `unit_price`,
+        `depreciation_method_id`, `current_location`, `department_id`, `person_charge`, `fixed_status`, `company_id`,
+        `entry_date`, `start_working_date`, ` estimated_residual_value`, `accumulated_depreciation`,
+        `monthly_depreciation_rate`, `monthly_depreciation`, `net_worth`)
+        VALUES ( #{fixedId,jdbcType=VARCHAR},
+        #{fixedName,jdbcType=VARCHAR},
+        #{fixedtypeId,jdbcType=INTEGER},
+        #{acquisitionDate,jdbcType=TIMESTAMP},
+        #{workingLife,jdbcType=INTEGER},
+        #{incrementId,jdbcType=INTEGER},
+        #{fixedScale,jdbcType=VARCHAR},
+        #{useStatus,jdbcType=INTEGER},
+        #{accruedMonth,jdbcType=INTEGER},
+        #{measureUnit,jdbcType=INTEGER},
+        #{account,jdbcType=DOUBLE},
+        #{totalAmount,jdbcType=DOUBLE},
+        #{unitPrice,jdbcType=DOUBLE},
+        #{depreciationMethodId,jdbcType=INTEGER},
+        #{currentLocation,jdbcType=VARCHAR},
+        #{departmentId,jdbcType=INTEGER},
+        #{personCharge,jdbcType=INTEGER},
+        #{fixedStatus,jdbcType=INTEGER},
+        #{companyId,jdbcType=INTEGER},
+        #{monthlyDepreciationRate,jdbcType=DOUBLE},
+        #{monthlyDepreciation,jdbcType=DOUBLE},
+        #{netWorth,jdbcType=DOUBLE},
+        #{entryDate,jdbcType=TIMESTAMP},
+        #{startWorkingDate,jdbcType=TIMESTAMP},
+        #{estimatedResidualValue,jdbcType=DOUBLE},
+        #{accumulatedDepreciation,jdbcType=DOUBLE});
+
+    </insert>
+
+</mapper>

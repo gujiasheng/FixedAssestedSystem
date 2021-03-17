@@ -26,6 +26,11 @@
         width: 120px
     }
 
+    .layui-card-header .layui-form-item .layui-input-inline {
+        width: 100px;
+        margin-right: 100px;
+    }
+
     .layui-card-body .layui-form-item .layui-inline {
         margin-right: 30px;
     }
@@ -47,9 +52,11 @@
     }
 </style>
 <body>
-<div class="layui-container">
-    <div class="layui-card">
+<!--<div class="layui-container">-->
+<div class="layui-card">
+    <form class="layui-form" action="/fixedcardadd" method="post">
         <div class="layui-form layui-card-header" style="height: 100%;text-align: center    ">
+
             <div style="font-size:25px">固定资产卡片</div>
             <div class="layui-form-item" style="float:left;">
                 <div class="layui-inline">
@@ -61,7 +68,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">录入日期:</label>
                     <div class="layui-input-inline">
-                        <span>2021-03-08</span>
+                        <span name="entryDate"></span>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -73,223 +80,218 @@
             </div>
         </div>
         <hr style="background-color: black">
+
         <div class="layui-card-body">
-            <form class="layui-form layui-form-pane">
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">编号</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password"
-                                   autocomplete="off" required lay-verify="required"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">固定资产名称</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="name" placeholder="请输入固定资产名称"
-                                   autocomplete="off" required lay-verify="required"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">类别名称</label>
-                        <div class="layui-input-inline">
-                            <select name="incrementId">
-                                <option value="">类别名称</option>
-                                <option value="010">北京</option>
-                                <option value="021" disabled>上海</option>
-                                <option value="0571">杭州</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">购置方式</label>
-                        <div class="layui-input-inline" id="incrementId">
-                            <select name="incrementId">
-                                <option value="">选择后自动填入编号</option>
-                                <option value="010">北京</option>
-                                <option value="021" disabled>上海</option>
-                                <option value="0571">杭州</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">规格型号</label>
-                        <div class="layui-input-inline">
-                            <input type="text"
-                                   autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">使用状况</label>
-                        <div class="layui-input-inline">
-                            <select name="useStatus">
-                                <option value="">选择后自动填入编号</option>
-                                <option value="010">北京</option>
-                                <option value="021" disabled>上海</option>
-                                <option value="0571">杭州</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">预计寿命(年)</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" placeholder="以年为单位"
-                                   autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">折旧方法</label>
-                        <div class="layui-input-inline">
-                            <select name="measureUnit">
-                                <option value="1">平均年限法</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">开始使用日期</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="acquisitionDate" id="acquisitionDate" autocomplete="off"
-                                   class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">已提计月份</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="acquisitionDate" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">币种</label>
-                        <div class="layui-input-inline">
-                            <input type="text" autocomplete="off" class="layui-input" value="人民币" readonly>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">计量单位</label>
-                        <div class="layui-input-inline">
-                            <select name="measureUnit">
-                                <option value="">选择后自动填入编号</option>
-                                <option value="010">北京</option>
-                                <option value="021" disabled>上海</option>
-                                <option value="0571">杭州</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">数量</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" placeholder="请输入数量"
-                                   autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">单价</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" placeholder="￥0.00"
-                                   autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">入账价值</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" placeholder="￥0.00"
-                                   autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">净残值率</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">预计净残值</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">累计折旧</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" autocomplete="off" class="layui-input" value="0.00">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">月折旧率</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="name" autocomplete="off" class="layui-input" value="0.00">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">月折旧额</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">净值</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" autocomplete="off" class="layui-input" value="0.00">
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">负责部门</label>
-                        <div class="layui-input-inline">
-                            <select name="incrementId">
-                                <option value="">部门名称</option>
-                                <option value="010">北京</option>
-                                <option value="021" disabled>上海</option>
-                                <option value="0571">杭州</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">负责人</label>
-                        <div class="layui-input-inline">
-                            <select name="incrementId">
-                                <option value="">部门名称</option>
-                                <option value="010">北京</option>
-                                <option value="021" disabled>上海</option>
-                                <option value="0571">杭州</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">所在地</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="password" autocomplete="off" class="layui-input">
 
-                        </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">编号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="fixedId" autocomplete="off" class="layui-input">
                     </div>
-
                 </div>
-            </form>
+                <div class="layui-inline">
+                    <label class="layui-form-label">固定资产名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="fixedName" placeholder="请输入固定资产名称" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">类别名称</label>
+                    <div class="layui-input-inline">
+                        <select name="fixedtypeId">
+                            <option value="">类别名称</option>
+                            <option th:each="tm:${typeMap}" th:text="${tm.getValue()}"
+                                    th:value="${tm.getKey()}"></option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">购置方式</label>
+                    <div class="layui-input-inline" id="incrementId">
+                        <select name="incrementId">
+                            <option th:each="i:${im}" th:text="${i.getValue()}" th:value="${i.getKey()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">规格型号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" class="layui-input" name="fixedScale">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">购置日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="acquisitionDate" id="acquisitionDate" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">使用状况</label>
+                    <div class="layui-input-inline">
+                        <select name="useStatus">
+                            <option th:each="s:${sm}" th:text="${s.getValue()}" th:value="${s.getKey()}"></option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">预计寿命(年)</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="workingLife" placeholder="以年为单位"
+                               autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">折旧方法</label>
+                    <div class="layui-input-inline">
+                        <select name="depreciationMethodId">
+                            <option value="1">平均年限法</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">开始使用日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="startWorkingDate" id="startWorkingDate" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">已提计月份</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="accruedMonth" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">币种</label>
+                    <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" class="layui-input" value="人民币" readonly>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">计量单位</label>
+                    <div class="layui-input-inline">
+                        <select name="measureUnit">
+                            <option th:each="u:${un}" th:text="${u.getValue()}" th:value="${u.getKey()}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">数量</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="account" placeholder="请输入数量" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">单价</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="unitPrice" placeholder="￥0.00" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">入账价值</label>
+                    <div class="layui-input-inline">
+                        <input type="text" placeholder="￥0.00" autocomplete="off" class="layui-input"
+                               name="totalAmount">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">净残值率</label>
+                    <div class="layui-input-inline">
+                        <input type="text" autocomplete="off" class="layui-input" value="5%" readonly>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">预计净残值</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="estimatedResidualValue" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">累计折旧</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="accumulatedDepreciation" autocomplete="off" class="layui-input"
+                               value="0.0000">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">月折旧率</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="monthlyDepreciationRate" autocomplete="off" class="layui-input"
+                               value="0.0000">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">月折旧额</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="monthlyDepreciation" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">净值</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="password" autocomplete="off" class="layui-input" value="0.0000">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">负责部门</label>
+                    <div class="layui-input-inline">
+                        <select name="departmentId">
+                            <option value="">部门名称</option>
+                            <option th:each="d:${de}" th:value="${d.departmentId}"
+                                    th:text="${d.departmentName}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">负责人</label>
+                    <div class="layui-input-inline">
+                        <select name="personCharge" lay-search>
+                            <option value="">负责人</option>
+                            <option th:each="u:${ul}" th:text="${u.userName}" th:value="${u.userId}"></option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">所在地</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="currentLocation" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item" style="margin-left: 30%;margin-top: 1%">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="cardadd">保存</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
 
         </div>
-
-    </div>
+    </form>
 
 </div>
+<!--</div>-->
 
 
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
@@ -306,6 +308,10 @@
         laydate.render({
             elem: '#acquisitionDate'
         })
+        laydate.render({
+            elem: '#startWorkingDate'
+        })
+
 
     })
 </script>

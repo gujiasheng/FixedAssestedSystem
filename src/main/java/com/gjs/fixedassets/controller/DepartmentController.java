@@ -1,6 +1,7 @@
 package com.gjs.fixedassets.controller;
 
 import com.gjs.fixedassets.entity.Department;
+import com.gjs.fixedassets.entity.FixedType;
 import com.gjs.fixedassets.entity.User;
 import com.gjs.fixedassets.mapper.DepartmentMapper;
 import com.gjs.fixedassets.service.DepartmentService;
@@ -39,8 +40,12 @@ public class DepartmentController {
      * @Return
      **/
     @GetMapping("/todepartmentlist")
-    public String toDepartmentList(Model model) {
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
+    public String toDepartmentList(Model model, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
         model.addAttribute("departmentList", departmentList);
         return "department/departmentlist";
     }
@@ -61,9 +66,9 @@ public class DepartmentController {
             , HttpSession session, Model model) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
-
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(1, page, limit, departmentId);
-        List<Department> departmentCountList = departmentService.selectAllDepartmentCount(1, departmentId);
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId(user.getCompanyId(), page, limit, departmentId);
+        List<Department> departmentCountList = departmentService.selectAllDepartmentCount(user.getCompanyId(), departmentId);
         int departmentCount = departmentCountList.size();
 //        for (Department de :
 //                departmentList) {
@@ -87,8 +92,12 @@ public class DepartmentController {
      * @Return
      **/
     @GetMapping("/toAddDepartment")
-    public String toadddepartment(Model model) {
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
+    public String toadddepartment(Model model, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
         model.addAttribute("departmentList", departmentList);
 
         return "department/departmentadd";
@@ -104,8 +113,11 @@ public class DepartmentController {
      **/
     @GetMapping("/ajaxGetUser")
     @ResponseBody
-    public String ajaxGetUser(Model model, HttpServletRequest request) {
-        List<User> userList = userService.selectAllUserByCompanyId(1);
+    public String ajaxGetUser(Model model, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        List<User> userList = userService.selectAllUserByCompanyId(user.getCompanyId());
         model.addAttribute("userList", userList);
         JSONArray jsonArray = JSONArray.fromObject(userList);
         String userJson = jsonArray.toString();

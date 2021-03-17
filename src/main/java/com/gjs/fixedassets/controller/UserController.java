@@ -43,12 +43,15 @@ public class UserController {
      * @Return
      **/
     @GetMapping("/touserlist")
-    public String touserlist(Model model) {
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
+    public String touserlist(Model model, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
         model.addAttribute("departmentList", departmentList);
         List<Role> roleList = roleService.selectAllRole();
         model.addAttribute("roleList", roleList);
-        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(user.getCompanyId());
         model.addAttribute("jobList", jobList);
         Integer qiyong = 1;
         Integer tingyong = 2;
@@ -67,12 +70,15 @@ public class UserController {
      * @Return
      **/
     @GetMapping("/touseradd")
-    public String touseradd(Model model) {
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
+    public String touseradd(Model model, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
         model.addAttribute("departmentList", departmentList);
         List<Role> roleList = roleService.selectAllRole();
         model.addAttribute("roleList", roleList);
-        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(user.getCompanyId());
         model.addAttribute("jobList", jobList);
         return "/admin/useradd";
     }
@@ -97,10 +103,10 @@ public class UserController {
                                                         HttpSession session, Model model) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
-
-        List<User> pageUser = userService.selectByCompanyId(1, page, limit, userName, phone, departmentId, roleId, isStatus, workId);//每页显示的数据
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        List<User> pageUser = userService.selectByCompanyId(user.getCompanyId(), page, limit, userName, phone, departmentId, roleId, isStatus, workId);//每页显示的数据
         //获取总数据数量
-        List<User> allUser = userService.selectAllUserCount(1, userName, phone, departmentId, roleId, isStatus, workId);
+        List<User> allUser = userService.selectAllUserCount(user.getCompanyId(), userName, phone, departmentId, roleId, isStatus, workId);
         int userCount = allUser.size();
         //用layui的table渲染数据的json有格式要求，需要封装一下
         Map<String, Object> map = new HashMap<>();
@@ -124,12 +130,12 @@ public class UserController {
     public String touseredit(Model model, @PathVariable("userId") Integer userId, HttpSession session) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
-
-        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(1);
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
         model.addAttribute("departmentList", departmentList);
         List<Role> roleList = roleService.selectAllRole();
         model.addAttribute("roleList", roleList);
-        List<Job> jobList = jobService.selectAllJobByCompanyId(1);
+        List<Job> jobList = jobService.selectAllJobByCompanyId(user.getCompanyId());
         model.addAttribute("jobList", jobList);
         User selectUserByUserId = userService.selectUserByUserId(userId);
         model.addAttribute("user", selectUserByUserId);

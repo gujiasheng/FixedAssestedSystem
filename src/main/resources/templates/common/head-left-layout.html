@@ -50,7 +50,7 @@
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a>
-                        <img src="../images/face/0.gif" class="layui-nav-img"/>我
+                        <img src="../images/face/0.gif" class="layui-nav-img"/><span th:text="${u.userName}"></span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a data-id="01" data-url="/selectMyAccount"><span
@@ -72,8 +72,8 @@
                                     class="fa fa-home"></i><span class="layui-nav-item-span">用户管理</span></a></dd>
                             <dd><a class="layui-nav-item-a" data-id="12" data-url="/todepartmentlist"><i
                                     class="fa fa-home"></i><span class="layui-nav-item-span">部门管理</span></a></dd>
-                            <dd><a class="layui-nav-item-a" data-id="13" data-url="../login.html"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">列表三</span></a></dd>
+                            <dd><a class="layui-nav-item-a" data-id="13" data-url="/tofixedcardadd"><i
+                                    class="fa fa-home"></i><span class="layui-nav-item-span">固定资产卡片--添加</span></a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">

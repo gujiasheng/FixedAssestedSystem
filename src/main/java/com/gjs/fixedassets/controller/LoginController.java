@@ -51,8 +51,7 @@ public class LoginController {
         if (user != null && !("").equals(user)) {
             session.setAttribute("user", user);
 
-
-            return "/common/head-left-layout";
+            return "redirect:/toheadleft";
         } else {
             model.addAttribute("msg", "用户名或者密码有误，请重新登录");
             return "login";
@@ -66,7 +65,11 @@ public class LoginController {
     }
 
     @GetMapping("/toheadleft")
-    public String toheadleft() {
+    public String toheadleft(Model model, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        model.addAttribute("u", user);
         return "/common/head-left-layout";
     }
 
