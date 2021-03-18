@@ -7,11 +7,11 @@ import com.gjs.fixedassets.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import javax.servlet.http.HttpSession;
@@ -59,9 +59,9 @@ public class FixedCardController {
         Map<Integer, String> unitMap = Unit.toUnitMap();
         model.addAttribute("un", unitMap);
         model.addAttribute("companyName", user.getCompany().getCompanyName());
+        //格式化录入时间
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date(System.currentTimeMillis());
-
         model.addAttribute("nowDateVal", formatter.format(date));
         model.addAttribute("nowDateText", formatter.format(date).toString());
         model.addAttribute("maker", user.getUserName());
@@ -77,8 +77,16 @@ public class FixedCardController {
      * @Return
      **/
     @PostMapping("/fixedcardadd")
-    public String fixedCardAdd(Fixedcard fixedcard, Session session) {
+    @ResponseBody
+    public void fixedCardAdd(Fixedcard fixedcard, HttpSession session) {
+        Object obj = session.getAttribute("user");
+        User loginUser = (User) obj;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        fixedcard.setCompanyId(user.getCompanyId());
+
+        Date date = new Date(System.currentTimeMillis());
+        fixedcard.setEntryDate(date);
         fixedcardService.insertFixedAsssetCard(fixedcard);
-        return "redirect:/tofixedcardadd";
+//        return "redirect:/tofixedcardadd";
     }
 }
