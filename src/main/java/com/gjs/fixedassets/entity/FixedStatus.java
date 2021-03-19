@@ -5,9 +5,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum FixedStatus {
-    USEING(1, "使用中"),
-    NOTUSE(2, "未使用"),
-    STOPUSING(3, "停用");
+    USEING(2, "使用中"),
+    NOTUSE(1, "闲置"),
+    STOPUSING(3, "报废"),
+    MAINTAIN(4, "维修中");
 
     private int code;
     private String name;

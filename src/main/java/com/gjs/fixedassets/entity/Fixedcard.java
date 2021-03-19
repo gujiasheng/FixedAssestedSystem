@@ -156,4 +156,9 @@ public class Fixedcard implements Serializable {
      * 预计残净值率
      */
     private Double estimatedResidualValueRate;
+
+    /**
+     * 来源渠道
+     */
+    private String supplier;
 }

@@ -32,6 +32,7 @@
         <result column="monthly_depreciation_rate" jdbcType="DOUBLE" property="monthlyDepreciationRate"/>
         <result column="monthly_depreciation" jdbcType="DOUBLE" property="monthlyDepreciation"/>
         <result column="net_worth" jdbcType="DOUBLE" property="netWorth"/>
+        <result column="supplier" jdbcType="VARCHAR" property="supplier"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -40,7 +41,7 @@
         unit_price, depreciation_method_id, current_location, department_id, person_charge,
         fixed_status, company_id, entry_date, start_working_date, estimated_residual_value_rate,
         ` estimated_residual_value`, accumulated_depreciation, monthly_depreciation_rate,
-        monthly_depreciation, net_worth
+        monthly_depreciation, net_worth,supplier
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         <!--@mbg.generated-->
@@ -77,7 +78,8 @@
         `monthly_depreciation_rate`,
         `monthly_depreciation`,
         `net_worth`,
-        `estimated_residual_value_rate`)
+        `estimated_residual_value_rate`,
+        `supplier`)
         VALUES (#{fixedId,jdbcType=VARCHAR},
         #{fixedName,jdbcType=VARCHAR},
         #{fixedtypeId,jdbcType=INTEGER},
@@ -104,10 +106,40 @@
         #{monthlyDepreciationRate,jdbcType=DOUBLE},
         #{monthlyDepreciation,jdbcType=DOUBLE},
         #{netWorth,jdbcType=DOUBLE},
-        #{estimatedResidualValueRate,jdbcType=DOUBLE}
-        )
+        #{estimatedResidualValueRate,jdbcType=DOUBLE},
+        #{supplier,jdbcType=VARCHAR})
 
 
     </insert>
+    <select id="selectFixedAsssetByCompany" resultMap="BaseResultMap">
+        select *
+        from fixedcard
+        where company_id=#{companyId,jdbcType=INTEGER}
+    </select>
+    <select id="selectFixedIdList" resultType="java.lang.String">
+        select fixed_id
+        from fixedcard
+        where company_id=#{companyId,jdbcType=INTEGER}
+    </select>
+    <select id="selectFixedByCompanyIdPage" resultMap="BaseResultMap">
+        select *
+        from fixedcard
+        where fixedcard.company_id = #{companyId,jdbcType=INTEGER} and fixedcard.use_status !=3
+        <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
+        <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name LIKE
+            CONCAT('%',#{fixedName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="useStatus != null and useStatus != ''">and fixedcard.use_status = #{useStatus,jdbcType=INTEGER}</if>
+        ORDER BY fixedcard.use_status
+        LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+    </select>
+    <select id="selectFixedCount" resultMap="BaseResultMap">
+        select *
+        from fixedcard
+        where fixedcard.company_id = #{companyId,jdbcType=INTEGER} and fixedcard.use_status !=3
+        <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
+        <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name=#{fixedName,jdbcType=VARCHAR}</if>
+        <if test="useStatus != null and useStatus !=''">and fixedcard.use_status = #{useStatus,jdbcType=INTEGER}</if>
+    </select>
 
 </mapper>

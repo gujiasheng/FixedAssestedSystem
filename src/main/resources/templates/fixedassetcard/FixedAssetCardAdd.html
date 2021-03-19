@@ -82,12 +82,28 @@
         <hr style="background-color: black">
 
         <div class="layui-card-body">
-
             <div class="layui-form-item">
+                <label class="layui-form-label"
+                       style="width: 100%;text-align: left;font-size: larger;font-weight: bold">固定资产基本信息</label>
+            </div>
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">类别</label>
+                    <div class="layui-input-inline">
+                        <select name="fixedtypeId" id="fixedtTypeId" lay-filter="fixedtTypeId" lay-verify="required">
+                            <option value="">类别名称</option>
+                            <option th:each="tm:${typeMap}" th:text="${tm.getValue()}"
+                                    th:value="${tm.getKey()}"></option>
+
+                        </select>
+                    </div>
+                </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">编号</label>
                     <div class="layui-input-inline">
-                        <input type="text" lay-verify="required" name="fixedId" autocomplete="off" class="layui-input">
+                        <input type="text" id="fixedId" lay-verify="required" name="fixedId" autocomplete="off"
+                               class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -98,17 +114,10 @@
                                class="layui-input">
                     </div>
                 </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">类别名称</label>
-                    <div class="layui-input-inline">
-                        <select name="fixedtypeId" lay-verify="required">
-                            <option value="">类别名称</option>
-                            <option th:each="tm:${typeMap}" th:text="${tm.getValue()}"
-                                    th:value="${tm.getKey()}"></option>
-
-                        </select>
-                    </div>
-                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"
+                       style="width: 100%;text-align: left;font-size: larger;font-weight: bold">固定资产采购信息</label>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -134,26 +143,20 @@
                                class="layui-input">
                     </div>
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">使用状况</label>
+                    <label class="layui-form-label">来源渠道</label>
                     <div class="layui-input-inline">
-                        <select name="useStatus" lay-verify="required">
-                            <option th:each="s:${sm}" th:text="${s.getValue()}" th:value="${s.getKey()}"></option>
-
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <label class="layui-form-label">开始使用日期</label>
-                    <div class="layui-input-inline">
-                        <input type="text" name="startWorkingDate" id="startWorkingDate" autocomplete="off"
-                               lay-verify="required"
+                        <input type="text" name="supplier" id="supplier" autocomplete="off"
+                               placeholder="例:联想官网"
                                class="layui-input">
                     </div>
                 </div>
-
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label"
+                       style="width: 100%;text-align: left;font-size: larger;font-weight: bold">固定资产折旧记录</label>
+            </div>
+            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">折旧方法</label>
                     <div class="layui-input-inline">
@@ -162,22 +165,22 @@
                         </select>
                     </div>
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">预计使用年限</label>
                     <div class="layui-input-inline">
                         <input type="text" id="workingLife" name="workingLife" placeholder="0" lay-verify="required"
-                               autocomplete="off"
+                               autocomplete="off" maxlength="3"
                                class="layui-input">
+                        <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">年</span>
+
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">已提计月份</label>
                     <div class="layui-input-inline">
                         <input type="text" id="accruedMonth" name="accruedMonth" autocomplete="off" class="layui-input"
-                               lay-verify="required"
-                               placeholder="0">
+                               lay-verify="required" maxlength="4" placeholder="0">
+                        <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">月</span>
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -186,12 +189,11 @@
                         <input type="text" autocomplete="off" class="layui-input" value="人民币" readonly>
                     </div>
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">计量单位</label>
                     <div class="layui-input-inline">
-                        <select name="measureUnit" lay-verify="required">
+                        <select lay-filter="measureUnit" name="measureUnit" lay-verify="required">
+                            <option value="">请选择</option>
                             <option th:each="u:${un}" th:text="${u.getValue()}" th:value="${u.getKey()}"></option>
                         </select>
                     </div>
@@ -202,6 +204,9 @@
                         <input type="text" id="account" name="account" placeholder="0.0000" autocomplete="off"
                                lay-verify="required"
                                class="layui-input" maxlength="8">
+                        <span style="position: absolute; top: 0; right: 45%; display: table-cell; white-space: nowrap; padding: 7px 10px;"
+                              id="danwei"></span>
+
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -212,8 +217,6 @@
                                class="layui-input" maxlength="8">
                     </div>
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">入账价值</label>
                     <div class="layui-input-inline">
@@ -226,8 +229,10 @@
                     <label class="layui-form-label">净残值率</label>
                     <div class="layui-input-inline">
                         <input type="text" id="estimatedResidualValueRate" name="estimatedResidualValueRate"
-                               lay-verify="required"
-                               autocomplete="off" class="layui-input" placeholder="0.05">
+                               lay-verify="required" maxlength="5"
+                               autocomplete="off" class="layui-input" placeholder="5">
+                        <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">%</span>
+
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -238,8 +243,6 @@
                                class="layui-input" placeholder="0.0000">
                     </div>
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">累计折旧</label>
                     <div class="layui-input-inline">
@@ -252,10 +255,16 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">月折旧率</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="monthlyDepreciationRate" name="monthlyDepreciationRate"
-                               lay-verify="required"
+                        <input type="text" id="monthlyDepreciationRate1" name="monthlyDepreciationRate1"
+                               lay-verify="required" maxlength="5"
                                autocomplete="off" class="layui-input"
                                placeholder="0.0">
+                        <input type="hidden" id="monthlyDepreciationRate" name="monthlyDepreciationRate"
+                               lay-verify="required" maxlength="5"
+                               autocomplete="off" class="layui-input"
+                               placeholder="0.0">
+                        <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">%</span>
+
                     </div>
                 </div>
                 <div class="layui-inline">
@@ -266,8 +275,6 @@
                                class="layui-input" placeholder="0.0000">
                     </div>
                 </div>
-            </div>
-            <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">净值</label>
                     <div class="layui-input-inline">
@@ -278,10 +285,30 @@
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label"
+                       style="width: 100%;text-align: left;font-size: larger;font-weight: bold">固定资产使用信息</label>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">资产状态</label>
+                    <div class="layui-input-inline">
+                        <select name="useStatus" lay-verify="required">
+                            <option th:each="s:${sm}" th:text="${s.getValue()}" th:value="${s.getKey()}"></option>
+
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">开始使用日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="startWorkingDate" id="startWorkingDate" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">负责部门</label>
                     <div class="layui-input-inline">
-                        <select name="departmentId" lay-verify="required">
+                        <select name="departmentId">
                             <option value="">部门名称</option>
                             <option th:each="d:${de}" th:value="${d.departmentId}"
                                     th:text="${d.departmentName}"></option>
@@ -322,19 +349,26 @@
 
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
 <script src="../jquery-3.4.1.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+<script th:inline="javascript">
     var account = 0;//数量
     var totalAmount = 0.0000;//入账金额
     var unitPrice = 0.0000;//单价
     var estimatedResidualValue = 0.0000;//预计净残值
     var monthlyDepreciation = 0.00;//月折旧额
-    var monthlyDepreciationRate = 0.0;//月折旧率
+    var monthlyDepreciationRate = 0.0;//月折旧率 实际值
+    var monthlyDepreciationRate1 = 0.0;//月折旧率 显示值
     var yearDepreciationRate = 0.0;//年折旧率
     var workingLife = 0;//预计使用时长
     var netWorth = 0.0000;//净值
     var accruedMonth = 0;//已提记月份
     var accumulatedDepreciation = 0.0000;//累计折旧
-    var estimatedResidualValueRate = 0.05;//预计残值率
+    var estimatedResidualValueRate = 0.0;//预计残值率
+
+
+
+
+
+
     //重置表单并把变量变成初始化
     function formReset() {
         account = 0;//数量
@@ -343,12 +377,13 @@
         estimatedResidualValue = 0.0000;//预计净残值
         monthlyDepreciation = 0.00;//月折旧额
         monthlyDepreciationRate = 0.0;//月折旧率
+        monthlyDepreciationRate1 = 0.0;
         yearDepreciationRate = 0.0;//年折旧率
         workingLife = 0;//预计使用时长
         netWorth = 0.0000;//净值
         accruedMonth = 0;//已提记月份
         accumulatedDepreciation = 0.0000;//累计折旧
-        estimatedResidualValueRate = 0.05;//预计残值率
+        estimatedResidualValueRate = 0.0;//预计残值率
     }
 
     layui.use(['form', 'table', 'laydate'], function () {
@@ -370,9 +405,10 @@
         //平均年限法算折旧
         function countmoney1() {
             totalAmount = account * unitPrice;
-            estimatedResidualValue = totalAmount * 0.05;
+            estimatedResidualValue = totalAmount * estimatedResidualValueRate;
             yearDepreciationRate = (1 - estimatedResidualValueRate) / workingLife;
             monthlyDepreciationRate = yearDepreciationRate / 12;
+            monthlyDepreciationRate1 = monthlyDepreciationRate * 100;
             monthlyDepreciation = totalAmount * monthlyDepreciationRate;
             accumulatedDepreciation = accruedMonth * monthlyDepreciation;
             netWorth = totalAmount - accumulatedDepreciation;
@@ -383,6 +419,7 @@
             $("#monthlyDepreciation").val(monthlyDepreciation.toFixed(4));
             $("#accumulatedDepreciation").val(accumulatedDepreciation.toFixed(4));
             $("#netWorth").val(netWorth.toFixed(4));
+            $("#monthlyDepreciationRate1").val(monthlyDepreciationRate1.toFixed(4));
         }
 
         //监听使用寿命输入框
@@ -410,7 +447,11 @@
         })
         //监听预计残净值率
         $("#estimatedResidualValueRate").on("input", function () {
-            estimatedResidualValueRate = this.value;
+            estimatedResidualValueRate = this.value / 100;
+            countmoney1();
+        })
+        $("#monthlyDepreciationRate1").on("input", function () {
+            monthlyDepreciationRate = this.value / 100;
             countmoney1();
         })
 
@@ -423,6 +464,51 @@
             }
         }
 
+        form.on('select(measureUnit)', function (data) {
+            var unitName;
+            switch (data.value) {
+                case "1":
+                    unitName = "套"
+                    break;
+                case "2":
+                    unitName = "只"
+                    break;
+                case "3":
+                    unitName = "片"
+                    break;
+                case "4":
+                    unitName = "m²"
+                    break;
+                case "5":
+                    unitName = "辆"
+                    break;
+                default:
+                    break;
+            }
+            $("#danwei").html(unitName);
+
+        })
+        //验证固定资产id有没有重复
+        $("#fixedId").blur(function () {
+            var thisFixedId = $(this).val();
+            var checkFixedId = [[${fds}]];
+
+            $(checkFixedId).each(function (i, item) {
+                console.log(item);
+                console.log(thisFixedId);
+                if (item == thisFixedId) {
+                    layer.msg('固定资产编号重复', {
+                        icon: 5,
+                        anim: 6,
+                        time: 1500
+                    }, function () {
+
+                    })
+                    $("#fixedId").val("");
+                    return false;
+                }
+            })
+        })
 
         form.on('submit(cardadd)', function (data) {
             data = data.field;

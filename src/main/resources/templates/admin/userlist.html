@@ -11,7 +11,6 @@
 <body>
 <div class="layui-fluid">
     <div class="layui-card">
-
         <div class="layui-form layui-card-header " style="height:100%">
             <div class="layui-form-item">
                 <div class="layui-inline">
@@ -75,14 +74,15 @@
                     </button>
                 </div>
             </div>
+            <div class="layui-form-item" style="padding-left: 5%">
+                <button class="layui-btn" id="openUserAdd">添加</button>
+            </div>
         </div>
 
         <div class="layui-card-body">
-            <div style="padding-left: 20px">
-                <button class="layui-btn" id="openUserAdd">添加</button>
-                <button class="layui-btn ">一键启用</button>
-                <button class="layui-btn layui-btn-danger">一键停用</button>
-            </div>
+
+            <!--<button class="layui-btn ">一键启用</button>-->
+            <!--<button class="layui-btn layui-btn-danger">一键停用</button>-->
             <table id="userList" lay-filter="userTable"></table>
             <!--templet内容-->
             <script type="text/html" id="usermanagetool">
