@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpSession;
@@ -106,8 +103,9 @@ public class FixedCardController {
      * @Return
      **/
     @GetMapping("/toFixedAssetCardList")
-    public String toFixedAssetCardList() {
-
+    public String toFixedAssetCardList(Model model) {
+        Map<Integer, String> statusMap = FixedStatus.toStatusMap();
+        model.addAttribute("sm", statusMap);
         return "fixedassetcard/FixedAssetCardList";
     }
 
@@ -142,6 +140,72 @@ public class FixedCardController {
         map.put("data", pageFixed);
 //        System.out.println(map);
         return map;
+    }
+
+    /*
+     * @Description TODO
+     *  前往资产卡片添加页面
+     * @Author
+     * @Date 2021-03-15
+     * @params
+     * @Return
+     **/
+    @GetMapping("/tofixedcardedit{fixedcardId}")
+    public String toFixedCardEdit(Model model, HttpSession session, @PathVariable("fixedcardId") Integer fixedcardId) {
+
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        Map<Integer, String> typeMap = FixedType.toList();
+        model.addAttribute("typeMap", typeMap);
+        Map<Integer, String> statusMap = FixedStatus.toStatusMap();
+        model.addAttribute("sm", statusMap);
+        Map<Integer, String> increMap = Increment.toIncreMap();
+        model.addAttribute("im", increMap);
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
+        model.addAttribute("de", departmentList);
+        List<User> userList = userService.selectAllUserByCompanyId(user.getCompanyId());
+        model.addAttribute("ul", userList);
+
+        Map<Integer, String> unitMap = Unit.toUnitMap();
+        model.addAttribute("un", unitMap);
+        model.addAttribute("companyName", user.getCompany().getCompanyName());
+
+        List<String> fixedcards = fixedcardService.selectFixedIdList(user.getCompanyId());
+        model.addAttribute("fds", fixedcards);
+
+        //格式化录入时间
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        model.addAttribute("nowDateVal", formatter.format(date));
+        model.addAttribute("nowDateText", formatter.format(date).toString());
+        model.addAttribute("maker", user.getUserName());
+
+        Fixedcard fixedcard = fixedcardService.selectFixedByFixedCardId(fixedcardId);
+        model.addAttribute("fci", fixedcard);
+
+        return "fixedassetcard/FixedAssetCardEdit";
+    }
+
+    /*
+     * @Description TODO
+     * 固定资产卡片修改
+     * @Author
+     * @Date 2021-03-22
+     * @params
+     * @Return
+     **/
+    @PostMapping("/fixedcardedit")
+    @ResponseBody
+    public void fixedCardEdit(Fixedcard fixedcard, HttpSession session) {
+        Object obj = session.getAttribute("user");
+        User loginUser = (User) obj;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        fixedcard.setCompanyId(user.getCompanyId());
+
+        Date date = new Date(System.currentTimeMillis());
+        fixedcard.setEntryDate(date);
+        fixedcardService.updateFixedByFixedCardId(fixedcard);
     }
 
 }

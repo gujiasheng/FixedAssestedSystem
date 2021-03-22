@@ -20,4 +20,7 @@ public interface FixedcardService {
 
     List<Fixedcard> selectFixedCount(@Param("companyId") Integer companyId, @Param("fixedId") String fixedId, @Param("fixedName") String fixedName, @Param("useStatus") Integer useStatus);
 
+    Fixedcard selectFixedByFixedCardId(@Param("fixedCardId") Integer fixedCardId);
+
+    void updateFixedByFixedCardId(Fixedcard fixedCard);
 }

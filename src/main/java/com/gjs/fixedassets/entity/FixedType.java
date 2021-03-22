@@ -40,6 +40,7 @@ public enum FixedType {
     //把枚举类变成list
     public static Map<Integer, String> toList() {
         Map<Integer, String> map = new HashMap<>();
+
         for (FixedType fixedType : values()) {
             map.put(fixedType.code, fixedType.name);
         }

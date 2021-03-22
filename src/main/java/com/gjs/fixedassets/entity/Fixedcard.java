@@ -161,4 +161,9 @@ public class Fixedcard implements Serializable {
      * 来源渠道
      */
     private String supplier;
+
+    /**
+     * 公司
+     */
+    private Company company;
 }

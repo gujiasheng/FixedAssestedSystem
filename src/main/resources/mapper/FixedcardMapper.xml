@@ -33,6 +33,13 @@
         <result column="monthly_depreciation" jdbcType="DOUBLE" property="monthlyDepreciation"/>
         <result column="net_worth" jdbcType="DOUBLE" property="netWorth"/>
         <result column="supplier" jdbcType="VARCHAR" property="supplier"/>
+        <association property="company" javaType="com.gjs.fixedassets.entity.Company">
+            <id column="company_id" jdbcType="INTEGER" property="companyId"/>
+            <result column="company_name" jdbcType="VARCHAR" property="companyName"/>
+            <result column="company_industry_id" jdbcType="INTEGER" property="companyIndustryId"/>
+            <result column="company_nature_id" jdbcType="INTEGER" property="companyNatureId"/>
+            <result column="company_email" jdbcType="VARCHAR" property="companyEmail"/>
+        </association>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -83,7 +90,7 @@
         VALUES (#{fixedId,jdbcType=VARCHAR},
         #{fixedName,jdbcType=VARCHAR},
         #{fixedtypeId,jdbcType=INTEGER},
-        #{acquisitionDate,jdbcType=TIMESTAMP},
+        #{acquisitionDate,jdbcType=DATE},
         #{workingLife,jdbcType=INTEGER},
         #{incrementId,jdbcType=INTEGER},
         #{fixedScale,jdbcType=VARCHAR},
@@ -99,8 +106,8 @@
         #{personCharge,jdbcType=INTEGER},
         #{fixedStatus,jdbcType=INTEGER},
         #{companyId,jdbcType=INTEGER},
-        #{entryDate,jdbcType=TIMESTAMP},
-        #{startWorkingDate,jdbcType=TIMESTAMP},
+        #{entryDate,jdbcType=DATE},
+        #{startWorkingDate,jdbcType=DATE},
         #{estimatedResidualValue,jdbcType=DOUBLE},
         #{accumulatedDepreciation,jdbcType=DOUBLE},
         #{monthlyDepreciationRate,jdbcType=DOUBLE},
@@ -141,5 +148,44 @@
         <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name=#{fixedName,jdbcType=VARCHAR}</if>
         <if test="useStatus != null and useStatus !=''">and fixedcard.use_status = #{useStatus,jdbcType=INTEGER}</if>
     </select>
+    <select id="selectFixedByFixedCardId" resultMap="BaseResultMap">
+        SELECT *
+        FROM fixedcard
+        LEFT JOIN company ON fixedcard.company_id=company.company_id
+        where fixedcard_id=#{fixedCardId,jdbcType=INTEGER}
+    </select>
+    <update id="updateFixedByFixedCardId" parameterType="Fixedcard">
+        UPDATE `fixedassets`.`fixedcard`
+        SET `fixed_id` = #{fixedId,jdbcType=VARCHAR},
+        `fixed_name` = #{fixedName,jdbcType=VARCHAR},
+        `fixedtype_id` = #{fixedtypeId,jdbcType=INTEGER},
+        `acquisition_date` = #{acquisitionDate,jdbcType=TIMESTAMP},
+        `working_life` = #{workingLife,jdbcType=INTEGER},
+        `increment_id` = #{incrementId,jdbcType=INTEGER},
+        `fixed_scale` = #{fixedScale,jdbcType=VARCHAR},
+        `use_status` = #{useStatus,jdbcType=INTEGER},
+        `accrued_month` = #{accruedMonth,jdbcType=INTEGER},
+        `measure_unit` = #{measureUnit,jdbcType=INTEGER},
+        `account` = #{account,jdbcType=DOUBLE},
+        `total_amount` = #{totalAmount,jdbcType=DOUBLE},
+        `unit_price` = #{unitPrice,jdbcType=DOUBLE},
+        `depreciation_method_id` = #{depreciationMethodId,jdbcType=INTEGER},
+        `current_location` = #{currentLocation,jdbcType=VARCHAR},
+        `department_id` = #{departmentId,jdbcType=INTEGER},
+        `person_charge` = #{personCharge,jdbcType=INTEGER},
+        `fixed_status` = #{fixedStatus,jdbcType=INTEGER},
+        `company_id` = #{companyId,jdbcType=INTEGER},
+        `entry_date` = #{entryDate,jdbcType=TIMESTAMP},
+        `start_working_date` = #{startWorkingDate,jdbcType=TIMESTAMP},
+        `estimated_residual_value_rate` = #{estimatedResidualValueRate,jdbcType=DOUBLE},
+        ` estimated_residual_value` = #{estimatedResidualValue,jdbcType=DOUBLE},
+        `accumulated_depreciation` = #{accumulatedDepreciation,jdbcType=DOUBLE},
+        `monthly_depreciation_rate` = #{monthlyDepreciationRate,jdbcType=DOUBLE},
+        `monthly_depreciation` = #{monthlyDepreciation,jdbcType=DOUBLE},
+        `net_worth` = #{netWorth,jdbcType=DOUBLE},
+        `supplier` = #{supplier,jdbcType=VARCHAR}
+        WHERE
+        `fixedcard_id` = #{fixedcardId,jdbcType=INTEGER};
+    </update>
 
 </mapper>

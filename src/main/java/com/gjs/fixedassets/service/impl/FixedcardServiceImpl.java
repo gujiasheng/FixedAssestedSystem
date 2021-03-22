@@ -39,4 +39,14 @@ public class FixedcardServiceImpl implements FixedcardService {
     public List<Fixedcard> selectFixedCount(Integer companyId, String fixedId, String fixedName, Integer useStatus) {
         return fixedcardMapper.selectFixedCount(companyId, fixedId, fixedName, useStatus);
     }
+
+    @Override
+    public Fixedcard selectFixedByFixedCardId(Integer fixedCardId) {
+        return fixedcardMapper.selectFixedByFixedCardId(fixedCardId);
+    }
+
+    @Override
+    public void updateFixedByFixedCardId(Fixedcard fixedCard) {
+        fixedcardMapper.updateFixedByFixedCardId(fixedCard);
+    }
 }

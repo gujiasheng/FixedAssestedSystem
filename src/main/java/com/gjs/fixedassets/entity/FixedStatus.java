@@ -29,6 +29,7 @@ public enum FixedStatus {
 
     public static Map<Integer, String> toStatusMap() {
         Map<Integer, String> map = new HashMap<>();
+
         for (FixedStatus fixdStatus : values()) {
             map.put(fixdStatus.code, fixdStatus.name);
         }

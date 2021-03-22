@@ -31,9 +31,8 @@
                     <label class="layui-form-label">资产状态:</label>
                     <div class="layui-input-block">
                         <select id="searchStatusId" name="searchStatusId">
-                            <option value="">--请选择--</option>
-                            <option
-                            ></option>
+                            <option value=""></option>
+                            <option th:each="sm:${sm}" th:value="${sm.getKey()}" th:text="${sm.getValue()}"></option>
                         </select>
                     </div>
                 </div>
@@ -145,41 +144,47 @@
         })
 
         // //点击添加打开useradd子页面
-        // $('#openUserAdd').click(function () {
-        //     layer.open({
-        //         type: 2,
-        //         area: ['500px', '500px'],
-        //         offset: ['100px', '300px'],
-        //         fixed: false, //不固定
-        //         maxmin: true,
-        //         title: '人员添加',
-        //         // content: 'useradd.html',
-        //         resize: false,
-        //         content: '/touseradd'
-        //     });
-        // })
+        // $('#openFixedAdd').click(function () {
         //
+        // })
+        $('#openFixedAdd').click(function () {
+            var fixedAdd = layer.open({
+                type: 2,
+                fixed: false, //不固定
+                maxmin: true,
+                offset: ['100px', '300px'],
+                title: '固定资产新建入库',
+                // content: 'useradd.html',
+                resize: false,
+                content: '/tofixedcardadd',
+                cancel: function () {
+                    window.location.reload();
+                }
+            });
+            layer.full(fixedAdd);
+        });
+
+
+
         // //点击编辑打开useredit子页面,使用layui的表格监听
-        // table.on('tool(userTable)', function (obj) {
-        //     var data = obj.data;
-        //     var userId = obj.data.userId;//每个对象的主键
-        //     // console.log(data);
-        //     if (obj.event == 'edit') {
-        //         layer.open({
-        //             type: 2,
-        //             area: ['500px', '500px'],
-        //             offset: ['100px', '300px'],
-        //             fixed: false, //不固定
-        //             maxmin: true,
-        //             title: '人员编辑',
-        //             // content: 'useredit.html',
-        //             resize: false,
-        //             content: '/touseredit' + userId
-        //         });
-        //     }
-        //
-        //
-        // })
+        table.on('tool(FixedTable)', function (obj) {
+            var data = obj.data;
+            var fixedCardId = obj.data.fixedcardId;//每个对象的主键
+            console.log(fixedCardId)
+            // console.log(data);
+            if (obj.event == 'edit') {
+                var layerEdit = layer.open({
+                    type: 2,
+                    offset: ['100px', '300px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    title: '固定资产卡片编辑',
+                    resize: false,
+                    content: '/tofixedcardedit' + fixedCardId
+                });
+                layer.full(layerEdit);
+            }
+        })
 
 
     })
