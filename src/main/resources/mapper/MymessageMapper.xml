@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjs.fixedassets.mapper.MymessageMapper">
+    <resultMap id="BaseResultMap" type="com.gjs.fixedassets.entity.Mymessage">
+        <!--@mbg.generated-->
+        <!--@Table mymessage-->
+        <id column="message_id" jdbcType="INTEGER" property="messageId"/>
+        <result column="message_title" jdbcType="VARCHAR" property="messageTitle"/>
+        <result column="message_type" jdbcType="INTEGER" property="messageType"/>
+        <result column="message_content" jdbcType="VARCHAR" property="messageContent"/>
+        <result column="message_date" jdbcType="DATE" property="messageDate"/>
+        <result column="is_new" jdbcType="INTEGER" property="isNew"/>
+        <result column="promoter" jdbcType="INTEGER" property="promoter"/>
+
+        <association property="user" javaType="com.gjs.fixedassets.entity.User">
+            <id column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="gender" jdbcType="CHAR" property="gender"/>
+            <result column="user_face" jdbcType="VARCHAR" property="userFace"/>
+            <result column="user_phone" jdbcType="INTEGER" property="userPhone"/>
+            <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+            <result column="user_online" jdbcType="CHAR" property="userOnline"/>
+            <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+            <result column="job_id" jdbcType="INTEGER" property="jobId"/>
+            <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+            <result column="is_status" jdbcType="CHAR" property="isStatus"/>
+            <result column="resgistertime" jdbcType="TIMESTAMP" property="resgistertime"/>
+            <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+            <result column="work_id" jdbcType="VARCHAR" property="workId"/>
+        </association>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        message_id, message_title, message_type, message_content, message_date, is_new, promoter
+    </sql>
+    <select id="selectMessageLimit" resultMap="BaseResultMap">
+        select *
+        from mymessage
+        LEFT JOIN user ON user.user_id = mymessage.promoter
+        where promoter=#{userId,jdbcType=INTEGER}
+        ORDER BY message_date DESC
+        LIMIT 0,5
+    </select>
+
+
+</mapper>

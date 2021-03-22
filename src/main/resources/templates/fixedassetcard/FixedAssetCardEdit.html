@@ -139,7 +139,7 @@
                     <label class="layui-form-label">购置日期</label>
                     <div class="layui-input-inline">
                         <input type="text" name="acquisitionDate" id="acquisitionDate" autocomplete="off"
-                               lay-verify="required" th:value="${fci.acquisitionDate}"
+                               lay-verify="required" th:value="${#dates.format(fci.acquisitionDate,'yyyy-MM-dd')}"
                                class="layui-input">
                     </div>
                 </div>
@@ -302,7 +302,7 @@
                     <label class="layui-form-label">开始使用日期</label>
                     <div class="layui-input-inline">
                         <input type="text" name="startWorkingDate" id="startWorkingDate" autocomplete="off"
-                               th:value="${fci.startWorkingDate}"
+                               th:value="${#dates.format(fci.startWorkingDate,'yyyy-MM-dd')}"
                                class="layui-input">
                     </div>
                 </div>
