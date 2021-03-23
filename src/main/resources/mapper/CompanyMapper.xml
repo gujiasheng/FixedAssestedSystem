@@ -29,4 +29,9 @@
     values (#{companyName,jdbcType=VARCHAR}, #{companyIndustryId,jdbcType=INTEGER}, #{companyNatureId,jdbcType=INTEGER},
     #{companyEmail,jdbcType=VARCHAR})
   </insert>
+  <select id="selectAllCompany" resultMap="BaseResultMap">
+    select *
+    from company
+  </select>
+
 </mapper>

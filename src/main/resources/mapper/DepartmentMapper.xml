@@ -77,7 +77,19 @@
     <insert id="addDepartment" parameterType="Department">
         INSERT INTO `fixedassets`.`department`(`department_name`, `company_id`, `department_manager`,
         `department_manager_2`, `department_phone`,`department_show_id`)
-        VALUES ( #{departmentName,jdbcType=VARCHAR}, 1, #{departmentManager,jdbcType=INTEGER},
+        VALUES ( #{departmentName,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER},
+        #{departmentManager,jdbcType=INTEGER},
+        #{departmentManager2,jdbcType=INTEGER},
+        #{departmentPhone,jdbcType=INTEGER},
+        #{departmentShowId,jdbcType=INTEGER});
+
+    </insert>
+    <insert id="addDepartment2" parameterType="Department" keyColumn="department_id" keyProperty="departmentId"
+            useGeneratedKeys="true">
+        INSERT INTO `fixedassets`.`department`(`department_name`, `company_id`, `department_manager`,
+        `department_manager_2`, `department_phone`,`department_show_id`)
+        VALUES ( #{departmentName,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER},
+        #{departmentManager,jdbcType=INTEGER},
         #{departmentManager2,jdbcType=INTEGER},
         #{departmentPhone,jdbcType=INTEGER},
         #{departmentShowId,jdbcType=INTEGER});

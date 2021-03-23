@@ -98,16 +98,16 @@
             <h2 class="register-head-title">企业注册</h2>
         </div>
         <div class="register-content">
-            <form class="layui-form">
+            <form class="layui-form" action="/registercompany" method="post">
                 <div>
                     <div>
                         <h4 style="font-weight: bold;font-size: 20px">填写注册信息</h4>
                         <hr>
                         <div class="register-maincontent">
                             <div class="layui-form-item">
-                                <label for="name" class="layui-form-label">用户名:</label>
+                                <label for="name" class="layui-form-label">账户名:</label>
                                 <div class="layui-input-block">
-                                    <input id="name" type="text" name="" lay-verify="required"
+                                    <input id="name" name="accountName" type="text" lay-verify="required"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                     <span class="layui-form-mid layui-word-aux" hidden><span class="redstar"
@@ -117,8 +117,8 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">密码:</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="" lay-verify="required"
-                                           placeholder="请输入" autocomplete="off"
+                                    <input type="text" lay-verify="required"
+                                           placeholder="请输入" autocomplete="off" name="password"
                                            class="layui-input">
                                     <span class="layui-form-mid layui-word-aux" hidden><span class="redstar"
                                                                                              style="color: red;font-size: large">*</span>请务必填写用户名</span>
@@ -137,7 +137,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">企业名称:</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="" lay-verify="required"
+                                    <input type="text" name="companyName" lay-verify="required"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                 </div>
@@ -145,33 +145,26 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">所属行业:</label>
                                 <div class="layui-input-block">
-                                    <select name="city" lay-verify="required">
-                                        <option value=""></option>
-                                        <option value="0">北京</option>
-                                        <option value="1">上海</option>
-                                        <option value="2">广州</option>
-                                        <option value="3">深圳</option>
-                                        <option value="4">杭州</option>
+                                    <select name="companyIndustryId" lay-verify="required">
+                                        <option th:each="cis:${cis}" th:text="${cis.companyIndustryName}"
+                                                th:value="${cis.companyIndustryId}"></option>
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">企业性质:</label>
                                 <div class="layui-input-block">
-                                    <select name="city" lay-verify="required">
-                                        <option value=""></option>
-                                        <option value="0">北京</option>
-                                        <option value="1">上海</option>
-                                        <option value="2">广州</option>
-                                        <option value="3">深圳</option>
-                                        <option value="4">杭州</option>
+                                    <select name="companyNatureId" lay-verify="required">
+                                        <option th:each="cns:${cns}" th:text="${cns.companyNatureName}"
+                                                th:value="${cns.companyNatureId}"></option>
+
                                     </select>
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <label class="layui-form-label">注册邮箱:</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name=""
+                                    <input type="text" name="companyEmail"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                     <span class="layui-form-mid layui-word-aux" hidden><span class="redstar"
@@ -180,7 +173,7 @@
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block" style="left: 25%;">
-                                    <button name=""
+                                    <button
                                             class="layui-btn layui-btn-lg layui-btn-radius layui-btn-normal"
                                             lay-submit=< lay-filter="register">注册
                                     </button>
@@ -215,7 +208,7 @@
                 return false;
             }
 
-            return false;
+            return true;
         })
 
     })

@@ -93,7 +93,8 @@
     <select id="selectUserByNamePSW" resultMap="BaseResultMap">
         select *
         FROM user
-        where account_name=#{param1,jdbcType=VARCHAR} AND password=#{param2,jdbcType=VARCHAR}
+        where account_name=#{param1,jdbcType=VARCHAR} AND password=#{param2,jdbcType=VARCHAR} AND
+        company_id=#{param3,jdbcType=INTEGER}
     </select>
     <insert id="addUser" parameterType="User">
         INSERT INTO `fixedassets`.`user`(`work_id`, `user_name`, `password`, `gender`, `user_face`, `user_phone`,
@@ -102,7 +103,18 @@
         VALUES ( #{workId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
         #{gender,jdbcType=VARCHAR}, #{userFace,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER},
         #{userEmail,jdbcType=VARCHAR},#{userOnline,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER},
-        #{jobId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 1,now(), 1,#{accountName,jdbcType=VARCHAR});
+        #{jobId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER},
+        1,now(),#{companyId,jdbcType=INTEGER},#{accountName,jdbcType=VARCHAR});
+    </insert>
+    <insert id="addUser2" parameterType="User" useGeneratedKeys="true" keyColumn="user_id" keyProperty="userId">
+        INSERT INTO `fixedassets`.`user`(`work_id`, `user_name`, `password`, `gender`, `user_face`, `user_phone`,
+        `user_email`, `user_online`,
+        `department_id`, `job_id`, `role_id`, `is_status`, `resgistertime`, `company_id`,account_name)
+        VALUES ( #{workId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+        #{gender,jdbcType=VARCHAR}, #{userFace,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER},
+        #{userEmail,jdbcType=VARCHAR},#{userOnline,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER},
+        #{jobId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER},
+        1,now(),#{companyId,jdbcType=INTEGER},#{accountName,jdbcType=VARCHAR});
     </insert>
     <update id="updateUser" parameterType="User">
         UPDATE `fixedassets`.`user`

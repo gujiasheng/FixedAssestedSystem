@@ -18,8 +18,8 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public User selectUserByNamePSW(String userName, String password) {
-        return userMapper.selectUserByNamePSW(userName, password);
+    public User selectUserByNamePSW(String userName, String password, Integer companyId) {
+        return userMapper.selectUserByNamePSW(userName, password, companyId);
     }
 
     @Override

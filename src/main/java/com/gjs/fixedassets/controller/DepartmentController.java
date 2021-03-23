@@ -136,7 +136,11 @@ public class DepartmentController {
      * @Return
      **/
     @PostMapping("/addDepartment")
-    public String addDepartment(Department department, @RequestParam("departmentManager") Integer departmentManager) {
+    public String addDepartment(Department department, @RequestParam("departmentManager") Integer departmentManager, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        department.setCompanyId(user.getCompanyId());
         department.setDepartmentManager(departmentManager);
         departmentService.addDepartment(department);
         return "redirect:/toAddDepartment";

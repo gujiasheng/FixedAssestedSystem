@@ -21,6 +21,7 @@ public interface DepartmentMapper {
     //添加部门
     void addDepartment(Department department);
 
+    int addDepartment2(Department department);
     //删除部门
     void deleteDepartment(Integer department);
 

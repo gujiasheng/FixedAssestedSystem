@@ -1,13 +1,9 @@
 package com.gjs.fixedassets.controller;
 
-import com.gjs.fixedassets.entity.Department;
-import com.gjs.fixedassets.entity.Job;
-import com.gjs.fixedassets.entity.Role;
-import com.gjs.fixedassets.entity.User;
-import com.gjs.fixedassets.service.DepartmentService;
-import com.gjs.fixedassets.service.JobService;
-import com.gjs.fixedassets.service.RoleService;
-import com.gjs.fixedassets.service.UserService;
+import com.gjs.fixedassets.entity.*;
+import com.gjs.fixedassets.mapper.CompanyindustryMapper;
+import com.gjs.fixedassets.mapper.CompanynatureMapper;
+import com.gjs.fixedassets.service.*;
 import jdk.nashorn.internal.runtime.Debug;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
@@ -32,9 +28,25 @@ public class LoginController {
     private RoleService roleService;
     @Autowired
     private JobService jobService;
-
+    @Autowired
+    private CompanyindustryMapper companyindustryMapper;
+    @Autowired
+    private CompanynatureMapper companynatureMapper;
+    @Autowired
+    private CompanyService companyService;
     @GetMapping("/tologin")
-    public String toLogin() {
+    public String toLogin(Model model) {
+        List<Company> list = companyService.selectAllCompany();
+        model.addAttribute("list", list);
+        return "login";
+    }
+
+    @GetMapping("/tologin2")
+    public String toLogin2(Model model) {
+        model.addAttribute("msg", "用户名或者密码有误，请重新登录");
+
+        List<Company> list = companyService.selectAllCompany();
+        model.addAttribute("list", list);
         return "login";
     }
 
@@ -47,23 +59,34 @@ public class LoginController {
      * @Return
      **/
     @PostMapping("/login")
-    public String login(@RequestParam("userName") String userName, @RequestParam("password") String password, Model model, HttpSession session) {
-        User user = userService.selectUserByNamePSW(userName, password);
+    public String login(@RequestParam("userName") String userName, @RequestParam("password") String password, Integer companyId, Model model, HttpSession session) {
+        User user = userService.selectUserByNamePSW(userName, password, companyId);
         if (user != null && !("").equals(user)) {
             session.setAttribute("user", user);
 
             return "redirect:/toheadleft";
         } else {
-            model.addAttribute("msg", "用户名或者密码有误，请重新登录");
-            return "login";
+            return "redirect:/tologin";
         }
 
     }
 
     @GetMapping("/toregister")
-    public String toRegister() {
+    public String toRegister(Model model) {
+        List<Companyindustry> companyindustries = companyindustryMapper.selectIndustry();
+        model.addAttribute("cis", companyindustries);
+        List<Companynature> companynatures = companynatureMapper.selectCompanyNature();
+        model.addAttribute("cns", companynatures);
         return "register";
     }
+
+    @PostMapping("/registercompany")
+    public String registerCompany(Company company, Department department, User user, Job job) {
+
+        companyService.registerCompany(company, department, user, job);
+        return "redirect:/tologin";
+    }
+
 
     @GetMapping("/toheadleft")
     public String toheadleft(Model model, HttpSession session) {

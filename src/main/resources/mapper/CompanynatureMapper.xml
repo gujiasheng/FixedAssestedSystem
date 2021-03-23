@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjs.fixedassets.mapper.CompanynatureMapper">
+    <resultMap id="BaseResultMap" type="com.gjs.fixedassets.entity.Companynature">
+        <!--@mbg.generated-->
+        <!--@Table companynature-->
+        <id column="company_nature_id" jdbcType="INTEGER" property="companyNatureId"/>
+        <result column="company_nature_name" jdbcType="VARCHAR" property="companyNatureName"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        company_nature_id, company_nature_name
+    </sql>
+    <select id="selectCompanyNature" resultMap="BaseResultMap">
+      select *
+      from companynature
+    </select>
+</mapper>

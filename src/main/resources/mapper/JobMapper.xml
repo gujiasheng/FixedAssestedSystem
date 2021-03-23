@@ -30,4 +30,17 @@
         FROM job
         WHERE job_id=#{jobId,jdbcType=INTEGER}
     </select>
+    <insert id="insert" parameterType="Job" keyColumn="job_id" keyProperty="jobId" useGeneratedKeys="true">
+        INSERT INTO `fixedassets`.`job`( `job_name`, `department_id`, `company_id`)
+        VALUES ( #{jobName,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER}, #{companyId,jdbcType=INTEGER});
+    </insert>
+    <update id="update" parameterType="Job">
+        UPDATE `fixedassets`.`job` SET
+        `job_name` = #{jobName,jdbcType=VARCHAR},
+        `department_id` = #{departmentId,jdbcType=INTEGER},
+        `company_id` = #{companyId,jdbcType=INTEGER}
+        WHERE `job_id` = #{jobId,jdbcType=INTEGER};
+
+    </update>
+
 </mapper>
