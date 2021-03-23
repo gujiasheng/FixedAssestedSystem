@@ -42,6 +42,21 @@
         ORDER BY message_date DESC
         LIMIT 0,5
     </select>
+    <select id="selectMessagePage" resultMap="BaseResultMap">
+
+        SELECT *
+        FROM mymessage
+        LEFT JOIN user ON user.user_id = mymessage.promoter
+        where promoter=#{userId,jdbcType=INTEGER}
+        ORDER BY message_date DESC
+        LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+    </select>
+    <select id="selectMessageCount" resultMap="BaseResultMap">
+        SELECT *
+        FROM mymessage
+        LEFT JOIN user ON user.user_id = mymessage.promoter
+        where promoter=#{userId,jdbcType=INTEGER}
+    </select>
 
 
 </mapper>

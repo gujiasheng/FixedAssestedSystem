@@ -18,4 +18,15 @@ public class MyMessageServiceImpl implements MyMessageService {
     public List<Mymessage> selectMessageLimit(Integer userId) {
         return mymessageMapper.selectMessageLimit(userId);
     }
+
+    @Override
+    public List<Mymessage> selectMessagePage(Integer userId, Integer page, Integer limit) {
+        Integer startNum = (page - 1) * limit;
+        return mymessageMapper.selectMessagePage(userId, startNum, limit);
+    }
+
+    @Override
+    public List<Mymessage> selectMessageCount(Integer userId) {
+        return mymessageMapper.selectMessageCount(userId);
+    }
 }

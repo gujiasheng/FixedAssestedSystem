@@ -31,8 +31,8 @@ public class Mymessage implements Serializable {
     /**
      * 消息提交日期
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")//set
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")//get
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date messageDate;
     /**
      * 是否阅读该消息
