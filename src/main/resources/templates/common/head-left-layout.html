@@ -66,29 +66,40 @@
             <div class="layui-side-scroll">  <!--layui导航超出内容默认隐藏，添加滚动显示-->
                 <ul class="layui-nav layui-nav-tree" lay-filter="test">
                     <li class="layui-nav-item">
-                        <a data-id="1"> <i class="fa fa-home"></i><span class="layui-nav-item-span">选项一</span></a>
+                        <a data-id="1"> <i class="fa fa-home" style="margin-right: 2%"></i><span
+                                class="layui-nav-item-span">管理员设置</span></a>
                         <dl class="layui-nav-child">
                             <dd><a class="layui-nav-item-a" data-id="11" data-url="/touserlist"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">用户管理</span></a></dd>
+                                    class="fa fa-user" style="margin-right: 2%"></i><span class="layui-nav-item-span">用户管理</span></a>
+                            </dd>
+                            <dd><a class="layui-nav-item-a" data-id="18" data-url="/tomymessage"><i
+                                    class="fa fa-comment-o" style="margin-right: 2%"></i><span
+                                    class="layui-nav-item-span">我的消息</span></a></dd>
                             <dd><a class="layui-nav-item-a" data-id="12" data-url="/todepartmentlist"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">部门管理</span></a></dd>
-                            <dd><a class="layui-nav-item-a" data-id="13" data-url="/tofixedcardadd"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">固定资产添加</span></a></dd>
-                            <dd><a class="layui-nav-item-a" data-id="14" data-url="/toFixedAssetCardList"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">固定资产入库</span></a></dd>
-                            <dd><a class="layui-nav-item-a" data-id="15" data-url="/tomymessage"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">我的消息</span></a></dd>
+                                    class="fa fa-users" style="margin-right: 2%"></i><span class="layui-nav-item-span">部门管理</span></a>
+                            </dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
-                        <a data-id="2"> <i class="fa fa-user-o"></i><span class="layui-nav-item-span">选项一</span></a>
+                        <a data-id="2"> <i class="fa fa-tasks" style="margin-right: 2%"></i><span
+                                class="layui-nav-item-span">资产管理</span></a>
                         <dl class="layui-nav-child">
-                            <dd><a class="layui-nav-item-a" data-id="21" data-url="../login.html"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">列表一</span></a></dd>
-                            <dd><a class="layui-nav-item-a" data-id="22" data-url="../register.html"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">列表二</span></a></dd>
-                            <dd><a class="layui-nav-item-a" data-id="23" data-url="../register.html"><i
-                                    class="fa fa-home"></i><span class="layui-nav-item-span">列表三</span></a></dd>
+
+                            <!--<dd><a class="layui-nav-item-a" data-id="13" data-url="/tofixedcardadd"><i-->
+                            <!--class="fa fa-home"></i><span class="layui-nav-item-span">固定资产添加</span></a></dd>-->
+                            <dd><a class="layui-nav-item-a" data-id="14" data-url="/toFixedAssetCardList"><i
+                                    class="fa fa-circle-thin" style="margin-right: 2%"></i><span
+                                    class="layui-nav-item-span">资产入库</span></a></dd>
+                            <dd><a class="layui-nav-item-a" data-id="15" data-url="/toMyFixedAssetTransfer"><i
+                                    class="fa fa-circle-thin" style="margin-right: 2%"></i><span
+                                    class="layui-nav-item-span">我的领用</span></a></dd>
+                            <dd><a class="layui-nav-item-a" data-id="16" data-url=""><i
+                                    class="fa fa-circle-thin" style="margin-right: 2%"></i><span
+                                    class="layui-nav-item-span">维修登记</span></a></dd>
+                            <dd><a class="layui-nav-item-a" data-id="17" data-url=""><i
+                                    class="fa fa-circle-thin" style="margin-right: 2%"></i><span
+                                    class="layui-nav-item-span">清理报废</span></a></dd>
+
                         </dl>
                     </li>
                 </ul>

@@ -13,6 +13,7 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header " style="height:100%">
+
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">资产编号:</label>
@@ -29,22 +30,14 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">资产状态:</label>
-                    <div class="layui-input-block">
-                        <select id="searchStatusId" name="searchStatusId">
-                            <option value=""></option>
-                            <option th:each="sm:${sm}" th:value="${sm.getKey()}" th:text="${sm.getValue()}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
                     <button class="layui-btn" id="searchBTN" type="button">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
             <div class="layui-form-item" style="padding-left: 2.5%">
-                <button class="layui-btn" id="openFixedAdd">新建入库</button>
+                <button class="layui-btn" id="openFixedTransfer">新建领用申请</button>
+                <button class="layui-btn" id="openFixedTransferApply">查看领用申请</button>
             </div>
         </div>
 
@@ -52,13 +45,10 @@
 
             <!--<button class="layui-btn ">一键启用</button>-->
             <!--<button class="layui-btn layui-btn-danger">一键停用</button>-->
-            <h3>固定资产基本信息</h3>
+            <h3>我的领用</h3>
             <table id="FixedList" lay-filter="FixedTable"></table>
             <!--templet内容-->
-            <script type="text/html" id="Fixedmanagetool">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </script>
+
         </div>
     </div>
 </div>
@@ -84,21 +74,10 @@
                     [
                         {type: 'checkbox', fixed: 'left'}
                         , {
-                        field: 'useStatus', title: '资产状态', fixed: 'left', templet: function (data) {
-                            if (data.useStatus == 1) {
-                                return "<span>闲置</span>"
-                            } else if (data.useStatus == 2) {
-                                return "<span>使用中</span>"
-                            } else if (data.useStatus == 3) {
-                                return "<span>报废</span>"
-                            } else if (data.useStatus == 4) {
-                                return "<span>维修中</span>"
-                            } else if (data.useStatus == 5) {
-                                return "<span>未使用</span>"
-                            }
-                        }
+                        field: 'useStatus', title: '领用单号', fixed: 'left'
                     }
-                        , {field: 'fixedId', title: '资产编号', fixed: 'left'}
+                        , {field: 'fixedId', title: '领用时间', fixed: 'left'}
+                        , {field: 'fixedId', title: '资产编号'}
                         , {field: 'fixedName', title: '资产名称'}
                         , {
                         field: 'fixedtypeId', title: '资产类别', templet: function (data) {
@@ -122,7 +101,6 @@
                         }
                     }
                         , {field: 'fixedScale', title: '规格型号'}
-                        , {unresize: true, width: 150, title: '操作', toolbar: '#Fixedmanagetool'}
                     ]
                 ]
                 , request: {
@@ -150,23 +128,22 @@
         // $('#openFixedAdd').click(function () {
         //
         // })
-        $('#openFixedAdd').click(function () {
+        $('#openFixedTransfer').click(function () {
             var fixedAdd = layer.open({
                 type: 2,
                 fixed: false, //不固定
                 maxmin: true,
                 offset: ['100px', '300px'],
-                title: '固定资产新建入库',
+                title: '新建领用单',
                 // content: 'useradd.html',
                 resize: false,
-                content: '/tofixedcardadd',
+                content: '/toMyFixedAssetTransferAdd',
                 cancel: function () {
                     window.location.reload();
                 }
             });
             layer.full(fixedAdd);
         });
-
 
 
         // //点击编辑打开useredit子页面,使用layui的表格监听

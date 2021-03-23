@@ -39,9 +39,14 @@ public class Mymessage implements Serializable {
      */
     private Integer isNew;
     /**
+     * 接收人d
+     */
+    private Integer receiver;
+    /**
      * 发起人id
      */
     private Integer promoter;
+
     /**
      * 发起人信息
      */

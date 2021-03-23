@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjs.fixedassets.mapper.CheckNodeMapper">
+    <resultMap id="BaseResultMap" type="com.gjs.fixedassets.entity.CheckNode">
+        <!--@mbg.generated-->
+        <!--@Table checknode-->
+        <id column="check_node_id" jdbcType="INTEGER" property="checkNodeId"/>
+        <result column="chenk_node_name" jdbcType="VARCHAR" property="chenkNodeName"/>
+        <result column="check_node_order" jdbcType="INTEGER" property="checkNodeOrder"/>
+        <result column="check_type_id" jdbcType="INTEGER" property="checkTypeId"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        check_node_id, chenk_node_name, check_node_order, check_type_id
+    </sql>
+</mapper>

@@ -10,7 +10,9 @@
         <result column="message_content" jdbcType="VARCHAR" property="messageContent"/>
         <result column="message_date" jdbcType="DATE" property="messageDate"/>
         <result column="is_new" jdbcType="INTEGER" property="isNew"/>
+        <result column="receiver" jdbcType="INTEGER" property="receiver"/>
         <result column="promoter" jdbcType="INTEGER" property="promoter"/>
+
 
         <association property="user" javaType="com.gjs.fixedassets.entity.User">
             <id column="user_id" jdbcType="INTEGER" property="userId"/>
@@ -32,13 +34,13 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        message_id, message_title, message_type, message_content, message_date, is_new, promoter
+        message_id, message_title, message_type, message_content, message_date, is_new,promoter,receiver
     </sql>
     <select id="selectMessageLimit" resultMap="BaseResultMap">
         select *
         from mymessage
         LEFT JOIN user ON user.user_id = mymessage.promoter
-        where promoter=#{userId,jdbcType=INTEGER}
+        where receiver=#{userId,jdbcType=INTEGER}
         ORDER BY message_date DESC
         LIMIT 0,5
     </select>
@@ -46,16 +48,16 @@
 
         SELECT *
         FROM mymessage
-        LEFT JOIN user ON user.user_id = mymessage.promoter
-        where promoter=#{userId,jdbcType=INTEGER}
+        LEFT JOIN user ON user.user_id = mymessage.receiver
+        where receiver=#{userId,jdbcType=INTEGER}
         ORDER BY message_date DESC
         LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
     </select>
     <select id="selectMessageCount" resultMap="BaseResultMap">
         SELECT *
         FROM mymessage
-        LEFT JOIN user ON user.user_id = mymessage.promoter
-        where promoter=#{userId,jdbcType=INTEGER}
+        LEFT JOIN user ON user.user_id = mymessage.receiver
+        where receiver=#{userId,jdbcType=INTEGER}
     </select>
 
 

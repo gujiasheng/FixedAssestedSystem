@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gjs.fixedassets.mapper.FixedTransferMapper">
+    <resultMap id="BaseResultMap" type="com.gjs.fixedassets.entity.FixedTransfer">
+        <!--@mbg.generated-->
+        <!--@Table fixedtransfer-->
+        <id column="fixed_transfer_id" jdbcType="INTEGER" property="fixedTransferId"/>
+        <result column="fixed_transfer_id2" jdbcType="VARCHAR" property="fixedTransferId2"/>
+        <result column="fixedcard_id" jdbcType="INTEGER" property="fixedcardId"/>
+        <result column="check_type_id" jdbcType="INTEGER" property="checkTypeId"/>
+        <result column="is_pass" jdbcType="INTEGER" property="isPass"/>
+        <result column="fixed_transfer_time" jdbcType="DATE" property="fixedTransferTime"/>
+        <result column="transfer_remark" jdbcType="VARCHAR" property="transferRemark"/>
+
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        fixed_transfer_id, fixed_transfer_id2, fixedcard_id, check_type_id, is_pass, fixed_transfer_time,transfer_remark
+
+    </sql>
+    <select id="selectFixedTransferByCompanyIdPage" resultType="com.gjs.fixedassets.entity.Fixedcard">
+        select *
+        from fixedcard
+        where fixedcard.company_id = #{companyId,jdbcType=INTEGER} and fixedcard.use_status=1
+        <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
+        <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name LIKE
+            CONCAT('%',#{fixedName,jdbcType=VARCHAR},'%')
+        </if>
+        LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+    </select>
+    <select id="selectFixedTransferCount" resultType="com.gjs.fixedassets.entity.Fixedcard">
+        select *
+        from fixedcard
+        where fixedcard.company_id = #{companyId,jdbcType=INTEGER} and fixedcard.use_status=1
+        <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
+        <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name=#{fixedName,jdbcType=VARCHAR}</if>
+    </select>
+</mapper>

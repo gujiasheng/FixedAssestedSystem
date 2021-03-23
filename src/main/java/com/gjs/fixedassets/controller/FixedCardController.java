@@ -208,4 +208,44 @@ public class FixedCardController {
         fixedcardService.updateFixedByFixedCardId(fixedcard);
     }
 
+    /**
+     * 详情页面
+     */
+    @GetMapping("/tofixedcardedit1{fixedcardId}")
+    public String toFixedCardEdit1(Model model, HttpSession session, @PathVariable("fixedcardId") Integer fixedcardId) {
+
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        Map<Integer, String> typeMap = FixedType.toList();
+        model.addAttribute("typeMap", typeMap);
+        Map<Integer, String> statusMap = FixedStatus.toStatusMap();
+        model.addAttribute("sm", statusMap);
+        Map<Integer, String> increMap = Increment.toIncreMap();
+        model.addAttribute("im", increMap);
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
+        model.addAttribute("de", departmentList);
+        List<User> userList = userService.selectAllUserByCompanyId(user.getCompanyId());
+        model.addAttribute("ul", userList);
+
+        Map<Integer, String> unitMap = Unit.toUnitMap();
+        model.addAttribute("un", unitMap);
+        model.addAttribute("companyName", user.getCompany().getCompanyName());
+
+        List<String> fixedcards = fixedcardService.selectFixedIdList(user.getCompanyId());
+        model.addAttribute("fds", fixedcards);
+
+        //格式化录入时间
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date(System.currentTimeMillis());
+        model.addAttribute("nowDateVal", formatter.format(date));
+        model.addAttribute("nowDateText", formatter.format(date).toString());
+        model.addAttribute("maker", user.getUserName());
+
+        Fixedcard fixedcard = fixedcardService.selectFixedByFixedCardId(fixedcardId);
+        model.addAttribute("fci", fixedcard);
+
+        return "fixedassetcard/FixedAssetCardEdit1";
+    }
+
 }

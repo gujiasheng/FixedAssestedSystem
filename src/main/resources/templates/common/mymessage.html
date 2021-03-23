@@ -54,7 +54,8 @@
     //把时间戳转成日期
     function transformDate(time) {
         var timestamp = time;
-        var newDate = new Date();
+        var newDate = new Date(timestamp);
+
         return newDate.toLocaleDateString();
     }
 

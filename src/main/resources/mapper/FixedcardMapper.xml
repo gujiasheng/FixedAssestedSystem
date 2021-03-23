@@ -131,7 +131,7 @@
     <select id="selectFixedByCompanyIdPage" resultMap="BaseResultMap">
         select *
         from fixedcard
-        where fixedcard.company_id = #{companyId,jdbcType=INTEGER} and fixedcard.use_status !=3
+        where fixedcard.company_id = #{companyId,jdbcType=INTEGER}
         <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
         <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name LIKE
             CONCAT('%',#{fixedName,jdbcType=VARCHAR},'%')
@@ -143,7 +143,7 @@
     <select id="selectFixedCount" resultMap="BaseResultMap">
         select *
         from fixedcard
-        where fixedcard.company_id = #{companyId,jdbcType=INTEGER} and fixedcard.use_status !=3
+        where fixedcard.company_id = #{companyId,jdbcType=INTEGER}
         <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
         <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name=#{fixedName,jdbcType=VARCHAR}</if>
         <if test="useStatus != null and useStatus !=''">and fixedcard.use_status = #{useStatus,jdbcType=INTEGER}</if>

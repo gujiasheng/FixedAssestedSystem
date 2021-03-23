@@ -55,9 +55,9 @@
 <body>
 <!--<div class="layui-container">-->
 <div class="layui-card">
-    <form class="layui-form" action="/fixedcardadd" method="post">
-        <div class="layui-form layui-card-header" style="height: 100%;text-align: center ">
-
+    <form class="layui-form" method="post" lay-filter="editFilter">
+        <div class="layui-form layui-card-header" style="height: 100%;text-align: center    ">
+            <input type="hidden" name="fixedcardId" th:value="${fci.fixedcardId}">
             <div style="font-size:25px">固定资产卡片</div>
             <div class="layui-form-item" style="float:left;">
                 <div class="layui-inline">
@@ -67,13 +67,13 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">录入日期:</label>
+                    <label class="layui-form-label">修改日期:</label>
                     <div class="layui-input-inline">
                         <span name="entryDate" th:value="${nowDateVal}" th:text="${nowDateText}"></span>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">录入人:</label>
+                    <label class="layui-form-label">修改人:</label>
                     <div class="layui-input-inline">
                         <span th:text="${maker}"></span>
                     </div>
@@ -92,7 +92,8 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">类别</label>
                     <div class="layui-input-inline">
-                        <select name="fixedtypeId" id="fixedtTypeId" lay-filter="fixedtTypeId" lay-verify="required">
+                        <select name="fixedtypeId" id="fixedtTypeId" lay-filter="fixedtTypeId" lay-verify="required"
+                                disabled>
                             <option value="">类别名称</option>
                             <option th:each="tm:${typeMap}" th:text="${tm.getValue()}"
                                     th:value="${tm.getKey()}"></option>
@@ -104,15 +105,15 @@
                     <label class="layui-form-label">编号</label>
                     <div class="layui-input-inline">
                         <input type="text" id="fixedId" lay-verify="required" name="fixedId" autocomplete="off"
-                               class="layui-input">
+                               class="layui-input" th:value="${fci.fixedId}" readonly>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">固定资产名称</label>
                     <div class="layui-input-inline">
                         <input type="text" lay-verify="required" name="fixedName" placeholder="请输入固定资产名称"
-                               autocomplete="off"
-                               class="layui-input">
+                               autocomplete="off" th:value="${fci.fixedName}"
+                               class="layui-input" readonly>
                     </div>
                 </div>
             </div>
@@ -124,7 +125,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">购置方式</label>
                     <div class="layui-input-inline" id="incrementId">
-                        <select name="incrementId" lay-verify="required">
+                        <select name="incrementId" lay-verify="required" disabled>
                             <option th:each="i:${im}" th:text="${i.getValue()}" th:value="${i.getKey()}"></option>
                         </select>
                     </div>
@@ -133,23 +134,23 @@
                     <label class="layui-form-label">规格型号</label>
                     <div class="layui-input-inline">
                         <input type="text" autocomplete="off" class="layui-input" name="fixedScale"
-                               lay-verify="required">
+                               lay-verify="required" th:value="${fci.fixedScale}" readonly>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">购置日期</label>
                     <div class="layui-input-inline">
                         <input type="text" name="acquisitionDate" id="acquisitionDate" autocomplete="off"
-                               lay-verify="required"
-                               class="layui-input">
+                               lay-verify="required" th:value="${#dates.format(fci.acquisitionDate,'yyyy-MM-dd')}"
+                               class="layui-input" readonly>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">来源渠道</label>
                     <div class="layui-input-inline">
                         <input type="text" name="supplier" id="supplier" autocomplete="off"
-                               placeholder="例:联想官网"
-                               class="layui-input">
+                               placeholder="例:联想官网" th:value="${fci.supplier}"
+                               class="layui-input" readonly>
                     </div>
                 </div>
             </div>
@@ -161,7 +162,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">折旧方法</label>
                     <div class="layui-input-inline">
-                        <select name="depreciationMethodId" lay-verify="required">
+                        <select name="depreciationMethodId" lay-verify="required" disabled>
                             <option value="1">平均年限法</option>
                         </select>
                     </div>
@@ -170,8 +171,8 @@
                     <label class="layui-form-label">预计使用年限</label>
                     <div class="layui-input-inline">
                         <input type="text" id="workingLife" name="workingLife" placeholder="0" lay-verify="required"
-                               autocomplete="off" maxlength="3"
-                               class="layui-input">
+                               autocomplete="off" maxlength="3" th:value="${fci.workingLife}"
+                               class="layui-input" readonly>
                         <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">年</span>
 
                     </div>
@@ -180,7 +181,8 @@
                     <label class="layui-form-label">已提计月份</label>
                     <div class="layui-input-inline">
                         <input type="text" id="accruedMonth" name="accruedMonth" autocomplete="off" class="layui-input"
-                               lay-verify="required" maxlength="4" placeholder="0">
+                               lay-verify="required" maxlength="4" placeholder="0" th:value="${fci.accruedMonth}"
+                               readonly>
                         <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">月</span>
                     </div>
                 </div>
@@ -193,7 +195,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">计量单位</label>
                     <div class="layui-input-inline">
-                        <select lay-filter="measureUnit" name="measureUnit" lay-verify="required">
+                        <select lay-filter="measureUnit" name="measureUnit" lay-verify="required" disabled>
                             <option value="">请选择</option>
                             <option th:each="u:${un}" th:text="${u.getValue()}" th:value="${u.getKey()}"></option>
                         </select>
@@ -203,7 +205,7 @@
                     <label class="layui-form-label">数量</label>
                     <div class="layui-input-inline">
                         <input type="text" id="account" name="account" placeholder="0.0000" autocomplete="off"
-                               lay-verify="required"
+                               lay-verify="required" th:value="${fci.account}" readonly
                                class="layui-input" maxlength="8">
                         <span style="position: absolute; top: 0; right: 45%; display: table-cell; white-space: nowrap; padding: 7px 10px;"
                               id="danwei"></span>
@@ -214,24 +216,24 @@
                     <label class="layui-form-label">单价</label>
                     <div class="layui-input-inline">
                         <input type="text" id="unitPrice" name="unitPrice" placeholder="0.0000" autocomplete="off"
-                               lay-verify="required"
-                               class="layui-input" maxlength="8">
+                               lay-verify="required" th:value="${fci.unitPrice}"
+                               class="layui-input" maxlength="8" readonly>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">入账价值</label>
                     <div class="layui-input-inline">
                         <input type="text" id="totalAmount" placeholder="0.00" autocomplete="off" class="layui-input"
-                               lay-verify="required"
-                               name="totalAmount">
+                               lay-verify="required" th:value="${fci.totalAmount}"
+                               name="totalAmount" readonly>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">净残值率</label>
                     <div class="layui-input-inline">
                         <input type="text" id="estimatedResidualValueRate" name="estimatedResidualValueRate"
-                               lay-verify="required" maxlength="5"
-                               autocomplete="off" class="layui-input" placeholder="5">
+                               lay-verify="required" maxlength="5" th:value="${fci.estimatedResidualValueRate}"
+                               autocomplete="off" class="layui-input" placeholder="5" readonly>
                         <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">%</span>
 
                     </div>
@@ -240,16 +242,16 @@
                     <label class="layui-form-label">预计净残值</label>
                     <div class="layui-input-inline">
                         <input type="text" id="estimatedResidualValue" name="estimatedResidualValue" autocomplete="off"
-                               lay-verify="required"
-                               class="layui-input" placeholder="0.0000">
+                               lay-verify="required" th:value="${fci.estimatedResidualValue}"
+                               class="layui-input" placeholder="0.0000" readonly>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">累计折旧</label>
                     <div class="layui-input-inline">
                         <input type="text" id="accumulatedDepreciation" name="accumulatedDepreciation"
-                               lay-verify="required"
-                               autocomplete="off" class="layui-input"
+                               lay-verify="required" th:value="${fci.accumulatedDepreciation}"
+                               autocomplete="off" class="layui-input" readonly
                                placeholder="0.0000">
                     </div>
                 </div>
@@ -257,11 +259,11 @@
                     <label class="layui-form-label">月折旧率</label>
                     <div class="layui-input-inline">
                         <input type="text" id="monthlyDepreciationRate1" name="monthlyDepreciationRate1"
-                               lay-verify="required" maxlength="5"
-                               autocomplete="off" class="layui-input"
+                               lay-verify="required" maxlength="5" th:value="${fci.monthlyDepreciationRate}"
+                               autocomplete="off" class="layui-input" readonly
                                placeholder="0.0">
                         <input type="hidden" id="monthlyDepreciationRate" name="monthlyDepreciationRate"
-                               lay-verify="required" maxlength="5"
+                               lay-verify="required" maxlength="5" th:value="${fci.monthlyDepreciationRate}"
                                autocomplete="off" class="layui-input"
                                placeholder="0.0">
                         <span style="position: absolute; top: 0; right: 55%; display: table-cell; white-space: nowrap; padding: 7px 10px;">%</span>
@@ -272,16 +274,16 @@
                     <label class="layui-form-label">月折旧额</label>
                     <div class="layui-input-inline">
                         <input type="text" id="monthlyDepreciation" name="monthlyDepreciation" autocomplete="off"
-                               lay-verify="required"
-                               class="layui-input" placeholder="0.0000">
+                               lay-verify="required" th:value="${fci.monthlyDepreciation}"
+                               class="layui-input" placeholder="0.0000" readonly>
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">净值</label>
                     <div class="layui-input-inline">
                         <input type="text" id="netWorth" name="netWorth" autocomplete="off" class="layui-input"
-                               lay-verify="required"
-                               placeholder="0.0000">
+                               lay-verify="required" th:value="${fci.netWorth}"
+                               placeholder="0.0000" readonly>
                     </div>
                 </div>
             </div>
@@ -293,7 +295,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">资产状态</label>
                     <div class="layui-input-inline">
-                        <select name="useStatus" lay-verify="required">
+                        <select name="useStatus" lay-verify="required" disabled>
                             <option th:each="s:${sm}" th:text="${s.getValue()}" th:value="${s.getKey()}"></option>
 
                         </select>
@@ -303,13 +305,14 @@
                     <label class="layui-form-label">开始使用日期</label>
                     <div class="layui-input-inline">
                         <input type="text" name="startWorkingDate" id="startWorkingDate" autocomplete="off"
+                               th:value="${#dates.format(fci.startWorkingDate,'yyyy-MM-dd')}" readonly
                                class="layui-input">
                     </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">负责部门</label>
                     <div class="layui-input-inline">
-                        <select name="departmentId">
+                        <select name="departmentId" disabled>
                             <option value="">部门名称</option>
                             <option th:each="d:${de}" th:value="${d.departmentId}"
                                     th:text="${d.departmentName}"></option>
@@ -319,7 +322,7 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">负责人</label>
                     <div class="layui-input-inline">
-                        <select name="personCharge" lay-search lay-verify="required">
+                        <select name="personCharge" lay-search lay-verify="required" disabled>
                             <option value="">负责人</option>
                             <option th:each="u:${ul}" th:text="${u.userName}" th:value="${u.userId}"></option>
                         </select>
@@ -328,19 +331,12 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">保管地点</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="currentLocation" autocomplete="off" class="layui-input"
+                        <input type="text" name="currentLocation" autocomplete="off" class="layui-input" readonly
+                               th:value="${fci.currentLocation}"
                                lay-verify="required">
                     </div>
                 </div>
             </div>
-            <div class="layui-form-item" style="margin-left: 30%;margin-top: 1%">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="cardadd" style="width: 120px">保存</button>
-                    <button type="reset" id="reset" class="layui-btn layui-btn-primary" onclick="formReset()">重置
-                    </button>
-                </div>
-            </div>
-
         </div>
     </form>
 
@@ -364,10 +360,6 @@
     var accruedMonth = 0;//已提记月份
     var accumulatedDepreciation = 0.0000;//累计折旧
     var estimatedResidualValueRate = 0.0;//预计残值率
-
-
-
-
 
 
     //重置表单并把变量变成初始化
@@ -401,7 +393,20 @@
         laydate.render({
             elem: '#startWorkingDate'
         })
-
+        var defftid = [[${fci.fixedtypeId}]];
+        var defin = [[${fci.incrementId}]];
+        var defun = [[${fci.measureUnit}]];
+        var defstat = [[${fci.useStatus}]];
+        var defdep = [[${fci.departmentId}]];
+        var defuser = [[${fci.personCharge}]];
+        form.val("editFilter", {
+            "fixedtypeId": defftid,
+            "incrementId": defin,
+            "measureUnit": defun,
+            "useStatus": defstat,
+            "departmentId": defdep,
+            "personCharge": defuser
+        })
 
         //平均年限法算折旧
         function countmoney1() {
@@ -621,7 +626,10 @@
                 })
                 return false;
             }
-
+            //获取当前iframe页面索引
+            var currIframe = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(currIframe);
+            window.parent.location.reload();
 
             return true;
         })
