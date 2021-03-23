@@ -1,5 +1,7 @@
 package com.gjs.fixedassets.controller;
 
+import com.gjs.fixedassets.entity.FixedTransfer;
+import com.gjs.fixedassets.entity.FixedType;
 import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.entity.User;
 import com.gjs.fixedassets.service.DepartmentService;
@@ -10,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -92,7 +96,32 @@ public class MyFixedAssetTransferController {
         map.put("data", fixedcardList);
 //        System.out.println(map);
         return map;
-
-
     }
+
+
+    /*
+     * @Description TODO
+     *
+     * @Author
+     * @Date 2021-03-23
+     * @params
+     * @Return
+     **/
+    @GetMapping("/toFixedTransferCheck{fixedcardId}")
+    public String toFixedTransferCheck(Model model, HttpSession session, @PathVariable("fixedcardId") Integer fixedcardId) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        model.addAttribute("user", user);
+        FixedTransfer fixedTransfer = fixedTransferService.selectFixedTransByCidFid(user.getCompanyId(), fixedcardId);
+        String fixedTypeName = FixedType.getValueByCode(fixedTransfer.getFixedcard().getFixedtypeId());
+        model.addAttribute("ftname", fixedTypeName);
+        model.addAttribute("ft", fixedTransfer);
+        System.out.println(fixedTransfer);
+        List<FixedTransfer> fixedTransfers = fixedTransferService.selectFixedTransByCompanyId(user.getCompanyId());
+        Integer fixedTrId2 = fixedTransfers.get(0).getFixedTransferId2() + 1;
+        model.addAttribute("ftid2", fixedTrId2);
+        return "myfixedtransfer/FixedTransferCheck";
+    }
+
 }

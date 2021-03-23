@@ -1,6 +1,8 @@
 package com.gjs.fixedassets.mapper;
 
+import com.gjs.fixedassets.entity.FixedTransfer;
 import com.gjs.fixedassets.entity.Fixedcard;
+import com.gjs.fixedassets.service.FixedTransferService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,4 +15,7 @@ public interface FixedTransferMapper {
 
     List<Fixedcard> selectFixedTransferCount(@Param("companyId") Integer companyId, @Param("fixedId") String fixedId, @Param("fixedName") String fixedName);
 
+    FixedTransfer selectFixedTransByCidFid(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId);
+
+    List<FixedTransfer> selectFixedTransByCompanyId(@Param("companyId") Integer companyId);
 }

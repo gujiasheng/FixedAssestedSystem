@@ -56,5 +56,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectAllUserByCompanyId(companyId);
     }
 
+    @Override
+    public List<String> selectAllAccountName(Integer companyId) {
+        return userMapper.selectAllAccountName(companyId);
+    }
+
 
 }

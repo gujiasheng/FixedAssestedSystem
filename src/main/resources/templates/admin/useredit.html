@@ -28,6 +28,13 @@
         </div>
     </div>
     <div class="layui-form-item">
+        <label class="layui-form-label"><span style="color: red">*</span>账号名:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="accountName" placeholder="请输入账号名" autocomplete="off" class="layui-input"
+                   th:value="${user.accountName}">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>密码:</label>
         <div class="layui-input-inline">
             <input type="password" name="password" autocomplete="off" class="layui-input" value="123">

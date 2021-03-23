@@ -62,7 +62,7 @@ public class DepartmentController {
     @GetMapping("/selectAllDepartmentByCompanyId")
     @ResponseBody
     public Map<String, Object> selectAllDepartmentByCompanyId(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                              @RequestParam(required = false, defaultValue = "10") Integer limit,
+                                                              @RequestParam(required = false, defaultValue = "5") Integer limit,
                                                               @RequestParam(required = false, defaultValue = "", value = "searchdepartmentName") Integer departmentId
             , HttpSession session, Model model) {
         Object object = session.getAttribute("user");

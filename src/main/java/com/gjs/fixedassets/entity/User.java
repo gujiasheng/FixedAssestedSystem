@@ -107,6 +107,12 @@ public class User implements Serializable {
      * 工号
      */
     private String workId;
+
+    /**
+     * 账号名
+     */
+    private String accountName;
+
     /*
      * @Description TODO
      * 用户角色枚举类

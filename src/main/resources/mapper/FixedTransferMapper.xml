@@ -5,13 +5,64 @@
         <!--@mbg.generated-->
         <!--@Table fixedtransfer-->
         <id column="fixed_transfer_id" jdbcType="INTEGER" property="fixedTransferId"/>
-        <result column="fixed_transfer_id2" jdbcType="VARCHAR" property="fixedTransferId2"/>
+        <result column="fixed_transfer_id2" jdbcType="INTEGER" property="fixedTransferId2"/>
         <result column="fixedcard_id" jdbcType="INTEGER" property="fixedcardId"/>
         <result column="check_type_id" jdbcType="INTEGER" property="checkTypeId"/>
         <result column="is_pass" jdbcType="INTEGER" property="isPass"/>
-        <result column="fixed_transfer_time" jdbcType="DATE" property="fixedTransferTime"/>
+        <result column="fixed_transfer_time" jdbcType="VARCHAR" property="fixedTransferTime"/>
         <result column="transfer_remark" jdbcType="VARCHAR" property="transferRemark"/>
-
+        <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+        <result column="departmentManager" jdbcType="VARCHAR" property="departmentManager"/>
+        <result column="personCharge" jdbcType="VARCHAR" property="personCharge"/>
+        <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <association property="receiver" javaType="com.gjs.fixedassets.entity.User">
+            <id column="user_id" jdbcType="INTEGER" property="userId"/>
+            <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+            <result column="password" jdbcType="VARCHAR" property="password"/>
+            <result column="gender" jdbcType="CHAR" property="gender"/>
+            <result column="user_face" jdbcType="VARCHAR" property="userFace"/>
+            <result column="user_phone" jdbcType="INTEGER" property="userPhone"/>
+            <result column="user_email" jdbcType="VARCHAR" property="userEmail"/>
+            <result column="user_online" jdbcType="CHAR" property="userOnline"/>
+            <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+            <result column="job_id" jdbcType="INTEGER" property="jobId"/>
+            <result column="role_id" jdbcType="INTEGER" property="roleId"/>
+            <result column="is_status" jdbcType="CHAR" property="isStatus"/>
+            <result column="resgistertime" jdbcType="TIMESTAMP" property="resgistertime"/>
+            <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+            <result column="work_id" jdbcType="VARCHAR" property="workId"/>
+        </association>
+        <association property="fixedcard" javaType="com.gjs.fixedassets.entity.Fixedcard">
+            <id column="fixedcard_id" jdbcType="INTEGER" property="fixedcardId"/>
+            <result column="fixed_id" jdbcType="VARCHAR" property="fixedId"/>
+            <result column="fixed_name" jdbcType="VARCHAR" property="fixedName"/>
+            <result column="fixedtype_id" jdbcType="INTEGER" property="fixedtypeId"/>
+            <result column="acquisition_date" jdbcType="DATE" property="acquisitionDate"/>
+            <result column="working_life" jdbcType="INTEGER" property="workingLife"/>
+            <result column="increment_id" jdbcType="INTEGER" property="incrementId"/>
+            <result column="fixed_scale" jdbcType="VARCHAR" property="fixedScale"/>
+            <result column="use_status" jdbcType="INTEGER" property="useStatus"/>
+            <result column="accrued_month" jdbcType="INTEGER" property="accruedMonth"/>
+            <result column="measure_unit" jdbcType="INTEGER" property="measureUnit"/>
+            <result column="account" jdbcType="DOUBLE" property="account"/>
+            <result column="total_amount" jdbcType="DOUBLE" property="totalAmount"/>
+            <result column="unit_price" jdbcType="DOUBLE" property="unitPrice"/>
+            <result column="depreciation_method_id" jdbcType="INTEGER" property="depreciationMethodId"/>
+            <result column="current_location" jdbcType="VARCHAR" property="currentLocation"/>
+            <result column="department_id" jdbcType="INTEGER" property="departmentId"/>
+            <result column="person_charge" jdbcType="INTEGER" property="personCharge"/>
+            <result column="fixed_status" jdbcType="INTEGER" property="fixedStatus"/>
+            <result column="company_id" jdbcType="INTEGER" property="companyId"/>
+            <result column="entry_date" jdbcType="DATE" property="entryDate"/>
+            <result column="start_working_date" jdbcType="DATE" property="startWorkingDate"/>
+            <result column="estimated_residual_value_rate" jdbcType="DOUBLE" property="estimatedResidualValueRate"/>
+            <result column=" estimated_residual_value" jdbcType="DOUBLE" property="estimatedResidualValue"/>
+            <result column="accumulated_depreciation" jdbcType="DOUBLE" property="accumulatedDepreciation"/>
+            <result column="monthly_depreciation_rate" jdbcType="DOUBLE" property="monthlyDepreciationRate"/>
+            <result column="monthly_depreciation" jdbcType="DOUBLE" property="monthlyDepreciation"/>
+            <result column="net_worth" jdbcType="DOUBLE" property="netWorth"/>
+            <result column="supplier" jdbcType="VARCHAR" property="supplier"/>
+        </association>
 
     </resultMap>
     <sql id="Base_Column_List">
@@ -36,4 +87,30 @@
         <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
         <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name=#{fixedName,jdbcType=VARCHAR}</if>
     </select>
+    <select id="selectFixedTransByCidFid" resultMap="BaseResultMap">
+        select
+        fixed_id,fixed_name,acquisition_date,fixedtype_id,fixed_scale,supplier,user.user_name,department_name,dm.user_name
+        AS departmentManager,pc.user_name AS personCharge
+        from fixedcard
+        LEFT JOIN user ON fixedcard.person_charge=user.user_id
+        LEFT JOIN department ON fixedcard.department_id=department.department_id
+        LEFT JOIN user dm ON department.department_manager=dm.user_id
+        LEFT JOIN user pc ON fixedcard.person_charge = pc.user_id
+        where fixedcard.company_id=#{companyId,jdbcType=INTEGER} and
+        fixedcard.fixedcard_id=#{fixedcardId,jdbcType=INTEGER}
+    </select>
+    <select id="selectFixedTransByCompanyId" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        fixedtransfer
+        WHERE
+        company_id = #{companyId,jdbcType=INTEGER}
+        ORDER BY
+        fixedtransfer.fixed_transfer_id2 DESC
+        LIMIT 0,1;
+
+    </select>
+
+
 </mapper>

@@ -27,5 +27,8 @@ public interface UserService {
     //下拉列表
     List<User> selectAllUserByCompanyId(Integer companyId);
 
+    List<String> selectAllAccountName(Integer companyId);
+
+
 
 }

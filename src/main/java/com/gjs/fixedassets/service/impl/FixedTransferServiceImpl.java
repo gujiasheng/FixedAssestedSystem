@@ -1,5 +1,6 @@
 package com.gjs.fixedassets.service.impl;
 
+import com.gjs.fixedassets.entity.FixedTransfer;
 import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.mapper.FixedTransferMapper;
 import com.gjs.fixedassets.service.FixedTransferService;
@@ -23,5 +24,15 @@ public class FixedTransferServiceImpl implements FixedTransferService {
     @Override
     public List<Fixedcard> selectFixedTransferCount(Integer companyId, String fixedId, String fixedName) {
         return fixedTransferMapper.selectFixedTransferCount(companyId, fixedId, fixedName);
+    }
+
+    @Override
+    public FixedTransfer selectFixedTransByCidFid(Integer companyId, Integer fixedcardId) {
+        return fixedTransferMapper.selectFixedTransByCidFid(companyId, fixedcardId);
+    }
+
+    @Override
+    public List<FixedTransfer> selectFixedTransByCompanyId(Integer companyId) {
+        return fixedTransferMapper.selectFixedTransByCompanyId(companyId);
     }
 }

@@ -120,7 +120,7 @@ public class FixedCardController {
     @ResponseBody
     @GetMapping("/selectFixedByCompanyIdPage")
     public Map<String, Object> selectFixedByCompanyIdPage(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                          @RequestParam(required = false, defaultValue = "10") Integer limit,
+                                                          @RequestParam(required = false, defaultValue = "5") Integer limit,
                                                           @RequestParam(required = false, defaultValue = "", value = "searchFixedId") String fixedId,
                                                           @RequestParam(required = false, defaultValue = "", value = "searchFixedName") String fixedName,
                                                           @RequestParam(required = false, defaultValue = "", value = "searchStatusId") Integer useStatus,

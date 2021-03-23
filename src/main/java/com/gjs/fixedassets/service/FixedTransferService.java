@@ -1,5 +1,6 @@
 package com.gjs.fixedassets.service;
 
+import com.gjs.fixedassets.entity.FixedTransfer;
 import com.gjs.fixedassets.entity.Fixedcard;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,5 +12,9 @@ public interface FixedTransferService {
 
 
     List<Fixedcard> selectFixedTransferCount(@Param("companyId") Integer companyId, @Param("fixedId") String fixedId, @Param("fixedName") String fixedName);
+
+    FixedTransfer selectFixedTransByCidFid(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId);
+
+    List<FixedTransfer> selectFixedTransByCompanyId(@Param("companyId") Integer companyId);
 
 }

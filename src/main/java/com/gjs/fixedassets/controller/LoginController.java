@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -71,6 +72,12 @@ public class LoginController {
         User user = userService.selectUserByUserId(loginUser.getUserId());
         model.addAttribute("u", user);
         return "/common/head-left-layout";
+    }
+
+    @GetMapping("/exit")
+    public String toexit(HttpSession session) {
+        session.setAttribute("user", null);
+        return "login";
     }
 
 

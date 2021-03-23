@@ -80,6 +80,8 @@ public class UserController {
         model.addAttribute("roleList", roleList);
         List<Job> jobList = jobService.selectAllJobByCompanyId(user.getCompanyId());
         model.addAttribute("jobList", jobList);
+        List<String> accountNameList = userService.selectAllAccountName(user.getCompanyId());
+        model.addAttribute("anl", accountNameList);
         return "/admin/useradd";
     }
     /*
@@ -93,7 +95,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/selectAllUserByCompanyId")
     public Map<String, Object> selectAllUserByCompanyId(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                        @RequestParam(required = false, defaultValue = "10") Integer limit,
+                                                        @RequestParam(required = false, defaultValue = "5") Integer limit,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchUserName") String userName,//查询条件
                                                         @RequestParam(required = false, defaultValue = "", value = "searchUserPhone") Integer phone,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchdepartmentId") Integer departmentId,
@@ -159,6 +161,11 @@ public class UserController {
     @PostMapping("/addUser")
     public String addUser(User user, HttpSession session) {
 //        System.out.println(user);
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user1 = userService.selectUserByUserId(loginUser.getUserId());
+        user.setCompanyId(user1.getCompanyId());
+        user.setIsStatus(1);
         userService.addUser(user);
         return "redirect:/touseradd";
     }

@@ -19,7 +19,7 @@
         <result column="resgistertime" jdbcType="TIMESTAMP" property="resgistertime"/>
         <result column="company_id" jdbcType="INTEGER" property="companyId"/>
         <result column="work_id" jdbcType="VARCHAR" property="workId"/>
-
+        <result column="account_name" jdbcType="VARCHAR" property="accountName"></result>
         <association property="department" javaType="com.gjs.fixedassets.entity.Department">
             <id column="department_id" jdbcType="INTEGER" property="departmentId"/>
             <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
@@ -93,16 +93,16 @@
     <select id="selectUserByNamePSW" resultMap="BaseResultMap">
         select *
         FROM user
-        where user_name=#{param1,jdbcType=VARCHAR} AND password=#{param2,jdbcType=VARCHAR}
+        where account_name=#{param1,jdbcType=VARCHAR} AND password=#{param2,jdbcType=VARCHAR}
     </select>
     <insert id="addUser" parameterType="User">
         INSERT INTO `fixedassets`.`user`(`work_id`, `user_name`, `password`, `gender`, `user_face`, `user_phone`,
         `user_email`, `user_online`,
-        `department_id`, `job_id`, `role_id`, `is_status`, `resgistertime`, `company_id`)
+        `department_id`, `job_id`, `role_id`, `is_status`, `resgistertime`, `company_id`,account_name)
         VALUES ( #{workId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
         #{gender,jdbcType=VARCHAR}, #{userFace,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER},
         #{userEmail,jdbcType=VARCHAR},#{userOnline,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER},
-        #{jobId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 1,now(), 1);
+        #{jobId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER}, 1,now(), 1,#{accountName,jdbcType=VARCHAR});
     </insert>
     <update id="updateUser" parameterType="User">
         UPDATE `fixedassets`.`user`
@@ -117,12 +117,19 @@
         `department_id` = #{departmentId,jdbcType=INTEGER},
         `job_id` = #{jobId,jdbcType=INTEGER},
         `role_id` = #{roleId,jdbcType=INTEGER},
-        `is_status` = #{isStatus,jdbcType=INTEGER}
+        `is_status` = #{isStatus,jdbcType=INTEGER},
+        account_name = #{accountName,jdbcType=VARCHAR}
+
         WHERE
         `user_id` = #{userId,jdbcType=INTEGER};
     </update>
     <select id="selectAllUserByCompanyId" resultMap="BaseResultMap">
         select user_name,work_id,user_id
+        from user
+        where company_id=#{companyId,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllAccountName" resultType="java.lang.String">
+        select account_name
         from user
         where company_id=#{companyId,jdbcType=INTEGER}
     </select>

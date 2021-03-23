@@ -48,7 +48,7 @@
             <!--templet内容-->
             <script type="text/html" id="Fixedmanagetool">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">详情</a>
-                <a class="layui-btn layui-btn-xs" lay-event="">提交申请</a>
+                <a class="layui-btn layui-btn-xs" lay-event="apply">提交申请</a>
             </script>
         </div>
     </div>
@@ -175,6 +175,17 @@
                     content: '/tofixedcardedit1' + fixedCardId
                 });
                 layer.full(layerEdit);
+            } else if (obj.event == 'apply') {
+                var layerApply = layer.open({
+                    type: 2,
+                    offset: ['100px', '300px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    title: '资产领用申请',
+                    resize: false,
+                    content: '/toFixedTransferCheck' + fixedCardId
+                });
+                layer.full(layerApply);
             }
         })
 

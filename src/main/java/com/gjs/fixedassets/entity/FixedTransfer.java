@@ -17,11 +17,16 @@ public class FixedTransfer implements Serializable {
     /**
      * 领用单号显示的编号
      */
-    private String fixedTransferId2;
+    private Integer fixedTransferId2;
     /**
      * 领用资产id
      */
     private Integer fixedcardId;
+    /**
+     * 领用资产信息
+     */
+    private Fixedcard fixedcard;
+
     /**
      * 审核类型
      */
@@ -33,11 +38,32 @@ public class FixedTransfer implements Serializable {
     /**
      * 领用时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
-    private Date fixedTransferTime;
+
+    private String fixedTransferTime;
     /**
      * 领用备注
      */
     private String transferRemark;
+    /**
+     * 所属公司id
+     */
+    private Integer companyId;
+    /**
+     * 领用人信息
+     */
+    private User receiver;
+
+    /**
+     * 部门负责人姓名
+     */
+    private String departmentManager;
+    /**
+     * 资产负责人
+     */
+    private String personCharge;
+
+    /**
+     * 部门名
+     */
+    private String departmentName;
 }
