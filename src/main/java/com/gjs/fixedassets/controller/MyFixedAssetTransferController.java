@@ -111,7 +111,7 @@ public class MyFixedAssetTransferController {
         String fixedTypeName = FixedType.getValueByCode(fixedTransfer.getFixedcard().getFixedtypeId());
         model.addAttribute("ftname", fixedTypeName);
         model.addAttribute("ft", fixedTransfer);
-        System.out.println(fixedTransfer);
+//        System.out.println(fixedTransfer);
         List<FixedTransfer> fixedTransfers = fixedTransferService.selectFixedTransByCompanyId(user.getCompanyId());
         Integer fixedTrId2 = 1000001;
         if (fixedTransfers != null) {
@@ -124,7 +124,10 @@ public class MyFixedAssetTransferController {
 
     @PostMapping("/checkTransferApply")
     @ResponseBody
-    public void checkTransferApply(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus, HttpSession session, @RequestParam("personcharge") Integer personcharge) {
+    public void checkTransferApply(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus, HttpSession session,
+                                   @RequestParam("personcharge") Integer personcharge,
+                                   @RequestParam("fixedcardId1") Integer fixedcardId
+    ) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user = userService.selectUserByUserId(loginUser.getUserId());
@@ -136,6 +139,15 @@ public class MyFixedAssetTransferController {
         checkRecordStatus.setCheckMan(user.getUserId());
         checkRecordStatus.setCheckTypeId(1);
         checkRecordStatus.setCheckNodeId(1);
+        fixedTransfer.setFixedcardId(fixedcardId);
+        fixedTransfer.setUsePerson(user.getUserId());
+        fixedTransfer.setCompanyId(user.getCompanyId());
+        List<FixedTransfer> fixedTransfers = fixedTransferService.selectFixedTransByCompanyId(user.getCompanyId());
+        Integer fixedTrId2 = 1000001;
+        if (fixedTransfers != null) {
+            fixedTrId2 = fixedTransfers.get(0).getFixedTransferId2() + 1;
+        }
+        fixedTransfer.setFixedTransferId2(fixedTrId2);
         fixedTransferService.applyTransfer(fixedTransfer, mymessage, checkRecordStatus);
     }
 }

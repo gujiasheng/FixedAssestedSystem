@@ -337,7 +337,9 @@
             </div>
             <div class="layui-form-item" style="margin-left: 30%;margin-top: 1%">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="cardadd" style="width: 120px">保存</button>
+                    <button class="layui-btn" lay-submit lay-filter="cardadd" style="width: 120px"
+                            onclick="return confirm('是否保存修改?')">保存
+                    </button>
                     <button type="reset" id="reset" class="layui-btn layui-btn-primary" onclick="formReset()">重置
                     </button>
                 </div>

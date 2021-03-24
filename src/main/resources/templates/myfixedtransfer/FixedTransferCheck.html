@@ -34,17 +34,19 @@
 </style>
 <body>
 <h2>固定资产领用申请表</h2>
+
 <div style="width:700px;margin:0 auto;margin-top: 10px">
-    <span style="font-size: larger">领用单号:</span><span name="fixedTransferId2" style="font-size: larger"
-                                                      th:text="${ftid2}"></span>
+    <form class="layui-form" th:action="@{/checkTransferApply}" method="post">
+        <span style="font-size: larger">领用单号:</span><span name="fixedTransferId2" style="font-size: larger"
+                                                          th:text="${ftid2}"></span>
 
 
 </div>
 </h2>
-<form class="layui-form" action="/checkTransferApply" method="post">
+
     <table border="1">
         <tr>
-            <input type="hidden" name="fixedcardId" th:value="${ft.fixedcard.fixedcardId}">
+            <input type="hidden" name="fixedcardId1" th:value="${ft.fixedcard.fixedcardId}">
             <input type="hidden" name="personcharge" th:value="${ft.fixedcard.personCharge}">
             <td width="140" height="70;" align="center">固定资产编号</td>
             <td width="200" colspan="3"><span th:text="${ft.fixedcard.fixedId}"></span> </td>
@@ -84,7 +86,9 @@
             </td>
             <td colspan="2">
                 <!--<a class="layui-btn layui-btn-xs">提交申请</a>-->
-                <button type="submit" class="layui-btn layui-btn ">提交申请</button>
+                <button type="submit" class="layui-btn layui-btn "
+                        onclick="return checkSub()">提交申请
+                </button>
             </td>
 
         </tr>
@@ -126,6 +130,30 @@
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" th:inline="javascript">
 
+    function checkSub() {
+        var msg = "是否提交申请?"
+        if (confirm(msg) == true) {
+            //获取当前iframe页面索引
+            var currIframe = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(currIframe);
+            window.parent.location.reload();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    layui.use(['form', 'table', 'laydate'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.jquery,
+            element = layui.element,
+            table = layui.table,
+            laydate = layui.laydate;
+
+
+    })
 
 </script>
 </body>

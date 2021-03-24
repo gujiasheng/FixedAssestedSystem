@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet " href="../css/public.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
+    <title>Title</title>
+</head>
+<style type="text/css">
+    h2 {
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    table {
+        border-collapse: collapse;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    table span {
+        /*display: inline-block;*/
+        width: 200px;
+        text-align: left;
+    }
+
+</style>
+<body>
+<h2>固定资产领用申请表</h2>
+
+<div style="width:700px;margin:0 auto;margin-top: 10px">
+    <form class="layui-form" th:action="@{/checkTransferApply}" method="post">
+        <span style="font-size: larger">领用单号:</span><span name="fixedTransferId2" style="font-size: larger"
+                                                          th:text="${ftid2}"></span>
+
+
+</div>
+</h2>
+
+<table border="1">
+    <tr>
+        <input type="hidden" name="fixedcardId1" th:value="${ft.fixedcard.fixedcardId}">
+        <input type="hidden" name="personcharge" th:value="${ft.fixedcard.personCharge}">
+        <td width="140" height="70;" align="center">固定资产编号</td>
+        <td width="200" colspan="3"><span th:text="${ft.fixedcard.fixedId}"></span> </td>
+        <td width="140" height="70;" align="center">固定资产名称</td>
+        <td width="200" colspan="3"><span th:text="${ft.fixedcard.fixedName}"></span> </td>
+    </tr>
+    <tr>
+        <td width="140" height="70;" align="center">固定资产类别</td>
+        <td width="200" colspan="3"><span th:text="${ftname}"></span> </td>
+        <td width="140" height="70;" align="center">购置日期</td>
+        <td width="200" colspan="3"><span
+                th:text="${#dates.format(ft.fixedcard.acquisitionDate,'yyyy-MM-dd')}"></span></td>
+    </tr>
+    <tr>
+        <td width="140" height="70;" align="center">固定资产规格</td>
+        <td width="200" colspan="3"><span th:text="${ft.fixedcard.fixedScale}"></span> </td>
+        <td width="140" height="70;" align="center">供应商</td>
+        <td width="200" colspan="3"><span th:text="${ft.fixedcard.supplier}"></span> </td>
+    </tr>
+    <tr>
+        <td width="140" height="70;" align="center">领用部门</td>
+        <td width="200" colspan="3"><span th:text="${ft.departmentName}"></span> </td>
+        <td width="140" height="70;" align="center">领用人</td>
+        <td width="200" colspan="3"><span th:text="${user.userName}"></span>  </td>
+    </tr>
+    <tr>
+        <td width="140" height="70;" align="center"><i style="color: red">*</i>使用地点</td>
+        <td width="200" colspan="3"><input name="usePosition" style="border: none" readonly> </td>
+        <td width="140" height="70;" align="center"><i style="color: red">*</i>领用时间</td>
+        <td width="200" colspan="3"><input name="fixedTransferTime" style="border: none" readonly></td>
+    </tr>
+
+    <tr>
+        <td width="140" height="70;" align="center">领用备注</td>
+        <td width="200" colspan="6" style="text-align: left">
+            <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%" readonly> 
+        </td>
+
+
+    </tr>
+    <tr>
+        <td height="30;" colspan="6" align="center">审批签署</td>
+    </tr>
+    <tr>
+        <td width="140" height="35;" align="center">当前资产负责人</td>
+        <td width="200" colspan="3">
+            <span th:text="${ft.personCharge}"></span>
+        </td>
+        <td width="140" height="35;" align="center">当前资产分管领导人</td>
+        <td width="200" colspan="3">
+            <span th:text="${ft.departmentManager}"></span>
+        </td>
+    </tr>
+    <tr>
+        <td width="140" height="35;" align="center">审核结果</td>
+        <td width="200" colspan="3">
+                <span><span><button class="layui-btn layui-btn-xs">通过</button></span>
+                    <span><button class="layui-btn layui-btn-xs">不通过</button></span></span>
+        </td>
+        <td width="140" height="35;" align="center">审核结果</td>
+        <td width="200" colspan="3">
+
+        </td>
+    </tr>
+    <tr>
+        <td width="140" height="35;" align="center">审核备注</td>
+        <td width="200" colspan="3">
+                <span><input name="transferRemark"
+                             style="border: none;margin-left: 5%;width: 90%;height: 30%"></span>
+        </td>
+        <td width="140" height="35;" align="center">审核备注</td>
+        <td width="200" colspan="3">
+            <span></span>
+        </td>
+    </tr>
+</table>
+</form>
+<script src="../layui.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" th:inline="javascript">
+
+    function checkSub() {
+        var msg = "是否提交申请?"
+        if (confirm(msg) == true) {
+            //获取当前iframe页面索引
+            var currIframe = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(currIframe);
+            window.parent.location.reload();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    layui.use(['form', 'table', 'laydate'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.jquery,
+            element = layui.element,
+            table = layui.table,
+            laydate = layui.laydate;
+
+
+    })
+
+</script>
+</body>
+</html>

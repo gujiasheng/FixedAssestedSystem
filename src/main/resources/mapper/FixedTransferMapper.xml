@@ -16,6 +16,7 @@
         <result column="personCharge" jdbcType="VARCHAR" property="personCharge"/>
         <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
         <result column="use_position" jdbcType="VARCHAR" property="usePosition"/>
+        <result column="use_person" jdbcType="INTEGER" property="usePerson"/>
         <association property="receiver" javaType="com.gjs.fixedassets.entity.User">
             <id column="user_id" jdbcType="INTEGER" property="userId"/>
             <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -68,7 +69,8 @@
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        fixed_transfer_id, fixed_transfer_id2, fixedcard_id, check_type_id, is_pass, fixed_transfer_time,transfer_remark
+        fixed_transfer_id, fixed_transfer_id2, fixedcard_id, check_type_id, is_pass,
+        fixed_transfer_time,transfer_remark,use_person,use_position
 
     </sql>
     <select id="selectFixedTransferByCompanyIdPage" resultType="com.gjs.fixedassets.entity.Fixedcard">
@@ -90,7 +92,7 @@
     </select>
     <select id="selectFixedTransByCidFid" resultMap="BaseResultMap">
         select
-        fixed_id,fixed_name,acquisition_date,fixedtype_id,person_charge,fixed_scale,supplier,user.user_name,department_name,dm.user_name
+        fixedcard_id,fixed_id,fixed_name,acquisition_date,fixedtype_id,person_charge,fixed_scale,supplier,user.user_name,department_name,dm.user_name
         AS departmentManager,pc.user_name AS personCharge
         from fixedcard
         LEFT JOIN user ON fixedcard.person_charge=user.user_id
@@ -122,7 +124,7 @@
         0,
         #{fixedTransferTime,jdbcType=VARCHAR} ,
         #{transferRemark,jdbcType=VARCHAR},
-        #{receiver.userId,jdbcType=INTEGER},
+        #{usePerson,jdbcType=INTEGER},
         #{usePosition,jdbcType=VARCHAR},
         #{companyId,jdbcType=INTEGER});
 

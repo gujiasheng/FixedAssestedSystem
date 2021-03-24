@@ -57,7 +57,10 @@ public class FixedTransfer implements Serializable {
      * 领用人信息
      */
     private User receiver;
-
+    /**
+     * 领用人id
+     */
+    private Integer usePerson;
     /**
      * 部门负责人姓名
      */
