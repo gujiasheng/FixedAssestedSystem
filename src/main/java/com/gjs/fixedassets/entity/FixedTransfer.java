@@ -40,6 +40,11 @@ public class FixedTransfer implements Serializable {
      */
 
     private String fixedTransferTime;
+
+    /**
+     * 使用地点
+     */
+    private String usePosition;
     /**
      * 领用备注
      */

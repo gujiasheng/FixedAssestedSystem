@@ -27,7 +27,7 @@ public class Mymessage implements Serializable {
     /**
      * 消息内容id
      */
-    private String messageContent;
+    private Integer messageContent;
     /**
      * 消息提交日期
      */

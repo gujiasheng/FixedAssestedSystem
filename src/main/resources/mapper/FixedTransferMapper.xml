@@ -15,6 +15,7 @@
         <result column="departmentManager" jdbcType="VARCHAR" property="departmentManager"/>
         <result column="personCharge" jdbcType="VARCHAR" property="personCharge"/>
         <result column="department_name" jdbcType="VARCHAR" property="departmentName"/>
+        <result column="use_position" jdbcType="VARCHAR" property="usePosition"/>
         <association property="receiver" javaType="com.gjs.fixedassets.entity.User">
             <id column="user_id" jdbcType="INTEGER" property="userId"/>
             <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -89,7 +90,7 @@
     </select>
     <select id="selectFixedTransByCidFid" resultMap="BaseResultMap">
         select
-        fixed_id,fixed_name,acquisition_date,fixedtype_id,fixed_scale,supplier,user.user_name,department_name,dm.user_name
+        fixed_id,fixed_name,acquisition_date,fixedtype_id,person_charge,fixed_scale,supplier,user.user_name,department_name,dm.user_name
         AS departmentManager,pc.user_name AS personCharge
         from fixedcard
         LEFT JOIN user ON fixedcard.person_charge=user.user_id
@@ -111,6 +112,21 @@
         LIMIT 0,1;
 
     </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="fixedTransferId" keyColumn="fixed_transfer_id"
+            parameterType="FixedTransfer">
+        INSERT INTO `fixedassets`.`fixedtransfer`( `fixed_transfer_id2`, `fixedcard_id`, `check_type_id`,
+        `is_pass`, `fixed_transfer_time`, `transfer_remark`, `use_person`, `use_position`, `company_id`)
+        VALUES ( #{fixedTransferId2,jdbcType=INTEGER},
+        #{fixedcardId,jdbcType=INTEGER},
+        1,
+        0,
+        #{fixedTransferTime,jdbcType=VARCHAR} ,
+        #{transferRemark,jdbcType=VARCHAR},
+        #{receiver.userId,jdbcType=INTEGER},
+        #{usePosition,jdbcType=VARCHAR},
+        #{companyId,jdbcType=INTEGER});
+
+    </insert>
 
 
 </mapper>

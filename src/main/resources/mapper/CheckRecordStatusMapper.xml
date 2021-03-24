@@ -9,9 +9,25 @@
         <result column="check_node_id" jdbcType="INTEGER" property="checkNodeId"/>
         <result column="check_record_id" jdbcType="INTEGER" property="checkRecordId"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="check_man" jdbcType="INTEGER" property="checkMan"/>
+        <result column="check_time" jdbcType="DATE" property="checkTime"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        check_record_status_id, check_type_id, check_node_id, check_record_id, remark
+        check_record_status_id, check_type_id, check_node_id, check_record_id, remark, check_man,
+        check_time
     </sql>
+    <insert parameterType="CheckRecordStatus" id="insert" useGeneratedKeys="true" keyProperty="checkRecordStatusId"
+            keyColumn="check_record_status_id">
+        INSERT INTO `fixedassets`.`checkrecordstatus`(`check_type_id`, `check_node_id`, `check_record_id`,
+        `remark`, `check_man`, `check_time`)
+        VALUES ( #{checkTypeId,jdbcType=INTEGER},
+        #{checkNodeId,jdbcType=INTEGER},
+        #{checkRecordId,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR},
+        #{checkMan,jdbcType=INTEGER},
+        now());
+
+
+    </insert>
 </mapper>

@@ -1,9 +1,6 @@
 package com.gjs.fixedassets.controller;
 
-import com.gjs.fixedassets.entity.FixedTransfer;
-import com.gjs.fixedassets.entity.FixedType;
-import com.gjs.fixedassets.entity.Fixedcard;
-import com.gjs.fixedassets.entity.User;
+import com.gjs.fixedassets.entity.*;
 import com.gjs.fixedassets.service.DepartmentService;
 import com.gjs.fixedassets.service.FixedTransferService;
 import com.gjs.fixedassets.service.FixedcardService;
@@ -11,10 +8,7 @@ import com.gjs.fixedassets.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.Console;
@@ -119,9 +113,29 @@ public class MyFixedAssetTransferController {
         model.addAttribute("ft", fixedTransfer);
         System.out.println(fixedTransfer);
         List<FixedTransfer> fixedTransfers = fixedTransferService.selectFixedTransByCompanyId(user.getCompanyId());
-        Integer fixedTrId2 = fixedTransfers.get(0).getFixedTransferId2() + 1;
+        Integer fixedTrId2 = 1000001;
+        if (fixedTransfers != null) {
+            fixedTrId2 = fixedTransfers.get(0).getFixedTransferId2() + 1;
+        }
+
         model.addAttribute("ftid2", fixedTrId2);
         return "myfixedtransfer/FixedTransferCheck";
     }
 
+    @PostMapping("/checkTransferApply")
+    @ResponseBody
+    public void checkTransferApply(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus, HttpSession session, @RequestParam("personcharge") Integer personcharge) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        mymessage.setMessageTitle("固定资产领用申请");
+        mymessage.setMessageContent(fixedTransfer.getFixedTransferId());
+        mymessage.setMessageType(1);
+        mymessage.setPromoter(user.getUserId());
+        mymessage.setReceiver(personcharge);
+        checkRecordStatus.setCheckMan(user.getUserId());
+        checkRecordStatus.setCheckTypeId(1);
+        checkRecordStatus.setCheckNodeId(1);
+        fixedTransferService.applyTransfer(fixedTransfer, mymessage, checkRecordStatus);
+    }
 }

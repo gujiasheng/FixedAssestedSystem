@@ -7,7 +7,7 @@
         <id column="message_id" jdbcType="INTEGER" property="messageId"/>
         <result column="message_title" jdbcType="VARCHAR" property="messageTitle"/>
         <result column="message_type" jdbcType="INTEGER" property="messageType"/>
-        <result column="message_content" jdbcType="VARCHAR" property="messageContent"/>
+        <result column="message_content" jdbcType="INTEGER" property="messageContent"/>
         <result column="message_date" jdbcType="DATE" property="messageDate"/>
         <result column="is_new" jdbcType="INTEGER" property="isNew"/>
         <result column="receiver" jdbcType="INTEGER" property="receiver"/>
@@ -48,7 +48,7 @@
 
         SELECT *
         FROM mymessage
-        LEFT JOIN user ON user.user_id = mymessage.receiver
+        LEFT JOIN user ON user.user_id = mymessage.promoter
         where receiver=#{userId,jdbcType=INTEGER}
         ORDER BY message_date DESC
         LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
@@ -59,6 +59,15 @@
         LEFT JOIN user ON user.user_id = mymessage.receiver
         where receiver=#{userId,jdbcType=INTEGER}
     </select>
+    <insert id="addMyMessage" parameterType="Mymessage" useGeneratedKeys="true" keyColumn="message_id"
+            keyProperty="messageId">
+        INSERT INTO `fixedassets`.`mymessage`
+        (`message_title`, `message_type`, `message_content`, `message_date`, `is_new`, `receiver`, `promoter`)
+        VALUES (#{messageTitle,jdbcType=VARCHAR}, 1,
+        #{messageContent,jdbcType=INTEGER}
+        , now(), #{messageType}, #{receiver,jdbcType=INTEGER}, #{promoter,jdbcType=INTEGER});
+
+    </insert>
 
 
 </mapper>

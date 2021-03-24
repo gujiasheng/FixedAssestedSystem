@@ -14,4 +14,6 @@ public interface MymessageMapper {
     List<Mymessage> selectMessagePage(@Param("userId") Integer userId, @Param("page") Integer page, @Param("limit") Integer limit);
 
     List<Mymessage> selectMessageCount(Integer userId);
+
+    int addMyMessage(Mymessage mymessage);
 }

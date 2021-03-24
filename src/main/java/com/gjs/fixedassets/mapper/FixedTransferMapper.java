@@ -18,4 +18,6 @@ public interface FixedTransferMapper {
     FixedTransfer selectFixedTransByCidFid(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId);
 
     List<FixedTransfer> selectFixedTransByCompanyId(@Param("companyId") Integer companyId);
+
+    int insert(FixedTransfer fixedTransfer);
 }
