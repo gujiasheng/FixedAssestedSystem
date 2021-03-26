@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -85,9 +86,21 @@ public class messageController {
         List<Mymessage> mymessageList = myMessageService.selectMessagePage(user.getUserId(), page, limit);
         JSONArray jsonArray = JSONArray.fromObject(mymessageList);
         String messJson = jsonArray.toString();
-
         return messJson;
+    }
 
+    /*
+     * @Description TODO
+     * 点击消息isNew+1
+     * @Author
+     * @Date 2021-03-26
+     * @params
+     * @Return
+     **/
+    @PostMapping("/ajaxAddIsNew")
+    @ResponseBody
+    public void ajaxAddIsNew(@RequestParam("messId") Integer messId) {
+        myMessageService.updateIsNew(messId, 2);
 
     }
 }

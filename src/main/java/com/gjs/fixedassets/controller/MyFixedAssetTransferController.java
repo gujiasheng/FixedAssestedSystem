@@ -1,10 +1,8 @@
 package com.gjs.fixedassets.controller;
 
 import com.gjs.fixedassets.entity.*;
-import com.gjs.fixedassets.service.DepartmentService;
-import com.gjs.fixedassets.service.FixedTransferService;
-import com.gjs.fixedassets.service.FixedcardService;
-import com.gjs.fixedassets.service.UserService;
+import com.gjs.fixedassets.mapper.CheckRecordStatusMapper;
+import com.gjs.fixedassets.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +29,11 @@ public class MyFixedAssetTransferController {
     @Autowired
     private FixedTransferService fixedTransferService;
 
+    @Autowired
+    private CheckRecordStatusService checkRecordStatusService;
+
+    @Autowired
+    private MyMessageService myMessageService;
     /*
      * @Description TODO
      * 打开我的领用
@@ -132,7 +135,8 @@ public class MyFixedAssetTransferController {
      * @Return
      **/
     @GetMapping("/toFixedTransferCheck2{fixedTransId}")
-    public String toFixedTransferCheck2(Model model, HttpSession session, @PathVariable("fixedTransId") Integer fixedTransId) {
+    public String toFixedTransferCheck2(Model model, HttpSession session,
+                                        @PathVariable("fixedTransId") Integer fixedTransId) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user = userService.selectUserByUserId(loginUser.getUserId());
@@ -141,6 +145,9 @@ public class MyFixedAssetTransferController {
         String fixedTypeName = FixedType.getValueByCode(fixedTransfer.getFixedcard().getFixedtypeId());
         model.addAttribute("ftname", fixedTypeName);
         model.addAttribute("ft", fixedTransfer);
+        CheckRecordStatus newCheckRecordStatus = checkRecordStatusService.selectNewNodeByRecordId(fixedTransId);
+        model.addAttribute("ncrs", newCheckRecordStatus);
+
 
         return "myfixedtransfer/FixedTransferCheck2";
     }

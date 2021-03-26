@@ -48,4 +48,5 @@
         ORDER BY checkrecordstatus.check_time DESC
         LIMIT 0,1
     </select>
+
 </mapper>

@@ -73,6 +73,11 @@
         from mymessage
         where receiver=#{receiver,jdbcType=INTEGER} and is_new=1;
     </select>
+    <update id="updateIsNew">
+        UPDATE `fixedassets`.`mymessage`
+        SET `is_new` = #{isNew,jdbcType=INTEGER}
+        WHERE `message_id` = #{myMessageId,jdbcType=INTEGER};
+    </update>
 
 
 </mapper>

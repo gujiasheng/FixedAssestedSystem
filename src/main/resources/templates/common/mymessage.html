@@ -58,6 +58,19 @@
         return newDate.toLocaleDateString();
     }
 
+    function clickIsNew(data) {
+        console.log(data)
+        $.ajax({
+            url: '/ajaxAddIsNew',
+            type: 'post',
+            dataType: 'json',
+            data: {
+                "messId": data
+            }, success: function () {
+                console.log(data)
+            }
+        })
+    }
     //ajax渲染面板数据
     function showMess(page, limit) {
         $.ajax({
@@ -69,7 +82,7 @@
                 limit: limit
             },
             success: function (data) {
-                console.log(data)
+                // console.log(data)
                 for (i = 0; i < data.length; i++) {
                     var span1 = $("<span></span>").text(data[i].messageTitle);
                     var span2;
@@ -81,18 +94,18 @@
                     var time = data[i].messageDate.time
                     var span3 = $("<span style='float:right;margin-left: 1%'></span>").text("时间:" + transformDate(time));
                     var span4 = $("<span style='float:right;'></span>").text("发起人:" + data[i].user.userName);
-
                     var hr = $("<hr>")
                     var ftid = data[i].messageContent;
+                    var messId = data[i].messageId;
                     if (data[i].messageType == 1) {
-                        var a = $("<a class='messlistitem' href='/toFixedTransferCheck2" + ftid + "'></a>").append(span1, span2, span3, span4, hr);
+                        var a = $("<a class='messlistitem' href='/toFixedTransferCheck2" + ftid + "' onclick='clickIsNew(" + messId + ")'></a>").append(span1, span2, span3, span4, hr);
                     }
                     $("#cardlist").append(a);
+
                 }
             }, error: function () {
                 console.log("失败了")
             }
-
         })
     }
 
@@ -104,7 +117,7 @@
             laypage = layui.laypage;
 
         var count = [[${count}]];
-        console.log(count);
+        // console.log(count);
         laypage.render({
             elem: 'page1', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
             count: count,

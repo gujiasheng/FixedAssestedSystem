@@ -105,8 +105,16 @@
     <tr>
         <td width="140" height="35;" align="center">审核结果</td>
         <td width="200" colspan="3">
-                <span><span><button class="layui-btn layui-btn-xs">通过</button></span>
+            <span th:switch="${ncrs.checkNodeId}">
+                <span th:case="1">
+                    <span><span><button class="layui-btn layui-btn-xs">通过</button></span>
                     <span><button class="layui-btn layui-btn-xs">不通过</button></span></span>
+                </span>
+                <span th:case="5">负责人审核未通过</span>
+                <span th:case="9">流程已中断</span>
+                <span th:case="*">负责人审核通过</span>
+            </span>
+
         </td>
         <td width="140" height="35;" align="center">审核结果</td>
         <td width="200" colspan="3">

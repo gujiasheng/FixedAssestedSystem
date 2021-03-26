@@ -34,4 +34,9 @@ public class MyMessageServiceImpl implements MyMessageService {
     public List<Mymessage> selectIsNewCount(Integer receiver) {
         return mymessageMapper.selectIsNewCount(receiver);
     }
+
+    @Override
+    public int updateIsNew(Integer myMessageId, Integer isNew) {
+        return mymessageMapper.updateIsNew(myMessageId, isNew);
+    }
 }
