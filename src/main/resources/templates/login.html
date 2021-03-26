@@ -127,7 +127,7 @@
 
                     <select type="text" id="companyId" name="companyId" placeholder="请选择公司" maxlength="24"
                             autocomplete="off">
-                        <option></option>
+                        <option>--请选择公司--</option>
                         <option th:each="l:${list}" th:value="${l.companyId}" th:text="${l.companyName}"></option>
                     </select>
                 </div>

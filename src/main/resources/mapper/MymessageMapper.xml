@@ -68,6 +68,11 @@
         , now(), #{messageType}, #{receiver,jdbcType=INTEGER}, #{promoter,jdbcType=INTEGER});
 
     </insert>
+    <select id="selectIsNewCount" resultMap="BaseResultMap">
+        select *
+        from mymessage
+        where receiver=#{receiver,jdbcType=INTEGER} and is_new=1;
+    </select>
 
 
 </mapper>

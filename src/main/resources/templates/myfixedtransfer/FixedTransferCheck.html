@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../layui-v2.5.4/css/layui.css" media="all">
     <link rel="stylesheet " href="../css/public.css">
     <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
-
     <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
     <title>Title</title>
 </head>
@@ -18,32 +17,25 @@
         margin: 0 auto;
         text-align: center;
     }
-
     table {
         border-collapse: collapse;
         text-align: center;
         margin: 0 auto;
     }
-
     table span {
         /*display: inline-block;*/
         width: 200px;
         text-align: left;
     }
-
 </style>
 <body>
 <h2>固定资产领用申请表</h2>
-
+<form class="layui-form" action="/checkTransferApply" method="post">
 <div style="width:700px;margin:0 auto;margin-top: 10px">
-    <form class="layui-form" th:action="@{/checkTransferApply}" method="post">
-        <span style="font-size: larger">领用单号:</span><span name="fixedTransferId2" style="font-size: larger"
-                                                          th:text="${ftid2}"></span>
-
-
+    <span style="font-size: larger">领用单号:</span><span name="fixedTransferId2" style="font-size: larger"
+                                                      th:text="${ftid2}"></span>
 </div>
 </h2>
-
     <table border="1">
         <tr>
             <input type="hidden" name="fixedcardId1" th:value="${ft.fixedcard.fixedcardId}">
@@ -86,8 +78,12 @@
             </td>
             <td colspan="2">
                 <!--<a class="layui-btn layui-btn-xs">提交申请</a>-->
+
                 <button type="submit" class="layui-btn layui-btn "
                         onclick="return checkSub()">提交申请
+                </button>
+                <button class="layui-btn layui-btn "
+                        onclick="return checkSub()">中断领用
                 </button>
             </td>
 
@@ -111,6 +107,39 @@
                 <span></span>
             </td>
             <td width="140" height="35;" align="center">审核结果</td>
+            <td width="200" colspan="3">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td width="140" height="35;" align="center">审核备注</td>
+            <td width="200" colspan="3">
+                <span></span>
+            </td>
+            <td width="140" height="35;" align="center">审核备注</td>
+            <td width="200" colspan="3">
+                <span></span>
+            </td>
+        </tr>
+        <tr>
+            <td height="30;" colspan="6" align="center">领用发放</td>
+        </tr>
+        <tr>
+            <td width="140" height="35;" align="center">当前资产负责人</td>
+            <td width="200" colspan="3">
+                <span th:text="${ft.personCharge}"></span>
+            </td>
+            <td width="140" height="35;" align="center">领用人</td>
+            <td width="200" colspan="3">
+                <span th:text="${user.userName}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td width="140" height="35;" align="center">发放结果</td>
+            <td width="200" colspan="3">
+                <span></span>
+            </td>
+            <td width="140" height="35;" align="center">接收结果</td>
             <td width="200" colspan="3">
                 <span></span>
             </td>

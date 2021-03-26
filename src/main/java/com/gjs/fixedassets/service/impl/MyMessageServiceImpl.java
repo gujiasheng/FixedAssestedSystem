@@ -29,4 +29,9 @@ public class MyMessageServiceImpl implements MyMessageService {
     public List<Mymessage> selectMessageCount(Integer userId) {
         return mymessageMapper.selectMessageCount(userId);
     }
+
+    @Override
+    public List<Mymessage> selectIsNewCount(Integer receiver) {
+        return mymessageMapper.selectIsNewCount(receiver);
+    }
 }

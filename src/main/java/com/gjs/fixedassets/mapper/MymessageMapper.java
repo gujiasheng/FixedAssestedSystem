@@ -16,4 +16,6 @@ public interface MymessageMapper {
     List<Mymessage> selectMessageCount(Integer userId);
 
     int addMyMessage(Mymessage mymessage);
+
+    List<Mymessage> selectIsNewCount(@Param("receiver") Integer receiver);
 }

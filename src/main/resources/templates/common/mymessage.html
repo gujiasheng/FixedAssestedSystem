@@ -55,7 +55,6 @@
     function transformDate(time) {
         var timestamp = time;
         var newDate = new Date(timestamp);
-
         return newDate.toLocaleDateString();
     }
 
@@ -80,11 +79,14 @@
                         span2 = $("<span class=\"layui-badge\" style=\"margin-left: 1%\" ></span>").text("new");
                     }
                     var time = data[i].messageDate.time
-                    var span3 = $("<span style='float: right;margin-left: 1%'></span>").text("时间:" + transformDate(time));
-                    var span4 = $("<span style='float: right;'></span>").text("发起人:" + data[i].user.userName);
+                    var span3 = $("<span style='float:right;margin-left: 1%'></span>").text("时间:" + transformDate(time));
+                    var span4 = $("<span style='float:right;'></span>").text("发起人:" + data[i].user.userName);
 
                     var hr = $("<hr>")
-                    var a = $("<a  href=''></a>").append(span1, span2, span3, span4, hr);
+                    var ftid = data[i].messageContent;
+                    if (data[i].messageType == 1) {
+                        var a = $("<a class='messlistitem' href='/toFixedTransferCheck2" + ftid + "'></a>").append(span1, span2, span3, span4, hr);
+                    }
                     $("#cardlist").append(a);
                 }
             }, error: function () {

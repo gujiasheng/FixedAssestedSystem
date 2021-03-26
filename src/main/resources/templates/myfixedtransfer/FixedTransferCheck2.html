@@ -33,14 +33,13 @@
 
 </style>
 <body>
+<a class="layui-btn layui-btn-radius " style="margin-left: 20px;margin-top: 10px" href="/tomymessage">返回</a>
+
 <h2>固定资产领用申请表</h2>
-
+<form class="layui-form" method="post">
 <div style="width:700px;margin:0 auto;margin-top: 10px">
-    <form class="layui-form" th:action="@{/checkTransferApply}" method="post">
-        <span style="font-size: larger">领用单号:</span><span name="fixedTransferId2" style="font-size: larger"
-                                                          th:text="${ftid2}"></span>
-
-
+    <span style="font-size: larger">领用单号:</span><span name="fixedTransferId2" style="font-size: larger"
+                                                      th:text="${ft.fixedTransferId2}"></span>
 </div>
 </h2>
 
@@ -74,15 +73,18 @@
     </tr>
     <tr>
         <td width="140" height="70;" align="center"><i style="color: red">*</i>使用地点</td>
-        <td width="200" colspan="3"><input name="usePosition" style="border: none" readonly> </td>
+        <td width="200" colspan="3"><input name="usePosition" style="border: none" th:value="${ft.usePosition}"
+                                           readonly> 
+        </td>
         <td width="140" height="70;" align="center"><i style="color: red">*</i>领用时间</td>
-        <td width="200" colspan="3"><input name="fixedTransferTime" style="border: none" readonly></td>
+        <td width="200" colspan="3"><input name="fixedTransferTime" th:value="${ft.fixedTransferTime}"
+                                           style="border: none" readonly></td>
     </tr>
-
     <tr>
         <td width="140" height="70;" align="center">领用备注</td>
         <td width="200" colspan="6" style="text-align: left">
-            <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%" readonly> 
+            <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%"
+                   th:value="${ft.transferRemark}" readonly> 
         </td>
 
 
@@ -108,18 +110,53 @@
         </td>
         <td width="140" height="35;" align="center">审核结果</td>
         <td width="200" colspan="3">
-
+                    <span><span><button class="layui-btn layui-btn-xs">通过</button></span>
+                    <span><button class="layui-btn layui-btn-xs">不通过</button></span></span>
         </td>
     </tr>
     <tr>
         <td width="140" height="35;" align="center">审核备注</td>
         <td width="200" colspan="3">
-                <span><input name="transferRemark"
-                             style="border: none;margin-left: 5%;width: 90%;height: 30%"></span>
+            <span><input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%"></span>
         </td>
         <td width="140" height="35;" align="center">审核备注</td>
         <td width="200" colspan="3">
-            <span></span>
+            <span><input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%"></span>
+        </td>
+    </tr>
+    <tr>
+        <td height="30;" colspan="6" align="center">领用发放</td>
+    </tr>
+    <tr>
+        <td width="140" height="35;" align="center">当前资产负责人</td>
+        <td width="200" colspan="3">
+            <span th:text="${ft.personCharge}"></span>
+        </td>
+        <td width="140" height="35;" align="center">领用人</td>
+        <td width="200" colspan="3">
+            <span th:text="${user.userName}"></span>
+        </td>
+    </tr>
+    <tr>
+        <td width="140" height="35;" align="center">发放结果</td>
+        <td width="200" colspan="3">
+                    <span><span><button class="layui-btn layui-btn-xs">已发放</button></span>
+                    <span><button class="layui-btn layui-btn-xs">中断</button></span></span>
+        </td>
+        <td width="140" height="35;" align="center">接收结果</td>
+        <td width="200" colspan="3">
+              <span><span><button class="layui-btn layui-btn-xs">已领取</button></span>
+                    <span><button class="layui-btn layui-btn-xs">中断</button></span></span>
+        </td>
+    </tr>
+    <tr>
+        <td width="140" height="35;" align="center">发放备注</td>
+        <td width="200" colspan="3">
+            <span><input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%"></span>
+        </td>
+        <td width="140" height="35;" align="center">领用备注</td>
+        <td width="200" colspan="3">
+            <span><input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%"></span>
         </td>
     </tr>
 </table>

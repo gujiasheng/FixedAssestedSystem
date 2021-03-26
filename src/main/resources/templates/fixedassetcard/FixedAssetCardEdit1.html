@@ -387,12 +387,7 @@
             table = layui.table,
             laydate = layui.laydate;
 
-        laydate.render({
-            elem: '#acquisitionDate'
-        })
-        laydate.render({
-            elem: '#startWorkingDate'
-        })
+
         var defftid = [[${fci.fixedtypeId}]];
         var defin = [[${fci.incrementId}]];
         var defun = [[${fci.measureUnit}]];
@@ -461,15 +456,6 @@
             countmoney1();
         })
 
-
-        //判断是否是数字的JS方法
-        function checkNum(o) {
-            var reg = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 ，判断正整数用/^[1-9]+[0-9]*]*$/
-            if (!reg.test(o)) {
-                return false;
-            }
-        }
-
         form.on('select(measureUnit)', function (data) {
             var unitName;
             switch (data.value) {
@@ -494,145 +480,8 @@
             $("#danwei").html(unitName);
 
         })
-        //验证固定资产id有没有重复
-        $("#fixedId").blur(function () {
-            var thisFixedId = $(this).val();
-            var checkFixedId = [[${fds}]];
 
-            $(checkFixedId).each(function (i, item) {
-                console.log(item);
-                console.log(thisFixedId);
-                if (item == thisFixedId) {
-                    layer.msg('固定资产编号重复', {
-                        icon: 5,
-                        anim: 6,
-                        time: 1500
-                    }, function () {
 
-                    })
-                    $("#fixedId").val("");
-                    return false;
-                }
-            })
-        })
-
-        form.on('submit(cardadd)', function (data) {
-            data = data.field;
-
-            if (checkNum(account) == false) {
-                layer.msg('请在数量输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-
-                })
-                return false;
-            }
-            if (checkNum(estimatedResidualValueRate) == false) {
-                layer.msg('请在预计残值率输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-                })
-                return false;
-            }
-            if (checkNum(unitPrice) == false) {
-
-                layer.msg('请在单价输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-
-                })
-                return false;
-            }
-            if (checkNum(workingLife) == false) {
-                layer.msg('请在预计使用年限输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-                })
-                return false;
-            }
-            if (checkNum(totalAmount) == false) {
-                layer.msg('请在入账金额输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-
-                })
-                return false;
-            }
-            if (checkNum(estimatedResidualValue) == false) {
-
-                layer.msg('请在预计净残值输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-
-                })
-                return false;
-            }
-            if (checkNum(monthlyDepreciation) == false) {
-                layer.msg('请在月折旧额输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-
-                })
-                return false;
-            }
-            if (checkNum(monthlyDepreciationRate) == false) {
-                layer.msg('请在月折旧率输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-
-                })
-                return false;
-            }
-            if (checkNum(netWorth) == false) {
-                layer.msg('请在净值输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-                })
-                return false;
-            }
-            if (checkNum(accruedMonth) == false) {
-                layer.msg('请在已提记月份输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-                })
-                return false;
-            }
-            if (checkNum(accumulatedDepreciation) == false) {
-                layer.msg('请在累计折旧输入正确数字', {
-                    icon: 5,
-                    anim: 6,
-                    time: 1500
-                }, function () {
-                })
-                return false;
-            }
-            //获取当前iframe页面索引
-            var currIframe = parent.layer.getFrameIndex(window.name);
-            parent.layer.close(currIframe);
-            window.parent.location.reload();
-
-            return true;
-        })
     })
 </script>
 </body>

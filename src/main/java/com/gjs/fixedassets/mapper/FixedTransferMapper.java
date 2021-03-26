@@ -5,6 +5,7 @@ import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.service.FixedTransferService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.boot.autoconfigure.web.WebProperties;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface FixedTransferMapper {
     List<FixedTransfer> selectFixedTransByCompanyId(@Param("companyId") Integer companyId);
 
     int insert(FixedTransfer fixedTransfer);
+
+    FixedTransfer selectFixedTransById(Integer fixedtransferId);
 }

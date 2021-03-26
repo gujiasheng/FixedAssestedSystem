@@ -13,4 +13,5 @@ public interface MyMessageService {
 
     List<Mymessage> selectMessageCount(Integer userId);
 
+    List<Mymessage> selectIsNewCount(@Param("receiver") Integer receiver);
 }

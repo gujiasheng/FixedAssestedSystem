@@ -45,4 +45,21 @@ public class CheckRecordStatus implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     private Date checkTime;
+
+    /**
+     * 我的消息类
+     */
+    private Mymessage mymessage;
+
+    /**
+     * 领用类
+     */
+    private FixedTransfer fixedTransfer;
+
+    /**
+     * 审核节点
+     */
+    private CheckNode checkNode;
+
+
 }

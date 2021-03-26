@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 import java.io.Console;
 import java.util.HashMap;
@@ -70,7 +71,7 @@ public class MyFixedAssetTransferController {
     @GetMapping("/selectFixedAssetTransferAdd")
     @ResponseBody
     public Map<String, Object> selectFixedAssetTransferAdd(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                           @RequestParam(required = false, defaultValue = "10") Integer limit,
+                                                           @RequestParam(required = false, defaultValue = "5") Integer limit,
                                                            @RequestParam(required = false, defaultValue = "", value = "searchFixedId") String fixedId,
                                                            @RequestParam(required = false, defaultValue = "", value = "searchFixedName") String fixedName,
                                                            Model model, HttpSession session) {
@@ -114,7 +115,7 @@ public class MyFixedAssetTransferController {
 //        System.out.println(fixedTransfer);
         List<FixedTransfer> fixedTransfers = fixedTransferService.selectFixedTransByCompanyId(user.getCompanyId());
         Integer fixedTrId2 = 1000001;
-        if (fixedTransfers != null) {
+        if (fixedTransfers == null) {
             fixedTrId2 = fixedTransfers.get(0).getFixedTransferId2() + 1;
         }
 
@@ -122,12 +123,35 @@ public class MyFixedAssetTransferController {
         return "myfixedtransfer/FixedTransferCheck";
     }
 
+    /*
+     * @Description TODO
+     * 前往领用申请2
+     * @Author
+     * @Date 2021-03-25
+     * @params
+     * @Return
+     **/
+    @GetMapping("/toFixedTransferCheck2{fixedTransId}")
+    public String toFixedTransferCheck2(Model model, HttpSession session, @PathVariable("fixedTransId") Integer fixedTransId) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        model.addAttribute("user", user);
+        FixedTransfer fixedTransfer = fixedTransferService.selectFixedTransById(fixedTransId);
+        String fixedTypeName = FixedType.getValueByCode(fixedTransfer.getFixedcard().getFixedtypeId());
+        model.addAttribute("ftname", fixedTypeName);
+        model.addAttribute("ft", fixedTransfer);
+
+        return "myfixedtransfer/FixedTransferCheck2";
+    }
+
+
     @PostMapping("/checkTransferApply")
     @ResponseBody
-    public void checkTransferApply(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus, HttpSession session,
+    public void checkTransferApply(FixedTransfer fixedTransfer, Mymessage mymessage,
+                                   CheckRecordStatus checkRecordStatus, HttpSession session,
                                    @RequestParam("personcharge") Integer personcharge,
-                                   @RequestParam("fixedcardId1") Integer fixedcardId
-    ) {
+                                   @RequestParam("fixedcardId1") Integer fixedcardId) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user = userService.selectUserByUserId(loginUser.getUserId());
@@ -144,10 +168,21 @@ public class MyFixedAssetTransferController {
         fixedTransfer.setCompanyId(user.getCompanyId());
         List<FixedTransfer> fixedTransfers = fixedTransferService.selectFixedTransByCompanyId(user.getCompanyId());
         Integer fixedTrId2 = 1000001;
-        if (fixedTransfers != null) {
+        if (fixedTransfers != null && ("").equals(fixedTransfers)) {//只用 !=null 会报越界错
             fixedTrId2 = fixedTransfers.get(0).getFixedTransferId2() + 1;
         }
         fixedTransfer.setFixedTransferId2(fixedTrId2);
         fixedTransferService.applyTransfer(fixedTransfer, mymessage, checkRecordStatus);
     }
+
+
+    /*
+     * @Description TODO
+     *
+     * @Author
+     * @Date 2021-03-25
+     * @params
+     * @Return
+     **/
+
 }

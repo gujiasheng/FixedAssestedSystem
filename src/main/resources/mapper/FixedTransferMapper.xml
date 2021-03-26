@@ -129,6 +129,15 @@
         #{companyId,jdbcType=INTEGER});
 
     </insert>
+    <select id="selectFixedTransById" resultMap="BaseResultMap">
+        SELECT *,dm.user_name as departmentManager,pc.user_name AS personCharge
+        FROM fixedtransfer
+        left join fixedcard on fixedcard.fixedcard_id = fixedtransfer.fixedcard_id
+        LEFT JOIN department ON fixedcard.department_id=department.department_id
+        left join user dm on dm.user_id = department.department_manager
+        LEFT JOIN user pc ON fixedcard.person_charge = pc.user_id
+        where fixed_transfer_id=#{fixedtransferId,jdbcType=INTEGER} ;
+    </select>
 
 
 </mapper>

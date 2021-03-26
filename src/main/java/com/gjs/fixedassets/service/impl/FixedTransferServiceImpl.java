@@ -55,4 +55,9 @@ public class FixedTransferServiceImpl implements FixedTransferService {
         checkRecordStatusMapper.insert(checkRecordStatus);
 
     }
+
+    @Override
+    public FixedTransfer selectFixedTransById(Integer fixedtransferId) {
+        return fixedTransferMapper.selectFixedTransById(fixedtransferId);
+    }
 }

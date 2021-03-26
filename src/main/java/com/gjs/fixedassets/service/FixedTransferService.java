@@ -20,4 +20,8 @@ public interface FixedTransferService {
     List<FixedTransfer> selectFixedTransByCompanyId(@Param("companyId") Integer companyId);
 
     void applyTransfer(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus);
+
+    FixedTransfer selectFixedTransById(Integer fixedtransferId);
+
+
 }

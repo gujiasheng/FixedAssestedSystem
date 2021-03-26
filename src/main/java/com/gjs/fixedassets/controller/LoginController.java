@@ -4,6 +4,7 @@ import com.gjs.fixedassets.entity.*;
 import com.gjs.fixedassets.mapper.CompanyindustryMapper;
 import com.gjs.fixedassets.mapper.CompanynatureMapper;
 import com.gjs.fixedassets.service.*;
+import com.gjs.fixedassets.service.impl.MyMessageServiceImpl;
 import jdk.nashorn.internal.runtime.Debug;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.server.Session;
@@ -34,6 +35,7 @@ public class LoginController {
     private CompanynatureMapper companynatureMapper;
     @Autowired
     private CompanyService companyService;
+
     @GetMapping("/tologin")
     public String toLogin(Model model) {
         List<Company> list = companyService.selectAllCompany();
@@ -44,6 +46,15 @@ public class LoginController {
     @GetMapping("/tologin2")
     public String toLogin2(Model model) {
         model.addAttribute("msg", "用户名或者密码有误，请重新登录");
+
+        List<Company> list = companyService.selectAllCompany();
+        model.addAttribute("list", list);
+        return "login";
+    }
+
+    @GetMapping("/tologin3")
+    public String toLogin3(Model model) {
+        model.addAttribute("msg", "该账号已停用,请联系管理员启用");
 
         List<Company> list = companyService.selectAllCompany();
         model.addAttribute("list", list);
@@ -61,12 +72,16 @@ public class LoginController {
     @PostMapping("/login")
     public String login(@RequestParam("userName") String userName, @RequestParam("password") String password, Integer companyId, Model model, HttpSession session) {
         User user = userService.selectUserByNamePSW(userName, password, companyId);
-        if (user != null && !("").equals(user)) {
+
+
+        if (user != null && !("").equals(user) && user.getIsStatus() == 1) {
             session.setAttribute("user", user);
 
             return "redirect:/toheadleft";
+        } else if (user != null && !("").equals(user) && user.getIsStatus() == 2) {
+            return "redirect:/tologin3";
         } else {
-            return "redirect:/tologin";
+            return "redirect:/tologin2";
         }
 
     }

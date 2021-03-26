@@ -28,7 +28,8 @@ import java.util.Map;
 public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
-
+    @Autowired
+    private DepartmentMapper departmentMapper;
     @Autowired
     private UserService userService;
 
@@ -135,15 +136,15 @@ public class DepartmentController {
      * @params
      * @Return
      **/
-    @PostMapping("/addDepartment")
-    public String addDepartment(Department department, @RequestParam("departmentManager") Integer departmentManager, HttpSession session) {
+    @RequestMapping("/adddepartment")
+    @ResponseBody
+    public void addDepartment(Department department, @RequestParam("departmentManager") Integer departmentManager, HttpSession session) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user = userService.selectUserByUserId(loginUser.getUserId());
         department.setCompanyId(user.getCompanyId());
         department.setDepartmentManager(departmentManager);
         departmentService.addDepartment(department);
-        return "redirect:/toAddDepartment";
     }
 
     /*

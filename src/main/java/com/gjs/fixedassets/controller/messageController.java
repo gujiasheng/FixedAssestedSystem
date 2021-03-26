@@ -47,7 +47,8 @@ public class messageController {
         List<Mymessage> mymessageList = myMessageService.selectMessageLimit(user.getUserId());
 
         model.addAttribute("mml", mymessageList);
-
+        List<Mymessage> mymessageList1 = myMessageService.selectIsNewCount(user.getUserId());
+        model.addAttribute("newMess", mymessageList1);
         return "common/main";
     }
 

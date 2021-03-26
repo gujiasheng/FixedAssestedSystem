@@ -11,6 +11,8 @@
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="check_man" jdbcType="INTEGER" property="checkMan"/>
         <result column="check_time" jdbcType="DATE" property="checkTime"/>
+
+
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -30,4 +32,20 @@
 
 
     </insert>
+    <select id="selectAllNodeByRecordId" resultMap="BaseResultMap">
+        select *
+        from checkrecordstatus
+        left join checknode on checkrecordstatus.check_node_id=checknode.check_node_id
+        left join mymessage on mymessage.message_content = checkrecordstatus.check_record_id
+        where checkrecordstatus.check_type_id=1 and checkrecordstatus.check_record_id=#{checkRecordId,jdbcType=INTEGER}
+    </select>
+    <select id="selectNewNodeByRecordId" resultMap="BaseResultMap">
+        select *
+        from checkrecordstatus
+        left join checknode on checkrecordstatus.check_node_id=checknode.check_node_id
+        left join mymessage on mymessage.message_content = checkrecordstatus.check_record_id
+        where checkrecordstatus.check_type_id=1 and checkrecordstatus.check_record_id=#{checkRecordId,jdbcType=INTEGER}
+        ORDER BY checkrecordstatus.check_time DESC
+        LIMIT 0,1
+    </select>
 </mapper>

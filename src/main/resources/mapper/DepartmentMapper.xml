@@ -74,7 +74,8 @@
         LEFT JOIN user ON department.department_manager=user.user_id
         where department.company_id = #{companyId,jdbcType=INTEGER}
     </select>
-    <insert id="addDepartment" parameterType="Department">
+    <insert id="addDepartment" parameterType="Department" keyColumn="department_id" keyProperty="departmentId"
+            useGeneratedKeys="true">
         INSERT INTO `fixedassets`.`department`(`department_name`, `company_id`, `department_manager`,
         `department_manager_2`, `department_phone`,`department_show_id`)
         VALUES ( #{departmentName,jdbcType=VARCHAR}, #{companyId,jdbcType=INTEGER},
