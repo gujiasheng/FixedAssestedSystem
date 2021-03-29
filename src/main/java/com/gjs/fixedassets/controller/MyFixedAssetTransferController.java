@@ -134,9 +134,10 @@ public class MyFixedAssetTransferController {
      * @params
      * @Return
      **/
-    @GetMapping("/toFixedTransferCheck2{fixedTransId}")
+    @GetMapping("/toFixedTransferCheck2{fixedTransId}/{messId}")
     public String toFixedTransferCheck2(Model model, HttpSession session,
-                                        @PathVariable("fixedTransId") Integer fixedTransId) {
+                                        @PathVariable("fixedTransId") Integer fixedTransId,
+                                        @PathVariable("messId") Integer messId) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user = userService.selectUserByUserId(loginUser.getUserId());
@@ -147,7 +148,7 @@ public class MyFixedAssetTransferController {
         model.addAttribute("ft", fixedTransfer);
         CheckRecordStatus newCheckRecordStatus = checkRecordStatusService.selectNewNodeByRecordId(fixedTransId);
         model.addAttribute("ncrs", newCheckRecordStatus);
-
+        model.addAttribute("messId", messId);
 
         return "myfixedtransfer/FixedTransferCheck2";
     }
@@ -162,7 +163,10 @@ public class MyFixedAssetTransferController {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user = userService.selectUserByUserId(loginUser.getUserId());
-        mymessage.setMessageTitle("固定资产领用申请");
+        //消息名称
+        Fixedcard fixedcard = fixedcardService.selectFixedByFixedCardId(fixedcardId);
+        mymessage.setMessageTitle(fixedcard.getFixedName() + "领用申请");
+
         mymessage.setMessageContent(fixedTransfer.getFixedTransferId());
         mymessage.setMessageType(1);
         mymessage.setPromoter(user.getUserId());
@@ -185,11 +189,42 @@ public class MyFixedAssetTransferController {
 
     /*
      * @Description TODO
-     *
+     * 负责人审核通过
      * @Author
      * @Date 2021-03-25
      * @params
      * @Return
      **/
+    @PostMapping("/applyAgree")
+    @ResponseBody
+    public void pcapply1(HttpSession session, @RequestParam("fixedcardId1") Integer fixedcardId,
+                         @RequestParam("newRecordNode") Integer newRecordNode,
+                         @RequestParam("messId") Integer messId,
+                         @RequestParam("ft1") Integer recordId,
+                         @RequestParam(required = false, defaultValue = "", value = "remark1") String remark1) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+
+        Mymessage oldMyMessage = myMessageService.selectMyMessage(messId);
+        Fixedcard fixedcard = fixedcardService.selectFixedByFixedCardId(fixedcardId);
+        fixedcard.setUseStatus(6);
+        CheckRecordStatus checkRecordStatus = new CheckRecordStatus();
+        Mymessage newMyMessage = new Mymessage();
+        switch (newRecordNode) {
+            case 1:
+                checkRecordStatus.setCheckNodeId(2);
+                checkRecordStatus.setCheckRecordId(recordId);
+                checkRecordStatus.setCheckTypeId(1);
+                checkRecordStatus.setCheckMan(user.getUserId());
+                newMyMessage.setReceiver(user.getDepartment().getDepartmentManager());
+                newMyMessage.setPromoter(user.getUserId());
+                newMyMessage.setMessageContent(oldMyMessage.getMessageContent());
+                newMyMessage.setMessageTitle(oldMyMessage.getMessageTitle());
+                fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
+                break;
+        }
+
+    }
 
 }

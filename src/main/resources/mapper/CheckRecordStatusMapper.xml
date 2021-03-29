@@ -29,8 +29,6 @@
         #{remark,jdbcType=VARCHAR},
         #{checkMan,jdbcType=INTEGER},
         now());
-
-
     </insert>
     <select id="selectAllNodeByRecordId" resultMap="BaseResultMap">
         select *

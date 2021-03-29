@@ -21,5 +21,5 @@ public interface MymessageMapper {
 
     int updateIsNew(@Param("myMessageId") Integer myMessageId, @Param("isNew") Integer isNew);
 
-
+    Mymessage selectMyMessage(Integer messId);
 }

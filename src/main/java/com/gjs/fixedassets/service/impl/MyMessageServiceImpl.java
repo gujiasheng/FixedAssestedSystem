@@ -39,4 +39,9 @@ public class MyMessageServiceImpl implements MyMessageService {
     public int updateIsNew(Integer myMessageId, Integer isNew) {
         return mymessageMapper.updateIsNew(myMessageId, isNew);
     }
+
+    @Override
+    public Mymessage selectMyMessage(Integer messId) {
+        return mymessageMapper.selectMyMessage(messId);
+    }
 }

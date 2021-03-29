@@ -6,6 +6,7 @@ import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.entity.Mymessage;
 import com.gjs.fixedassets.mapper.CheckRecordStatusMapper;
 import com.gjs.fixedassets.mapper.FixedTransferMapper;
+import com.gjs.fixedassets.mapper.FixedcardMapper;
 import com.gjs.fixedassets.mapper.MymessageMapper;
 import com.gjs.fixedassets.service.FixedTransferService;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class FixedTransferServiceImpl implements FixedTransferService {
 
     @Resource
     private CheckRecordStatusMapper checkRecordStatusMapper;
+
+    @Resource
+    private FixedcardMapper fixedcardMapper;
 
     @Override
     public List<Fixedcard> selectFixedTransferByCompanyIdPage(Integer companyId, Integer page, Integer limit, String fixedId, String fixedName) {
@@ -60,4 +64,19 @@ public class FixedTransferServiceImpl implements FixedTransferService {
     public FixedTransfer selectFixedTransById(Integer fixedtransferId) {
         return fixedTransferMapper.selectFixedTransById(fixedtransferId);
     }
+
+    @Override
+    public void applyTransfer1(Fixedcard fixedcard, Mymessage oldMyMessage, CheckRecordStatus checkRecordStatus, Mymessage newMyMessage) {
+
+        fixedcardMapper.updateFixedByFixedCardId(fixedcard);
+
+        mymessageMapper.updateIsNew(oldMyMessage.getMessageId(), 3);
+
+        checkRecordStatusMapper.insert(checkRecordStatus);
+
+        mymessageMapper.addMyMessage(newMyMessage);
+
+
+    }
+
 }

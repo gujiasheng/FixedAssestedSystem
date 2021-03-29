@@ -49,7 +49,7 @@
         SELECT *
         FROM mymessage
         LEFT JOIN user ON user.user_id = mymessage.promoter
-        where receiver=#{userId,jdbcType=INTEGER}
+        where receiver=#{userId,jdbcType=INTEGER} and mymessage.is_new &lt; 3
         ORDER BY message_date DESC
         LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
     </select>
@@ -57,7 +57,7 @@
         SELECT *
         FROM mymessage
         LEFT JOIN user ON user.user_id = mymessage.receiver
-        where receiver=#{userId,jdbcType=INTEGER}
+        where receiver=#{userId,jdbcType=INTEGER} and mymessage.is_new &lt; 3
     </select>
     <insert id="addMyMessage" parameterType="Mymessage" useGeneratedKeys="true" keyColumn="message_id"
             keyProperty="messageId">
@@ -65,7 +65,7 @@
         (`message_title`, `message_type`, `message_content`, `message_date`, `is_new`, `receiver`, `promoter`)
         VALUES (#{messageTitle,jdbcType=VARCHAR}, 1,
         #{messageContent,jdbcType=INTEGER}
-        , now(), #{messageType}, #{receiver,jdbcType=INTEGER}, #{promoter,jdbcType=INTEGER});
+        , now(), 1, #{receiver,jdbcType=INTEGER}, #{promoter,jdbcType=INTEGER});
 
     </insert>
     <select id="selectIsNewCount" resultMap="BaseResultMap">
@@ -78,6 +78,11 @@
         SET `is_new` = #{isNew,jdbcType=INTEGER}
         WHERE `message_id` = #{myMessageId,jdbcType=INTEGER};
     </update>
+    <select id="selectMyMessage" resultMap="BaseResultMap">
+        select *
+        from mymessage
+        where mymessage.message_id=#{messId,jdbcType=INTEGER}
+    </select>
 
 
 </mapper>

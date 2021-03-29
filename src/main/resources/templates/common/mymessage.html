@@ -59,7 +59,7 @@
     }
 
     function clickIsNew(data) {
-        console.log(data)
+        // console.log(data)
         $.ajax({
             url: '/ajaxAddIsNew',
             type: 'post',
@@ -98,7 +98,7 @@
                     var ftid = data[i].messageContent;
                     var messId = data[i].messageId;
                     if (data[i].messageType == 1) {
-                        var a = $("<a class='messlistitem' href='/toFixedTransferCheck2" + ftid + "' onclick='clickIsNew(" + messId + ")'></a>").append(span1, span2, span3, span4, hr);
+                        var a = $("<a class='messlistitem' href='/toFixedTransferCheck2" + ftid + "/" + messId + "' onclick='clickIsNew(" + messId + ")'></a>").append(span1, span2, span3, span4, hr);
                     }
                     $("#cardlist").append(a);
 

@@ -17,4 +17,10 @@ public class CheckRecordStatusServiceImpl implements CheckRecordStatusService {
     public CheckRecordStatus selectNewNodeByRecordId(Integer checkRecordId) {
         return checkRecordStatusMapper.selectNewNodeByRecordId(checkRecordId);
     }
+
+    @Override
+    public int insert(CheckRecordStatus checkRecordStatus) {
+
+        return 0;
+    }
 }

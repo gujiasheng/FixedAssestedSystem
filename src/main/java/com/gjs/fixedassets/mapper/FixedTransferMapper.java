@@ -1,5 +1,6 @@
 package com.gjs.fixedassets.mapper;
 
+import com.gjs.fixedassets.entity.CheckRecordStatus;
 import com.gjs.fixedassets.entity.FixedTransfer;
 import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.service.FixedTransferService;
@@ -23,4 +24,6 @@ public interface FixedTransferMapper {
     int insert(FixedTransfer fixedTransfer);
 
     FixedTransfer selectFixedTransById(Integer fixedtransferId);
+
+
 }

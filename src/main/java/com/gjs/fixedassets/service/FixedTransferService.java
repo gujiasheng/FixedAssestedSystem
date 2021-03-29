@@ -23,5 +23,15 @@ public interface FixedTransferService {
 
     FixedTransfer selectFixedTransById(Integer fixedtransferId);
 
+    /*
+     * @Description TODO
+     * 领用审核通过按钮接口服务类
+     * @Author
+     * @Date 2021-03-29
+     * @params fixedcard修改固定资产当前状态为申请中，oldMyMessage让同意后的消息消失，checkRecordStatus添加审核状态，newMyMessage给下一个节点对象添加新的消息
+     * @Return
+     **/
+    void applyTransfer1(Fixedcard fixedcard, Mymessage oldMyMessage, CheckRecordStatus checkRecordStatus, Mymessage newMyMessage);
+
 
 }

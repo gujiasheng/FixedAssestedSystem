@@ -21,7 +21,7 @@ public class Mymessage implements Serializable {
      */
     private String messageTitle;
     /**
-     * 消息类型
+     * 消息类型 1代表领用，2代表保修，3代表报废
      */
     private Integer messageType;
     /**
