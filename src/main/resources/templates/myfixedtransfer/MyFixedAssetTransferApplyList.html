@@ -41,10 +41,10 @@
 
             <!--<button class="layui-btn ">一键启用</button>-->
             <!--<button class="layui-btn layui-btn-danger">一键停用</button>-->
-            <h3>我的领用</h3>
-            <table id="FixedList" lay-filter="FixedTable"></table>
+            <h3>我的领用申请</h3>
+            <table id="FixedList" lay-filter="TransferApplyTable"></table>
             <!--templet内容-->
-            <script type="text/html" id="Fixedmanagetool">
+            <script type="text/html" id="transferapplytool">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">详情</a>
             </script>
         </div>
@@ -67,7 +67,7 @@
         table.render(
             {
                 elem: '#FixedList'//指定table
-                , url: ''
+                , url: '/MyFixedAssetTransferApplyList'
                 , cols: [
                     [
                         {type: 'checkbox', fixed: 'left'}
@@ -98,8 +98,28 @@
                         }
                     }
                         , {field: 'fixedScale', title: '规格型号', templet: '<div>{{d.fixedcard.fixedScale}}</div>'}
-                        , {field: 'checkNodeId', title: '当前节点', templet: '<div></div>'}
-                        , {unresize: true, width: 150, title: '操作', toolbar: '#Fixedmanagetool'}
+                        , {
+                        field: 'lastNode', title: '当前节点', templet: function (data) {
+                            if (data.lastNode == 1) {
+                                return "<span>待审核</span>"
+                            } else if (data.lastNode == 2) {
+                                return "<span>负责人审核通过</span>"
+                            } else if (data.lastNode == 3) {
+                                return "<span>分管领导审核通过</span>"
+                            } else if (data.lastNode == 5) {
+                                return "<span>负责人审核未通过</span>"
+                            } else if (data.lastNode == 6) {
+                                return "<span>分管领导审核未通过</span>"
+                            } else if (data.lastNode == 7) {
+                                return "<span>资产已发放</span>"
+                            } else if (data.lastNode == 8) {
+                                return "<span>资产已领取</span>"
+                            } else {
+                                return "<span>流程中断</span>"
+                            }
+                        }
+                    }
+                        , {unresize: true, width: 150, title: '操作', toolbar: '#transferapplytool'}
                     ]
                 ]
                 , request: {
@@ -127,49 +147,16 @@
         // $('#openFixedAdd').click(function () {
         //
         // })
-        $('#openFixedTransfer').click(function () {
-            var fixedAdd = layer.open({
-                type: 2,
-                fixed: false, //不固定
-                maxmin: true,
-                offset: ['100px', '300px'],
-                title: '新建领用单',
-                // content: 'useradd.html',
-                resize: false,
-                content: '/toMyFixedAssetTransferAdd',
-                cancel: function () {
-                    window.location.reload();
-                }
-            });
-            layer.full(fixedAdd);
-        });
-
-        $('#openFixedTransferApply').click(function () {
-            var fixedList = layer.open({
-                type: 2,
-                fixed: false, //不固定
-                maxmin: true,
-                title: '我的领用申请',
-                // content: 'useradd.html',
-                resize: false,
-                content: '',
-                cancel: function () {
-                    window.location.reload();
-                }
-            });
-            layer.full(fixedList);
-        });
 
 
-        table.on('tool(FixedTable)', function (obj) {
+        table.on('tool(TransferApplyTable)', function (obj) {
             var data = obj.data;
             var fixedtransferId = obj.data.fixedTransferId;//每个对象的主键
-            console.log(fixedCardId)
+            console.log(fixedtransferId)
             // console.log(data);
             if (obj.event == 'edit') {
                 var layerEdit = layer.open({
                     type: 2,
-                    offset: ['100px', '300px'],
                     fixed: false, //不固定
                     maxmin: true,
                     title: '申请详情',

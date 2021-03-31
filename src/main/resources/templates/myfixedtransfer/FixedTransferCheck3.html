@@ -33,7 +33,6 @@
 
 </style>
 <body>
-<a class="layui-btn layui-btn-radius " style="margin-left: 20px;margin-top: 10px" href="/tomymessage">返回</a>
 
 <h2>固定资产领用申请表</h2>
 <!--<form class="layui-form" method="post" >-->
@@ -173,8 +172,8 @@
                 <span th:case="3">
                     待审核
                 </span>
-                <span th:case="5">负责人审核未通过</span>
-                <span th:case="6">分管领导审核未通过</span>
+                <span th:case="5">待审核</span>
+                <span th:case="6">待审核</span>
                 <span th:case="9">流程中断</span>
                 <span th:case="*">资产已发放</span>
             </span>

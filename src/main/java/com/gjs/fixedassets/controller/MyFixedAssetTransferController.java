@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpSession;
 import java.io.Console;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,6 +63,20 @@ public class MyFixedAssetTransferController {
 
         return "myfixedtransfer/MyFixedAssetTransferAdd";
     }
+
+    /*
+     * @Description TODO
+     * 打开我的申请列表
+     * @Author
+     * @Date 2021-03-31
+     * @params
+     * @Return
+     **/
+    @GetMapping("/toMyFixedAssetTransferApplyList")
+    public String toMyFixedAssetTransferApplyList() {
+        return "myfixedtransfer/MyFixedAssetTransferApplyList";
+    }
+
 
     /*
      * @Description TODO
@@ -293,6 +308,7 @@ public class MyFixedAssetTransferController {
         checkRecordStatus.setCheckRecordId(recordId);//资产领用id
         checkRecordStatus.setCheckMan(user.getUserId());
         checkRecordStatus.setCheckTypeId(1);
+
         newMyMessage.setPromoter(user.getUserId());
         newMyMessage.setMessageContent(oldMyMessage.getMessageContent());
         newMyMessage.setMessageTitle(oldMyMessage.getMessageTitle());
@@ -301,40 +317,69 @@ public class MyFixedAssetTransferController {
             case 1:
                 checkRecordStatus.setCheckNodeId(5);
                 checkRecordStatus.setRemark(remark1);
-                newMyMessage.setReceiver(user.getDepartment().getDepartmentManager());
-
+                newMyMessage.setReceiver(useManId);
+                fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
             case 2:
                 checkRecordStatus.setCheckNodeId(6);
                 newMyMessage.setReceiver(fixedcard.getPersonCharge());
-
+                fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
             case 3:
                 checkRecordStatus.setCheckNodeId(9);
                 newMyMessage.setReceiver(useManId);
-
+                fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
             case 7:
                 checkRecordStatus.setCheckNodeId(9);
                 newMyMessage.setReceiver(useManId);
-
+                fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
+                break;
         }
 
     }
-
     /*
      * @Description TODO
-     * 查看我的领用流程表
+     * 已阅按钮
      * @Author
      * @Date 2021-03-31
      * @params
      * @Return
      **/
-    @GetMapping("/applyProgress")
-    public String selectApplyProgress() {
+    @PostMapping("/read")
+    @ResponseBody
+    public void read(@RequestParam("messId") Integer messId) {
+        Mymessage oldMyMessage = myMessageService.selectMyMessage(messId);
+        myMessageService.updateIsNew(oldMyMessage.getMessageId(), 3);
+    }
+    /*
+     * @Description TODO
+     * 我的领用流程表数据
+     * @Author
+     * @Date 2021-03-31
+     * @params
+     * @Return
+     **/
+    @GetMapping("/MyFixedAssetTransferApplyList")
+    @ResponseBody
+    public Map<String, Object> MyFixedAssetTransferApplyList(HttpSession session,
+                                                             @RequestParam(required = false, defaultValue = "1") Integer page,
+                                                             @RequestParam(required = false, defaultValue = "5") Integer limit) {
+
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+
+        List<FixedTransfer> selectMyTransferApplyList = fixedTransferService.selectMyTransferApplyList(user.getUserId());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("code", 0);
+        map.put("msg", "操作成功");
+        map.put("count", selectMyTransferApplyList.size());
+        map.put("data", selectMyTransferApplyList);
+        return map;
 
 
-        return "myfixedtransfer/";
     }
 
     /*
@@ -350,33 +395,6 @@ public class MyFixedAssetTransferController {
     public Map<String, Object> selectMyTransferList(HttpSession session,
                                                     @RequestParam(required = false, defaultValue = "1") Integer page,
                                                     @RequestParam(required = false, defaultValue = "5") Integer limit
-    ) {
-        Object object = session.getAttribute("user");
-        User loginUser = (User) object;
-        User user = userService.selectUserByUserId(loginUser.getUserId());
-
-        List<FixedTransfer> selectMyTransferList = fixedTransferService.selectMyTransferList(user.getUserId());
-        Map<String, Object> map = new HashMap<>();
-        map.put("code", 0);
-        map.put("msg", "操作成功");
-        map.put("count", selectMyTransferList.size());
-        map.put("data", selectMyTransferList);
-        return map;
-    }
-
-    /*
-     * @Description TODO
-     * 查看我的领用申请进度列表
-     * @Author
-     * @Date 2021-03-31
-     * @params
-     * @Return
-     **/
-    @GetMapping("/toMyFixedAssetTransferApplyList")
-    @ResponseBody
-    public Map<String, Object> toMyFixedAssetTransferApplyList(HttpSession session,
-                                                               @RequestParam(required = false, defaultValue = "1") Integer page,
-                                                               @RequestParam(required = false, defaultValue = "5") Integer limit
     ) {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
@@ -415,6 +433,8 @@ public class MyFixedAssetTransferController {
         CheckRecordStatus newCheckRecordStatus = checkRecordStatusService.selectNewNodeByRecordId(fixedTransId);
         model.addAttribute("ncrs", newCheckRecordStatus);
 
+
         return "myfixedtransfer/FixedTransferCheck3";
     }
+
 }

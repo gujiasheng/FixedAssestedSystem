@@ -19,6 +19,7 @@
         <result column="use_person" jdbcType="INTEGER" property="usePerson"/>
         <result column="useMan" jdbcType="VARCHAR" property="useMan"/>
         <result column="useMan_id" jdbcType="VARCHAR" property="useManId"/>
+        <result column="lastNode" jdbcType="INTEGER" property="lastNode"/>
         <association property="receiver" javaType="com.gjs.fixedassets.entity.User">
             <id column="user_id" jdbcType="INTEGER" property="userId"/>
             <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -158,13 +159,13 @@
 
     </select>
     <select id="selectMyTransferApplyList" resultMap="BaseResultMap">
-        select *
+        select *,MAX(checkrecordstatus.check_node_id)AS lastNode
         from fixedtransfer
         left join checkrecordstatus on fixedtransfer.fixed_transfer_id = checkrecordstatus.check_record_id
         left join checknode on checknode.check_node_id=checkrecordstatus.check_node_id
         left join fixedcard on fixedcard.fixedcard_id=fixedtransfer.fixedcard_id
         where fixedtransfer.use_person = #{usePerson,jdbcType=INTEGER}
-
+        GROUP BY fixedtransfer.fixed_transfer_id2
     </select>
 
 

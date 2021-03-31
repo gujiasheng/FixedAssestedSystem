@@ -88,4 +88,10 @@ public class FixedTransfer implements Serializable {
      * 审核记录
      */
     private CheckRecordStatus checkRecordStatus;
+
+    /**
+     * 记录当前节点
+     */
+    private Integer lastNode;
+
 }

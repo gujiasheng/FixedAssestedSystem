@@ -46,5 +46,7 @@ public interface FixedTransferService {
 
     List<FixedTransfer> selectMyTransferList(Integer usePerson);
 
+    List<FixedTransfer> selectMyTransferApplyList(Integer usePerson);
+
 
 }

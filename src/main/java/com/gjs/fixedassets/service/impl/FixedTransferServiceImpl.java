@@ -78,7 +78,6 @@ public class FixedTransferServiceImpl implements FixedTransferService {
 
         mymessageMapper.addMyMessage(newMyMessage);
 
-
     }
 
     @Override
@@ -93,6 +92,11 @@ public class FixedTransferServiceImpl implements FixedTransferService {
     @Override
     public List<FixedTransfer> selectMyTransferList(Integer usePerson) {
         return fixedTransferMapper.selectMyTransferList(usePerson);
+    }
+
+    @Override
+    public List<FixedTransfer> selectMyTransferApplyList(Integer usePerson) {
+        return fixedTransferMapper.selectMyTransferApplyList(usePerson);
     }
 
 }

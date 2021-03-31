@@ -40,7 +40,7 @@
         select *
         from mymessage
         LEFT JOIN user ON user.user_id = mymessage.promoter
-        where receiver=#{userId,jdbcType=INTEGER}
+        where receiver=#{userId,jdbcType=INTEGER} and mymessage.is_new &lt; 3
         ORDER BY message_date DESC
         LIMIT 0,5
     </select>
