@@ -113,6 +113,8 @@ public class User implements Serializable {
      */
     private String accountName;
 
+
+
     /*
      * @Description TODO
      * 用户角色枚举类

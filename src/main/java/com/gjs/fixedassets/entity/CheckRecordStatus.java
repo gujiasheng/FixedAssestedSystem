@@ -61,5 +61,10 @@ public class CheckRecordStatus implements Serializable {
      */
     private CheckNode checkNode;
 
+    /**
+     * 资产卡片
+     */
+    private Fixedcard fixedcard;
+
 
 }

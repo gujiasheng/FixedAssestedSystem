@@ -19,7 +19,7 @@ public interface FixedTransferService {
 
     List<FixedTransfer> selectFixedTransByCompanyId(@Param("companyId") Integer companyId);
 
-    void applyTransfer(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus);
+    void applyTransfer(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus, Fixedcard fixedcard);
 
     FixedTransfer selectFixedTransById(Integer fixedtransferId);
 
@@ -32,6 +32,19 @@ public interface FixedTransferService {
      * @Return
      **/
     void applyTransfer1(Fixedcard fixedcard, Mymessage oldMyMessage, CheckRecordStatus checkRecordStatus, Mymessage newMyMessage);
+
+    /*
+     * @Description TODO
+     * 点击已领取后修改卡片，插入审核流
+     * @Author
+     * @Date 2021-03-29
+     * @params
+     * @Return
+     **/
+    void applyTransfer2(Fixedcard fixedcard, Mymessage oldMyMessage, CheckRecordStatus checkRecordStatus);
+
+
+    List<FixedTransfer> selectMyTransferList(Integer usePerson);
 
 
 }

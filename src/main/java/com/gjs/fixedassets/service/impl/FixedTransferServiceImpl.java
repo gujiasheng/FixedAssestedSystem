@@ -49,7 +49,9 @@ public class FixedTransferServiceImpl implements FixedTransferService {
     }
 
     @Override
-    public void applyTransfer(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus) {
+    public void applyTransfer(FixedTransfer fixedTransfer, Mymessage mymessage, CheckRecordStatus checkRecordStatus, Fixedcard fixedcard) {
+        fixedcardMapper.updateFixedByFixedCardId(fixedcard);
+
         fixedTransferMapper.insert(fixedTransfer);
         mymessage.setMessageContent(fixedTransfer.getFixedTransferId());
 
@@ -77,6 +79,20 @@ public class FixedTransferServiceImpl implements FixedTransferService {
         mymessageMapper.addMyMessage(newMyMessage);
 
 
+    }
+
+    @Override
+    public void applyTransfer2(Fixedcard fixedcard, Mymessage oldMyMessage, CheckRecordStatus checkRecordStatus) {
+        fixedcardMapper.updateFixedByFixedCardId(fixedcard);
+
+        mymessageMapper.updateIsNew(oldMyMessage.getMessageId(), 3);
+
+        checkRecordStatusMapper.insert(checkRecordStatus);
+    }
+
+    @Override
+    public List<FixedTransfer> selectMyTransferList(Integer usePerson) {
+        return fixedTransferMapper.selectMyTransferList(usePerson);
     }
 
 }

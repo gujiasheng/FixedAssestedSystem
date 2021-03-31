@@ -25,5 +25,7 @@ public interface FixedTransferMapper {
 
     FixedTransfer selectFixedTransById(Integer fixedtransferId);
 
+    List<FixedTransfer> selectMyTransferList(Integer usePerson);
 
+    List<FixedTransfer> selectMyTransferApplyList(Integer usePerson);
 }

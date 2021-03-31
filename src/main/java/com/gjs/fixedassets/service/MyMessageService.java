@@ -18,4 +18,6 @@ public interface MyMessageService {
     int updateIsNew(@Param("myMessageId") Integer myMessageId, @Param("isNew") Integer isNew);
 
     Mymessage selectMyMessage(Integer messId);
+
+
 }

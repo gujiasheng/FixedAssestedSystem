@@ -74,4 +74,18 @@ public class FixedTransfer implements Serializable {
      * 部门名
      */
     private String departmentName;
+    /**
+     * 领用人名称
+     */
+    private String useMan;
+
+    /**
+     * 领用人id
+     */
+    private Integer useManId;
+
+    /**
+     * 审核记录
+     */
+    private CheckRecordStatus checkRecordStatus;
 }

@@ -111,16 +111,7 @@
         <td width="140" height="35;" align="center">审核结果</td>
         <td width="200" colspan="3">
             <span th:switch="${ncrs.checkNodeId}">
-                <span th:case="1">
-                    <span>
-                        <span>
-                            <button id="agree1" class="layui-btn layui-btn-xs">通过</button>
-                        </span>
-                        <span>
-                            <button class="layui-btn layui-btn-xs">不通过</button>
-                        </span>
-                    </span>
-                </span>
+                <span th:case="1">待审核</span>
                 <span th:case="5">负责人审核未通过</span>
                 <span th:case="9">流程中断</span>
                 <span th:case="*">负责人审核通过</span>
@@ -131,8 +122,7 @@
             <span th:switch="${ncrs.checkNodeId}">
                 <span th:case="1">待审核</span>
                 <span th:case="2">
-                    <span><span><button class="layui-btn layui-btn-xs" id="agree2">通过</button></span>
-                    <span><button class="layui-btn layui-btn-xs">不通过</button></span></span>
+                   待审核
                 </span>
                 <span th:case="3">分管领导审核通过</span>
                 <span th:case="5">待审核</span>
@@ -146,9 +136,6 @@
         <td width="140" height="35;" align="center">审核备注</td>
         <td width="200" colspan="3">
               <span th:switch="${ncrs.checkNodeId}">
-                    <span th:case="1">
-                        <input id="remark1" name="remark1" style="border: none;margin-left: 5%;width: 90%;height: 30%"/>
-                    </span>
                     <span th:case="*">
                         <span></span>
                     </span>
@@ -157,9 +144,6 @@
         <td width="140" height="35;" align="center">审核备注</td>
         <td width="200" colspan="3">
                <span th:switch="${ncrs.checkNodeId}">
-                    <span th:case="2">
-                        <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%">
-                    </span>
                     <span th:case="*">
                         <span></span>
                     </span>
@@ -187,10 +171,7 @@
                 <span th:case="1">待审核</span>
                 <span th:case="2">待审核</span>
                 <span th:case="3">
-                    <span>
-                        <span><button class="layui-btn layui-btn-xs" id="agree3">已发放</button></span>
-                        <span><button class="layui-btn layui-btn-xs">中断</button></span>
-                    </span>
+                    待审核
                 </span>
                 <span th:case="5">负责人审核未通过</span>
                 <span th:case="6">分管领导审核未通过</span>
@@ -202,8 +183,7 @@
         <td width="200" colspan="3">
                 <span th:switch="${ncrs.checkNodeId}">
                     <span th:case="7">
-                        <span><span><button class="layui-btn layui-btn-xs" id="agree4">已领取</button></span>
-                        <span><button class="layui-btn layui-btn-xs">中断</button></span></span>
+                            待审核
                     </span>
                     <span th:case="8">资产已领取</span>
                     <span th:case="9">流程中断</span>
@@ -241,49 +221,6 @@
 <script src="../jquery-3.4.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" th:inline="javascript">
 
-    // function checkSub() {
-    //     var msg = "是否提交申请?"
-    //     if (confirm(msg) == true) {
-    //         //获取当前iframe页面索引
-    //         var currIframe = parent.layer.getFrameIndex(window.name);
-    //         parent.layer.close(currIframe);
-    //         window.parent.location.reload();
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
-
-    var messid = $("#messId").val();
-    var remark1 = $("#remark1").val();
-    var fixedcardId1 = $("#fixedcardId1").val();
-    var newRecordNode = $("#newRecordNode").val();
-    var ft1 = $("#ft1").val();
-    var useManId = $("#useManId").val();
-    function agreeApply() {
-        $.ajax(
-            {
-                url: '/applyAgree',
-                type: 'post',
-                dataType: 'json',
-                data: {
-                    messId: messid,
-                    remark1: remark1,
-                    fixedcardId1: fixedcardId1,
-                    newRecordNode: newRecordNode,
-                    ft1: ft1,
-                    useManId: useManId
-                },
-                success: function () {
-
-                }, error: function () {
-                    window.location.href = "/tomymessage"
-                }
-            }
-        )
-    }
-
-
     layui.use(['form', 'table', 'laydate'], function () {
         var form = layui.form,
             layer = layui.layer,
@@ -291,67 +228,6 @@
             element = layui.element,
             table = layui.table,
             laydate = layui.laydate;
-
-        $("#agree1").click(function () {
-            layer.confirm('是否同意?', {
-                btn: ["确定", "取消"],
-                offset: ['350px', '500px'],
-                btn1: function (index) {
-                    agreeApply();
-                    layer.close(index)
-                },
-                btn2: function (index) {
-                    layer.close(index)
-                }
-
-            })
-
-        })
-        $("#agree2").click(function () {
-            layer.confirm('是否同意?', {
-                btn: ["确定", "取消"],
-                offset: ['350px', '500px'],
-                btn1: function (index) {
-                    agreeApply();
-                    layer.close(index)
-                },
-                btn2: function (index) {
-                    layer.close(index)
-                }
-
-            })
-
-        })
-        $("#agree3").click(function () {
-            layer.confirm('是否同意?', {
-                btn: ["确定", "取消"],
-                offset: ['350px', '500px'],
-                btn1: function (index) {
-                    agreeApply();
-                    layer.close(index)
-                },
-                btn2: function (index) {
-                    layer.close(index)
-                }
-
-            })
-
-        })
-        $("#agree4").click(function () {
-            layer.confirm('是否同意?', {
-                btn: ["确定", "取消"],
-                offset: ['350px', '500px'],
-                btn1: function (index) {
-                    agreeApply();
-                    layer.close(index)
-                },
-                btn2: function (index) {
-                    layer.close(index)
-                }
-
-            })
-
-        })
 
     })
 

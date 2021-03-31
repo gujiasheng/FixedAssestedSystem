@@ -6,6 +6,7 @@ import com.gjs.fixedassets.service.CheckRecordStatusService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class CheckRecordStatusServiceImpl implements CheckRecordStatusService {
@@ -22,5 +23,10 @@ public class CheckRecordStatusServiceImpl implements CheckRecordStatusService {
     public int insert(CheckRecordStatus checkRecordStatus) {
 
         return 0;
+    }
+
+    @Override
+    public CheckRecordStatus selectNewRecordTrans(Integer recordId) {
+        return checkRecordStatusMapper.selectNewNodeByRecordId(recordId);
     }
 }

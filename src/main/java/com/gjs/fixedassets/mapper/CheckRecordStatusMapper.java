@@ -16,4 +16,5 @@ public interface CheckRecordStatusMapper {
     //查询某个领用资产的最新流程节点
     CheckRecordStatus selectNewNodeByRecordId(Integer checkRecordId);
 
+
 }

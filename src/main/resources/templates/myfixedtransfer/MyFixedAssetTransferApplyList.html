@@ -35,10 +35,6 @@
                     </button>
                 </div>
             </div>
-            <div class="layui-form-item" style="padding-left: 2.5%">
-                <button class="layui-btn" id="openFixedTransfer">新建领用申请</button>
-                <button class="layui-btn" id="openFixedTransferApply">查看领用申请</button>
-            </div>
         </div>
 
         <div class="layui-card-body">
@@ -71,14 +67,13 @@
         table.render(
             {
                 elem: '#FixedList'//指定table
-                , url: '/toMyTransferList'
+                , url: ''
                 , cols: [
                     [
                         {type: 'checkbox', fixed: 'left'}
                         , {
                         field: 'fixedTransferId2', title: '领用单号', fixed: 'left'
                     }
-                        , {field: 'fixedTransferTime', title: '领用时间', fixed: 'left'}
                         , {field: 'fixedId', title: '资产编号', templet: '<div>{{d.fixedcard.fixedId}}</div>'}
                         , {field: 'fixedName', title: '资产名称', templet: '<div>{{d.fixedcard.fixedName}}</div>'}
                         , {
@@ -103,6 +98,7 @@
                         }
                     }
                         , {field: 'fixedScale', title: '规格型号', templet: '<div>{{d.fixedcard.fixedScale}}</div>'}
+                        , {field: 'checkNodeId', title: '当前节点', templet: '<div></div>'}
                         , {unresize: true, width: 150, title: '操作', toolbar: '#Fixedmanagetool'}
                     ]
                 ]
@@ -164,10 +160,10 @@
             layer.full(fixedList);
         });
 
-        // //点击编辑打开useredit子页面,使用layui的表格监听
+
         table.on('tool(FixedTable)', function (obj) {
             var data = obj.data;
-            var fixedCardId = obj.data.fixedcardId;//每个对象的主键
+            var fixedtransferId = obj.data.fixedTransferId;//每个对象的主键
             console.log(fixedCardId)
             // console.log(data);
             if (obj.event == 'edit') {
@@ -176,9 +172,9 @@
                     offset: ['100px', '300px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    title: '固定资产详情',
+                    title: '申请详情',
                     resize: false,
-                    content: '/tofixedcardedit1' + fixedCardId
+                    content: '/FixedTransferCheck3' + fixedtransferId
                 });
                 layer.full(layerEdit);
             }
