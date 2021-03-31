@@ -100,6 +100,11 @@
         ORDER BY checkrecordstatus.check_node_id DESC
         LIMIT 0,1
     </select>
+    <select id="selectRemarkByRidNid" resultType="java.lang.String">
+        select remark
+        from checkrecordstatus
+        where check_record_id=#{recordId,jdbcType=INTEGER} ;
+    </select>
 
 
 </mapper>

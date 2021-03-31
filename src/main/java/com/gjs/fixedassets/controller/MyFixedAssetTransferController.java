@@ -165,6 +165,33 @@ public class MyFixedAssetTransferController {
         model.addAttribute("ncrs", newCheckRecordStatus);
         model.addAttribute("messId", messId);
 
+        List<String> remarkList = checkRecordStatusService.selectRemarkByRidNid(fixedTransId);
+
+        //传到前端的四个remark
+        Map<String, String> map = new HashMap<>();
+        if (remarkList.size() == 2) {
+            map.put("remark1", remarkList.get(1));
+            map.put("remark2", "");
+            map.put("remark3", "");
+            map.put("remark4", "");
+        } else if (remarkList.size() == 3) {
+            map.put("remark1", remarkList.get(1));
+            map.put("remark2", remarkList.get(2));
+            map.put("remark3", "");
+            map.put("remark4", "");
+        } else if (remarkList.size() == 4) {
+            map.put("remark1", remarkList.get(1));
+            map.put("remark2", remarkList.get(2));
+            map.put("remark3", remarkList.get(3));
+            map.put("remark4", "");
+        } else if (remarkList.size() == 5) {
+            map.put("remark1", remarkList.get(1));
+            map.put("remark2", remarkList.get(2));
+            map.put("remark3", remarkList.get(3));
+            map.put("remark4", remarkList.get(4));
+        }
+
+        model.addAttribute("map", map);
         return "myfixedtransfer/FixedTransferCheck2";
     }
 
@@ -227,6 +254,9 @@ public class MyFixedAssetTransferController {
                          @RequestParam("messId") Integer messId,
                          @RequestParam("ft1") Integer recordId,
                          @RequestParam(required = false, value = "remark1") String remark1,
+                         @RequestParam(required = false, value = "remark2") String remark2,
+                         @RequestParam(required = false, value = "remark3") String remark3,
+                         @RequestParam(required = false, value = "remark4") String remark4,
                          @RequestParam("useManId") Integer useManId
     ) {
         Object object = session.getAttribute("user");
@@ -256,21 +286,25 @@ public class MyFixedAssetTransferController {
             case 2:
                 checkRecordStatus.setCheckNodeId(3);
                 newMyMessage.setReceiver(fixedcard.getPersonCharge());
+                checkRecordStatus.setRemark(remark2);
                 fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
             case 3:
                 checkRecordStatus.setCheckNodeId(7);
                 newMyMessage.setReceiver(useManId);
+                checkRecordStatus.setRemark(remark3);
                 fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
             case 7:
                 checkRecordStatus.setCheckNodeId(8);
                 fixedcard.setPersonCharge(useManId);
+                checkRecordStatus.setRemark(remark4);
+                newMyMessage.setReceiver(useManId);
                 fixedcard.setUseStatus(2);
                 User useman = userService.selectUserByUserId(useManId);
                 fixedcard.setDepartmentId(useman.getDepartmentId());
 
-                fixedTransferService.applyTransfer2(fixedcard, oldMyMessage, checkRecordStatus);
+                fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
 
         }
@@ -293,6 +327,9 @@ public class MyFixedAssetTransferController {
                          @RequestParam("messId") Integer messId,
                          @RequestParam("ft1") Integer recordId,
                          @RequestParam(required = false, value = "remark1") String remark1,
+                         @RequestParam(required = false, value = "remark2") String remark2,
+                         @RequestParam(required = false, value = "remark3") String remark3,
+                         @RequestParam(required = false, value = "remark4") String remark4,
                          @RequestParam("useManId") Integer useManId
     ) {
         Object object = session.getAttribute("user");
@@ -322,16 +359,19 @@ public class MyFixedAssetTransferController {
                 break;
             case 2:
                 checkRecordStatus.setCheckNodeId(6);
+                checkRecordStatus.setRemark(remark2);
                 newMyMessage.setReceiver(fixedcard.getPersonCharge());
                 fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
             case 3:
                 checkRecordStatus.setCheckNodeId(9);
+                checkRecordStatus.setRemark(remark3);
                 newMyMessage.setReceiver(useManId);
                 fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;
             case 7:
                 checkRecordStatus.setCheckNodeId(9);
+                checkRecordStatus.setRemark(remark4);
                 newMyMessage.setReceiver(useManId);
                 fixedTransferService.applyTransfer1(fixedcard, oldMyMessage, checkRecordStatus, newMyMessage);
                 break;

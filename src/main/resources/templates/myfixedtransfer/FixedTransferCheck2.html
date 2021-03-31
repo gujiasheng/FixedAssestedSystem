@@ -118,6 +118,16 @@
         </td>
 
                 </span>
+                <span th:case="8">
+                <td width="200" colspan="4" style="text-align: left">
+            <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%"
+                   th:value="${ft.transferRemark}" readonly> 
+        </td>
+                <td colspan="2">
+            <button id="read3" class="layui-btn layui-btn ">已阅</button>
+        </td>
+
+                </span>
                 <span th:case="*">
                 <td width="200" colspan="6" style="text-align: left">
             <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%"
@@ -186,7 +196,7 @@
                         <input id="remark1" name="remark1" style="border: none;margin-left: 5%;width: 90%;height: 30%"/>
                     </span>
                     <span th:case="*">
-                        <span></span>
+                      <span th:text="${map.get('remark1')}"></span>
                     </span>
               </span>
         </td>
@@ -194,10 +204,10 @@
         <td width="200" colspan="3">
                <span th:switch="${ncrs.checkNodeId}">
                     <span th:case="2">
-                        <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%">
+                        <input id="remark2" name="remark2" style="border: none;margin-left: 5%;width: 90%;height: 30%">
                     </span>
                     <span th:case="*">
-                        <span></span>
+                        <span th:text="${map.get('remark2')}"></span>
                     </span>
               </span>
 
@@ -252,10 +262,10 @@
         <td width="200" colspan="3">
                 <span th:switch="${ncrs.checkNodeId}">
                     <span th:case="3">
-                        <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%">
+                        <input id="remark3" name="remark3" style="border: none;margin-left: 5%;width: 90%;height: 30%">
                     </span>
                     <span th:case="*">
-                        <span></span>
+                        <span th:text="${map.get('remark3')}"></span>
                     </span>
               </span>
         </td>
@@ -263,10 +273,10 @@
         <td width="200" colspan="3">
                 <span th:switch="${ncrs.checkNodeId}">
                     <span th:case="7">
-                        <input name="transferRemark" style="border: none;margin-left: 5%;width: 90%;height: 30%">
+                        <input id="remark4" name="remark4" style="border: none;margin-left: 5%;width: 90%;height: 30%">
                     </span>
                     <span th:case="*">
-                        <span></span>
+                       <span th:text="${map.get('remark4')}"></span>
                     </span>
               </span>
         </td>
@@ -291,7 +301,22 @@
     // }
 
     var messid = $("#messId").val();
-    var remark1 = $("#remark1").val();
+    var remark1;
+    $("#remark1").on("input", function () {
+        remark1 = this.value;
+    });
+    var remark2;
+    $("#remark2").on("input", function () {
+        remark2 = this.value;
+    });
+    var remark3;
+    $("#remark3").on("input", function () {
+        remark3 = this.value;
+    });
+    var remark4;
+    $("#remark4").on("input", function () {
+        remark4 = this.value;
+    });
     var fixedcardId1 = $("#fixedcardId1").val();
     var newRecordNode = $("#newRecordNode").val();
     var ft1 = $("#ft1").val();
@@ -306,6 +331,9 @@
                 data: {
                     messId: messid,
                     remark1: remark1,
+                    remark2: remark2,
+                    remark3: remark3,
+                    remark4: remark4,
                     fixedcardId1: fixedcardId1,
                     newRecordNode: newRecordNode,
                     ft1: ft1,
@@ -329,6 +357,9 @@
                 data: {
                     messId: messid,
                     remark1: remark1,
+                    remark2: remark2,
+                    remark3: remark3,
+                    remark4: remark4,
                     fixedcardId1: fixedcardId1,
                     newRecordNode: newRecordNode,
                     ft1: ft1,

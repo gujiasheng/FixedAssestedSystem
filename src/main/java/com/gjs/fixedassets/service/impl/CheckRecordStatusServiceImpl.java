@@ -29,4 +29,9 @@ public class CheckRecordStatusServiceImpl implements CheckRecordStatusService {
     public CheckRecordStatus selectNewRecordTrans(Integer recordId) {
         return checkRecordStatusMapper.selectNewNodeByRecordId(recordId);
     }
+
+    @Override
+    public List<String> selectRemarkByRidNid(Integer recordId) {
+        return checkRecordStatusMapper.selectRemarkByRidNid(recordId);
+    }
 }
