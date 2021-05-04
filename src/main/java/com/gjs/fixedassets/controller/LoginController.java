@@ -24,12 +24,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
     @Autowired
-    private DepartmentService departmentService;
-    @Autowired
-    private RoleService roleService;
-    @Autowired
-    private JobService jobService;
-    @Autowired
     private CompanyindustryMapper companyindustryMapper;
     @Autowired
     private CompanynatureMapper companynatureMapper;
@@ -70,7 +64,9 @@ public class LoginController {
      * @Return
      **/
     @PostMapping("/login")
-    public String login(@RequestParam("userName") String userName, @RequestParam("password") String password, Integer companyId, Model model, HttpSession session) {
+    public String login(@RequestParam("userName") String userName, @RequestParam("password") String password,
+                        Integer companyId, Model model, HttpSession session) {
+
         User user = userService.selectUserByNamePSW(userName, password, companyId);
 
 
@@ -115,7 +111,7 @@ public class LoginController {
     @GetMapping("/exit")
     public String toexit(HttpSession session) {
         session.setAttribute("user", null);
-        return "login";
+        return "redirect:/tologin";
     }
 
 

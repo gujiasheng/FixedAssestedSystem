@@ -50,17 +50,26 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label" readonly="readonly"><span style="color: red">*</span>用户名</label>
+                    <label class="layui-form-label">姓名</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="userName" value="xx" readonly="" class="layui-input"
+                        <input type="text" name="userName" value="xx" class="layui-input"
                                th:value="${user.userName}">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux"></div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"><span style="color: red">*</span>账号名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="accountName" value="xx" readonly="" class="layui-input"
+                               th:value="${user.accountName}">
                     </div>
                     <div class="layui-form-mid layui-word-aux"></div>
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label">密码</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="password" value="123" autocomplete="off" class="layui-input"
+                        <input type="text" lay-verify="required" name="password" value="123" autocomplete="off"
+                               class="layui-input"
                                th:value="${user.password}">
                     </div>
                 </div>
@@ -74,12 +83,12 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">性别</label>
                     <div class="layui-input-block">
-                        <div th:if="${user.gender}==0">
+                        <div th:if="${user.gender}==2">
                             <input type="radio" name="gender" value="1" title="男">
                             <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
                                 <div>男</div>
                             </div>
-                            <input type="radio" name="gender" value="0" title="女" checked="">
+                            <input type="radio" name="gender" value="2" title="女" checked="">
                             <div class="layui-unselect layui-form-radio layui-form-radioed"><i
                                     class="layui-anim layui-icon"></i>
                                 <div>女</div>
@@ -90,7 +99,7 @@
                             <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
                                 <div>男</div>
                             </div>
-                            <input type="radio" name="gender" value="0" title="女">
+                            <input type="radio" name="gender" value="2" title="女">
                             <div class="layui-unselect layui-form-radio layui-form-radioed"><i
                                     class="layui-anim layui-icon"></i>
                                 <div>女</div>
@@ -102,7 +111,7 @@
                     <label class="layui-form-label">头像</label>
                     <div class="layui-upload">
                         <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
-                        <button type="button" class="layui-btn" id="test9">开始上传</button>
+
                     </div>
                 </div>
 
@@ -128,7 +137,8 @@
                 <!--</div>-->
                 <div class="layui-form-item">
                     <div class="layui-input-block">
-                        <button id="myaccountedit" class="layui-btn" lay-submit="" lay-filter="myaccountedit">确认修改
+                        <button id="myaccountedit" class="layui-btn" lay-submit="" lay-filter="myaccountedit"
+                                onclick="return confirm('是否保存修改?')">确认修改
                         </button>
                         <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
                     </div>
@@ -163,8 +173,16 @@
 
         form.on('submit(myaccountedit)', function (data) {
             data = data.field;
+            if (data.password != data.password2) {
 
-
+                layer.msg('两次密码输入不正确', {
+                    icon: 5,
+                    shift: 6,//抖动效果
+                    time: 1000
+                });
+                return false;
+            }
+            return true;
         })
         var oldpassword = [[${user.password}]];
         var newpassword = [[${loginUser.password}]];

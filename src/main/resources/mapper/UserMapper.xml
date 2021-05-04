@@ -102,7 +102,7 @@
         `user_email`, `user_online`,
         `department_id`, `job_id`, `role_id`, `is_status`, `resgistertime`, `company_id`,account_name)
         VALUES ( #{workId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-        #{gender,jdbcType=VARCHAR}, #{userFace,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER},
+        1, #{userFace,jdbcType=VARCHAR}, #{userPhone,jdbcType=INTEGER},
         #{userEmail,jdbcType=VARCHAR},#{userOnline,jdbcType=VARCHAR}, #{departmentId,jdbcType=INTEGER},
         #{jobId,jdbcType=INTEGER}, #{roleId,jdbcType=INTEGER},
         1,now(),#{companyId,jdbcType=INTEGER},#{accountName,jdbcType=VARCHAR});
@@ -146,4 +146,7 @@
         from user
         where company_id=#{companyId,jdbcType=INTEGER}
     </select>
+    <delete id="deleteUser">
+        DELETE from user where user_id =#{userId,jdbcType=INTEGER}
+    </delete>
 </mapper>

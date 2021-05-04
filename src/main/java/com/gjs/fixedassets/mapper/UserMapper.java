@@ -31,4 +31,7 @@ public interface UserMapper {
 
     //所有账户名
     List<String> selectAllAccountName(Integer companyId);
+
+    //删除功能
+    void deleteUser(Integer userId);
 }

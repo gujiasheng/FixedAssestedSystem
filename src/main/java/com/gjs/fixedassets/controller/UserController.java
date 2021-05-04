@@ -234,4 +234,18 @@ public class UserController {
         return "redirect:/selectMyAccount";
     }
 
+    /*
+     * @Description TODO
+     * 删除功能
+     * @Author
+     * @Date 2021-05-05
+     * @params
+     * @Return
+     **/
+    @PostMapping("/deleteUser{userId}")
+    @ResponseBody
+    public String deleteUser(User user, @PathVariable("userId") Integer userId) {
+        userService.deleteUser(userId);
+        return null;
+    }
 }

@@ -13,7 +13,7 @@
 
 <form class="layui-form" action="/addUser" method="post">
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>工号:</label>
+        <label class="layui-form-label">工号:</label>
         <div class="layui-input-inline">
             <input type="text" id="workId" name="workId" placeholder="请输入工号" autocomplete="off" class="layui-input">
         </div>
@@ -77,7 +77,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn" lay-submit lay-filter="useradd">立即提交</button>
+            <button class="layui-btn" lay-submit lay-filter="useradd" onclick="return confirm('是否提交?')">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -120,15 +120,6 @@
                     icon: 5,
                     shift: 6,//抖动效果
                     time: 1500//持续时间
-                }, function () {
-                });
-                return false;
-            }
-            if (data.workId == '') {
-                layer.msg('工号不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
                 }, function () {
                 });
                 return false;

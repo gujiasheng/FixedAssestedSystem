@@ -42,5 +42,18 @@
         WHERE `job_id` = #{jobId,jdbcType=INTEGER};
 
     </update>
+    <select id="selectJobByCompanyId" resultMap="BaseResultMap">
+        select *
+        from job
+        where job.company_id=#{companyId,jdbcType=INTEGER}
+        <if test=" jobName != null">and job_name like CONCAT('%' ,#{jobName,jdbcType=VARCHAR},'%')</if>
+        LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+    </select>
+    <select id="selectJobCount" resultType="com.gjs.fixedassets.entity.Job">
+        select *
+        from job
+        where job.company_id=#{companyId,jdbcType=INTEGER}
+        <if test=" jobName != null">and job_name like CONCAT('%' ,#{jobName,jdbcType=VARCHAR},'%')</if>
+    </select>
 
 </mapper>

@@ -127,7 +127,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label">验证密码:</label>
                                 <div class="layui-input-block">
-                                    <input type="text" name="" lay-verify="required"
+                                    <input type="text" name="repassword" lay-verify="required"
                                            placeholder="请输入" autocomplete="off"
                                            class="layui-input">
                                     <span class="layui-form-mid layui-word-aux" hidden><span class="redstar"
@@ -205,6 +205,10 @@
             }
             if (data.password == '') {
                 layer.msg('密码不能为空');
+                return false;
+            }
+            if (data.password != data.repassword) {
+                layer.msg('两次密码输入不正确');
                 return false;
             }
 

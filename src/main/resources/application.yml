@@ -27,7 +27,7 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true #驼峰命名和下划线命名相互转换
 
-#添加mapper层的sql语句输出
+
 
 logging:
   level:

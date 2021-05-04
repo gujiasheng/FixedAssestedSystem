@@ -206,6 +206,24 @@
 
                 });
             }
+            if (obj.event == 'del') {
+                layer.confirm('是否删除该用户?', {
+                    btn: ['确定', '取消'], //按钮
+                    offset: '100px'
+                }, function () {
+                    $.ajax({
+                        url: '/deleteUser' + userId,
+                        type: "post",
+                        success: function () {
+                            layer.msg('删除成功', {icon: 1});
+                            window.location.reload();
+
+                        }
+                    })
+
+                }, function () {
+                });
+            }
 
 
         })
