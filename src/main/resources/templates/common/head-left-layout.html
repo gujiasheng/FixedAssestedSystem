@@ -89,6 +89,30 @@
                     </li>
 
                     <li class="layui-nav-item">
+                        <div th:if="${u.roleId} eq 2">
+                            <a data-id="2"> <i class="fa fa-tasks" style="margin-right: 2%"></i><span
+                                    class="layui-nav-item-span">固定资产管理员</span></a>
+                            <dl class="layui-nav-child">
+                                <dd><a class="layui-nav-item-a" data-id="18" data-url="/tomymessage"><i
+                                        class="fa fa-comment-o" style="margin-right: 2%"></i><span
+                                        class="layui-nav-item-span">我的消息</span></a></dd>
+                                <dd><a class="layui-nav-item-a" data-id="13" data-url="/toFixedAssetCardList"><i
+                                        class="fa fa-circle-thin"></i><span class="layui-nav-item-span">固定资产信息管理</span></a>
+                                </dd>
+                                <dd><a class="layui-nav-item-a" data-id="15" data-url="/toFixedAssetTransferManageList"><i
+                                        class="fa fa-circle-thin" style="margin-right: 2%"></i><span
+                                        class="layui-nav-item-span">固定资产领用管理</span></a></dd>
+                                <dd><a class="layui-nav-item-a" data-id="16" data-url=""><i
+                                        class="fa fa-circle-thin" style="margin-right: 2%"></i><span
+                                        class="layui-nav-item-span">固定资产维修管理</span></a></dd>
+                                <dd><a class="layui-nav-item-a" data-id="17" data-url=""><i
+                                        class="fa fa-circle-thin" style="margin-right: 2%"></i><span
+                                        class="layui-nav-item-span">固定资产报废管理</span></a></dd>
+                            </dl>
+                        </div>
+                    </li>
+
+                    <li class="layui-nav-item">
                         <div th:if="${u.roleId} eq 3">
                             <a data-id="2"> <i class="fa fa-tasks" style="margin-right: 2%"></i><span
                                     class="layui-nav-item-span">普通用户</span></a>
@@ -107,7 +131,6 @@
                                 <dd><a class="layui-nav-item-a" data-id="17" data-url=""><i
                                         class="fa fa-circle-thin" style="margin-right: 2%"></i><span
                                         class="layui-nav-item-span">报废申报</span></a></dd>
-
                             </dl>
                         </div>
                     </li>

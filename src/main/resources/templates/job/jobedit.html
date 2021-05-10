@@ -10,12 +10,13 @@
 </head>
 <body>
 
-<form class="layui-form" method="post">
-
+<form class="layui-form" action="/editJob" method="post" lay-filter="editFilter">
+    <input type="text" name="jobId" autocomplete="off" class="layui-input" hidden>
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>岗位名:</label>
         <div class="layui-input-inline">
-            <input type="text" name="departmentName" placeholder="请输入部门名" autocomplete="off" class="layui-input">
+            <input type="text" name="jobName" placeholder="请输入岗位名" autocomplete="off" class="layui-input"
+                   th:value="${job.jobName}">
         </div>
     </div>
     <div class="layui-form-item">
@@ -27,7 +28,17 @@
             </select>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">岗位等级:</label>
+        <div class="layui-input-inline">
+            <select id="level" name="level">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
 
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="departmentadd">立即提交</button>
@@ -44,28 +55,34 @@
             $ = layui.jquery
         element = layui.element;
 
-        //动态获取用户下拉列表
-        $.ajax({
-            url: '/ajaxGetUser',
-            dataType: 'json',
-            type: "get",
-            success: function (data) {
-                $.each(data, function (index, item) {
-
-                    $("#departmentManager").append("<option value='" + item.userId + "'>" + item.workId + '——' + item.userName + "</option>");
-
-                });
-                layui.form.render("select");
-            }
-
-
+        form.val("editFilter", {
+            "jobId": [[${job.jobId}]],
+            "departmentId": [[${job.departmentId}]],
+            "level": [[${job.level}]]
         })
+
+        //动态获取用户下拉列表
+        // $.ajax({
+        //     url: '/ajaxGetDept',
+        //     dataType: 'json',
+        //     type: "get",
+        //     success: function (data) {
+        //         $.each(data, function (index, item) {
+        //
+        //             $("#departmentId").append("<option value='" + item.departmentId + "'>" + item.departmentName + "</option>");
+        //
+        //         });
+        //         layui.form.render("select");
+        //     }
+        //
+        //
+        // })
 
         // 提交验证
         form.on('submit(departmentadd)', function (data) {
             data = data.field;
             //提交验证错误提示
-            if (data.departmentName == '') {
+            if (data.jobName == '') {
                 layer.msg('岗位名不能为空', {
                     icon: 5,
                     anim: 6,//抖动效果

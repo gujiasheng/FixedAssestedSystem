@@ -29,6 +29,7 @@ public interface UserMapper {
     //下拉列表人员列表
     List<User> selectAllUserByCompanyId(Integer companyId);
 
+
     //所有账户名
     List<String> selectAllAccountName(Integer companyId);
 

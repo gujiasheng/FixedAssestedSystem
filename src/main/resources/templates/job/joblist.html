@@ -66,8 +66,14 @@
                 , cols: [
                     [
                         {field: 'jobShowId', title: '序号', fixed: 'left', templet: '#jobShowId'}
-                        , {field: 'jobName', title: '部门名', fixed: 'left'}
-                        , {field: 'departmentName', title: '所属部门', fixed: 'left'}
+                        , {field: 'jobName', title: '岗位名', fixed: 'left'}
+                        , {
+                        field: 'departmentName',
+                        title: '所属部门',
+                        templet: '<div>{{d.departmentName}}</div>',
+                        fixed: 'left'
+                    }
+                        , {field: 'level', title: '岗位等级', fixed: 'left'}
                         , {fixed: 'right', title: '操作', toolbar: '#jobmanagetool'}
                     ]
                 ]

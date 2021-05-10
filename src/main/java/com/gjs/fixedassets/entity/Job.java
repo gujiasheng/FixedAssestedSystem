@@ -27,4 +27,14 @@ public class Job implements Serializable {
      * 职位所属公司
      */
     private Integer companyId;
+
+    /**
+     * 所属部门名称
+     */
+    private String departmentName;
+
+    /**
+     * 职位等级
+     */
+    private Integer level;
 }

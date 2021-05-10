@@ -18,4 +18,9 @@ public interface JobService {
 
     void addJob(Job job);
 
+    Job selectJobByPk(@Param("jobId") Integer jobId);
+
+    void deleteJob(Integer jobId);
+
+    void updateJob(Job job);
 }

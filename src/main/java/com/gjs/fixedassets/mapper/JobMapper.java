@@ -24,4 +24,7 @@ public interface JobMapper {
 
     List<Job> selectJobCount(@Param("companyId") Integer companyId, @Param("jobName") String jobName);
 
+    void deleteJob(Integer jobId);
+
+    void updateJob(Job job);
 }

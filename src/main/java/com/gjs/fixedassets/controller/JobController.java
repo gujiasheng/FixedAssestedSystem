@@ -6,13 +6,11 @@ import com.gjs.fixedassets.entity.User;
 import com.gjs.fixedassets.service.DepartmentService;
 import com.gjs.fixedassets.service.JobService;
 import com.gjs.fixedassets.service.UserService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -109,5 +107,46 @@ public class JobController {
         return map;
     }
 
+    @GetMapping("toJobedit{jobId}")
+    public String editDepartment(Model model, @PathVariable("jobId") Integer jobId, HttpSession session) {
+        Object obj = session.getAttribute("user");
+        User loginUser = (User) obj;
 
+        Job job = jobService.selectJobByPk(jobId);
+        List<User> userList = userService.selectAllUserByCompanyId(loginUser.getCompanyId());
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(loginUser.getCompanyId());
+        model.addAttribute("dl", departmentList);
+        model.addAttribute("job", job);
+        model.addAttribute("ul", userList);
+        return "job/jobedit";
+    }
+
+    @GetMapping("/ajaxGetDept")
+    @ResponseBody
+    public String ajaxGetUser(Model model, HttpSession session) {
+        Object object = session.getAttribute("user");
+        User loginUser = (User) object;
+        User user = userService.selectUserByUserId(loginUser.getUserId());
+        List<Department> departmentList = departmentService.selectDepartmentByCompanyId2(user.getCompanyId());
+        model.addAttribute("userList", departmentList);
+        JSONArray jsonArray = JSONArray.fromObject(departmentList);
+        String userJson = jsonArray.toString();
+
+        return userJson;
+
+    }
+
+    @PostMapping("/deleteJob{jobId}")
+    @ResponseBody
+    public String deleteDepartment(Model model, @PathVariable("jobId") Integer jobId) {
+        jobService.deleteJob(jobId);
+        return null;
+    }
+
+    @PostMapping("/editJob")
+    @ResponseBody
+    public String editDepartment(Job job) {
+        jobService.updateJob(job);
+        return null;
+    }
 }

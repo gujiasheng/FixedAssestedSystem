@@ -200,18 +200,29 @@
         form.on('submit(register)', function (data) {
             data = data.field;
             if (data.name == '') {
-                layer.msg('用户名不能为空');
+                layer.msg('用户名不能为空', {
+                    icon: 5,
+                    shift: 6,//抖动效果
+                    time: 1000
+                });
                 return false;
             }
             if (data.password == '') {
-                layer.msg('密码不能为空');
+                layer.msg('密码不能为空', {
+                    icon: 5,
+                    shift: 6,//抖动效果
+                    time: 1000
+                });
                 return false;
             }
             if (data.password != data.repassword) {
-                layer.msg('两次密码输入不正确');
+                layer.msg('两次密码输入不正确', {
+                    icon: 5,
+                    shift: 6,//抖动效果
+                    time: 1000
+                });
                 return false;
             }
-
             return true;
         })
 

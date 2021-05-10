@@ -203,7 +203,7 @@
                     <label class="layui-form-label">数量</label>
                     <div class="layui-input-inline">
                         <input type="text" id="account" name="account" placeholder="0.0000" autocomplete="off"
-                               lay-verify="required"
+                               lay-verify="required" readonly value="1"
                                class="layui-input" maxlength="8">
                         <span style="position: absolute; top: 0; right: 45%; display: table-cell; white-space: nowrap; padding: 7px 10px;"
                               id="danwei"></span>
@@ -335,7 +335,9 @@
             </div>
             <div class="layui-form-item" style="margin-left: 30%;margin-top: 1%">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="cardadd" style="width: 120px">保存</button>
+                    <button class="layui-btn" lay-submit lay-filter="cardadd" style="width: 120px"
+                            onclick="return confirm('是否保存?')">保存
+                    </button>
                     <button type="reset" id="reset" class="layui-btn layui-btn-primary" onclick="formReset()">重置
                     </button>
                 </div>
@@ -351,7 +353,7 @@
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
 <script src="../jquery-3.4.1.min.js" type="text/javascript"></script>
 <script th:inline="javascript">
-    var account = 0;//数量
+    var account = 1;//数量
     var totalAmount = 0.0000;//入账金额
     var unitPrice = 0.0000;//单价
     var estimatedResidualValue = 0.0000;//预计净残值
@@ -495,16 +497,8 @@
             var checkFixedId = [[${fds}]];
 
             $(checkFixedId).each(function (i, item) {
-                console.log(item);
-                console.log(thisFixedId);
                 if (item == thisFixedId) {
-                    layer.msg('固定资产编号重复', {
-                        icon: 5,
-                        anim: 6,
-                        time: 1500
-                    }, function () {
-
-                    })
+                    alert("固定资产编号重复，请重新填写")
                     $("#fixedId").val("");
                     return false;
                 }

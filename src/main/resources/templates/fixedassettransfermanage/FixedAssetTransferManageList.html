@@ -13,6 +13,7 @@
 <div class="layui-fluid">
     <div class="layui-card">
         <div class="layui-form layui-card-header " style="height:100%">
+
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">资产编号:</label>
@@ -29,22 +30,14 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">资产状态:</label>
-                    <div class="layui-input-block">
-                        <select id="searchStatusId" name="searchStatusId">
-                            <option value=""></option>
-                            <option th:each="sm:${sm}" th:value="${sm.getKey()}" th:text="${sm.getValue()}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="layui-inline">
                     <button class="layui-btn" id="searchBTN" type="button">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
             </div>
             <div class="layui-form-item" style="padding-left: 2.5%">
-                <button class="layui-btn" id="openFixedAdd">新建入库</button>
+                <button class="layui-btn" id="openFixedTransfer">领用申报</button>
+                <button class="layui-btn" id="openFixedTransferApply">查看领用</button>
             </div>
         </div>
 
@@ -56,8 +49,7 @@
             <table id="FixedList" lay-filter="FixedTable"></table>
             <!--templet内容-->
             <script type="text/html" id="Fixedmanagetool">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">领用详情</a>
             </script>
         </div>
     </div>
@@ -152,16 +144,16 @@
         // $('#openFixedAdd').click(function () {
         //
         // })
-        $('#openFixedAdd').click(function () {
+        $('#openFixedTransfer').click(function () {
             var fixedAdd = layer.open({
                 type: 2,
                 fixed: false, //不固定
                 maxmin: true,
                 offset: ['100px', '300px'],
-                title: '固定资产新建入库',
+                title: '领用申报',
                 // content: 'useradd.html',
                 resize: false,
-                content: '/tofixedcardadd',
+                content: '/toMyFixedAssetTransferAdd',
                 cancel: function () {
                     window.location.reload();
                 }
@@ -169,7 +161,21 @@
             layer.full(fixedAdd);
         });
 
-
+        $('#openFixedTransferApply').click(function () {
+            var fixedList = layer.open({
+                type: 2,
+                fixed: false, //不固定
+                maxmin: true,
+                title: '我的领用申请',
+                // content: 'useradd.html',
+                resize: false,
+                content: '/toMyFixedAssetTransferApplyList',
+                cancel: function () {
+                    window.location.reload();
+                }
+            });
+            layer.full(fixedList);
+        });
 
         // //点击编辑打开useredit子页面,使用layui的表格监听
         table.on('tool(FixedTable)', function (obj) {
@@ -183,9 +189,9 @@
                     offset: ['100px', '300px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    title: '固定资产卡片编辑',
+                    title: '固定资产详情',
                     resize: false,
-                    content: '/tofixedcardedit' + fixedCardId
+                    content: '/tofixedcardedit1' + fixedCardId
                 });
                 layer.full(layerEdit);
             }

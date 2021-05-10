@@ -86,11 +86,33 @@
 <script src="../jquery-3.4.1.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 
+
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer,
             $ = layui.jquery;
 
+
+        // $("#accountName").blur(function () {
+        //     var thisAccountName=$(this).val();
+        //     var alluser=[[${allacc}]];
+        //
+        //     $(alluser).each(function (i, item) {
+        //         console.log(item);
+        //         console.log(thisAccountName);
+        //         if (item == thisAccountName) {
+        //             layer.msg('账号重复，请修改', {
+        //                 icon: 5,
+        //                 anim: 6,
+        //                 time: 1500
+        //             }, function () {
+        //
+        //             })
+        //             $("#accountName").val("");
+        //             return false;
+        //         }
+        //     })
+        // })
 
         // 提交验证
         form.on('submit(useradd)', function (data) {
@@ -154,6 +176,8 @@
                 });
                 return false;
             }
+
+
             //获取当前iframe页面索引
             var currIframe = parent.layer.getFrameIndex(window.name);
 

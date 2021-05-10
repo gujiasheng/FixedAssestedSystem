@@ -39,4 +39,19 @@ public class JobServiceImpl implements JobService {
     public void addJob(Job job) {
         jobMapper.insert(job);
     }
+
+    @Override
+    public Job selectJobByPk(Integer jobId) {
+        return jobMapper.selectByPrimaryKey(jobId);
+    }
+
+    @Override
+    public void deleteJob(Integer jobId) {
+        jobMapper.deleteJob(jobId);
+    }
+
+    @Override
+    public void updateJob(Job job) {
+        jobMapper.updateJob(job);
+    }
 }

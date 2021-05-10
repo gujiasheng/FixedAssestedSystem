@@ -86,7 +86,7 @@
                 for (i = 0; i < data.length; i++) {
                     var span1 = $("<span></span>").text(data[i].messageTitle);
                     var span2;
-                    if (data[i].isNew != 1) {
+                    if (data[i].isNew != 1) {//判断是否已阅
                         span2 = $("<span class=\"layui-badge  layui-bg-gray\" style=\"margin-left: 1%\"></span>").text("已阅");
                     } else {
                         span2 = $("<span class=\"layui-badge\" style=\"margin-left: 1%\" ></span>").text("new");
@@ -98,7 +98,8 @@
                     var ftid = data[i].messageContent;
                     var messId = data[i].messageId;
                     if (data[i].messageType == 1) {
-                        var a = $("<a class='messlistitem' href='/toFixedTransferCheck2" + ftid + "/" + messId + "' onclick='clickIsNew(" + messId + ")'></a>").append(span1, span2, span3, span4, hr);
+                        var a = $("<a class='messlistitem' href='/toFixedTransferCheck2" + ftid + "/" + messId + "' " +
+                            "onclick='clickIsNew(" + messId + ")'></a>").append(span1, span2, span3, span4, hr);
                     }
                     $("#cardlist").append(a);
 

@@ -6,6 +6,7 @@ import com.gjs.fixedassets.entity.Department;
 import com.gjs.fixedassets.entity.Job;
 import com.gjs.fixedassets.entity.Role;
 import com.gjs.fixedassets.entity.User;
+import com.gjs.fixedassets.mapper.UserMapper;
 import com.gjs.fixedassets.service.DepartmentService;
 import com.gjs.fixedassets.service.JobService;
 import com.gjs.fixedassets.service.RoleService;
@@ -82,6 +83,8 @@ public class UserController {
         model.addAttribute("jobList", jobList);
         List<String> accountNameList = userService.selectAllAccountName(user.getCompanyId());
         model.addAttribute("anl", accountNameList);
+        List<String> selectAllUserByCompanyId = userService.selectAllAccountName(user.getCompanyId());
+        model.addAttribute("allacc", selectAllUserByCompanyId);
         return "/admin/useradd";
     }
     /*
@@ -164,9 +167,11 @@ public class UserController {
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user1 = userService.selectUserByUserId(loginUser.getUserId());
+
         user.setCompanyId(user1.getCompanyId());
         user.setIsStatus(1);
         userService.addUser(user);
+
         return "redirect:/touseradd";
     }
 

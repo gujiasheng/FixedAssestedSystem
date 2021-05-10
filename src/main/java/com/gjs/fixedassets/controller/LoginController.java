@@ -70,11 +70,10 @@ public class LoginController {
         User user = userService.selectUserByNamePSW(userName, password, companyId);
 
 
-        if (user != null && !("").equals(user) && user.getIsStatus() == 1) {
+        if (user != null && !("").equals(user) && user.getIsStatus() == 1) {//1为账号启用
             session.setAttribute("user", user);
-
             return "redirect:/toheadleft";
-        } else if (user != null && !("").equals(user) && user.getIsStatus() == 2) {
+        } else if (user != null && !("").equals(user) && user.getIsStatus() == 2) {//2为账号停用
             return "redirect:/tologin3";
         } else {
             return "redirect:/tologin2";

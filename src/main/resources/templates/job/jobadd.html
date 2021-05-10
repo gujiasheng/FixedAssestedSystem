@@ -10,12 +10,13 @@
 </head>
 <body>
 
-<form class="layui-form" method="post">
+<form class="layui-form" action="/addJob" method="post">
 
     <div class="layui-form-item">
         <label class="layui-form-label"><span style="color: red">*</span>岗位名:</label>
         <div class="layui-input-inline">
-            <input type="text" name="jobName" placeholder="请输入岗位名" autocomplete="off" class="layui-input">
+            <input type="text" name="jobName" lay-verify="required" placeholder="请输入岗位名" autocomplete="off"
+                   class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -27,10 +28,22 @@
             </select>
         </div>
     </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">岗位等级:</label>
+        <div class="layui-input-inline">
+            <select id="level" name="level">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
 
+            </select>
+        </div>
+    </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button id="addsub" class="layui-btn" lay-submit lay-filter="jobadd">立即提交</button>
+            <button id="addsub" class="layui-btn" lay-submit lay-filter="jobadd" onclick="return confirm('是否提交?')">
+                立即提交
+            </button>
 
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
@@ -43,8 +56,8 @@
     layui.use(['form'], function () {
         var form = layui.form,
             layer = layui.layer,
-            $ = layui.jquery
-        element = layui.element;
+            $ = layui.jquery,
+            element = layui.element;
 
 
         // 提交验证

@@ -34,6 +34,7 @@ public class CompanyServiceImpl implements CompanyService {
         job.setCompanyId(company.getCompanyId());
 //            job.setDepartmentId(department.getDepartmentId());
         job.setJobName("员工");
+        job.setLevel(3);
         jobMapper.insert(job);
         user.setIsStatus(1);
         user.setCompanyId(company.getCompanyId());
@@ -41,6 +42,7 @@ public class CompanyServiceImpl implements CompanyService {
         user.setRoleId(1);
         user.setWorkId("10001");
         user.setGender("1");
+        user.setUserName("系统管理员1号");
         userMapper.addUser2(user);
         department.setCompanyId(company.getCompanyId());
         department.setDepartmentName("系统管理部");
@@ -52,7 +54,8 @@ public class CompanyServiceImpl implements CompanyService {
         user.setDepartmentId(department.getDepartmentId());
 
         userMapper.updateUser(user);
-
+        job.setDepartmentId(department.getDepartmentId());
+        jobMapper.updateJob(job);
 
     }
 
