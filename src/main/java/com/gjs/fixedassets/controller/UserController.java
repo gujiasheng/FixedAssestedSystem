@@ -2,15 +2,9 @@ package com.gjs.fixedassets.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.gjs.fixedassets.entity.Department;
-import com.gjs.fixedassets.entity.Job;
-import com.gjs.fixedassets.entity.Role;
-import com.gjs.fixedassets.entity.User;
+import com.gjs.fixedassets.entity.*;
 import com.gjs.fixedassets.mapper.UserMapper;
-import com.gjs.fixedassets.service.DepartmentService;
-import com.gjs.fixedassets.service.JobService;
-import com.gjs.fixedassets.service.RoleService;
-import com.gjs.fixedassets.service.UserService;
+import com.gjs.fixedassets.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +28,8 @@ public class UserController {
     private RoleService roleService;
     @Autowired
     private JobService jobService;
+    @Autowired
+    private FixedcardService fixedcardService;
 
     /*
      * @Description TODO
@@ -58,6 +54,7 @@ public class UserController {
         Integer tingyong = 2;
         model.addAttribute("qiyong", qiyong);
         model.addAttribute("tingyong", tingyong);
+
 
         return "/admin/userlist";
     }
@@ -144,6 +141,9 @@ public class UserController {
         model.addAttribute("jobList", jobList);
         User selectUserByUserId = userService.selectUserByUserId(userId);
         model.addAttribute("user", selectUserByUserId);
+        model.addAttribute("userDid", selectUserByUserId.getDepartmentId() != null ? selectUserByUserId.getDepartmentId() : 0);//防止部门为空的bug
+        model.addAttribute("userJid", selectUserByUserId.getJobId() != null ? selectUserByUserId.getJobId() : 0);//防止岗位为空的bug
+
         String departmentName = departmentService.selectDName(selectUserByUserId.getDepartmentId());
         model.addAttribute("dName", departmentName);
         String jobName = jobService.selectJName(selectUserByUserId.getJobId());
@@ -249,8 +249,16 @@ public class UserController {
      **/
     @PostMapping("/deleteUser{userId}")
     @ResponseBody
-    public String deleteUser(User user, @PathVariable("userId") Integer userId) {
-        userService.deleteUser(userId);
+    public String deleteUser(User user, @PathVariable("userId") Integer userId) throws Exception {
+        List<Fixedcard> fixedcards = fixedcardService.selectFixedcardByUserId(userId);
+        List<Department> departmentList = departmentService.selectdepartByManager(userId);
+        if (fixedcards.size() != 0) {
+            throw new Exception("该用户已被引用！");
+        } else if (departmentList.size() != 0) {
+            throw new Exception("该用户已被应用！");
+        } else {
+            userService.deleteUser(userId);
+        }
         return null;
     }
 }

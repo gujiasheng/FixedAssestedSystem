@@ -51,10 +51,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>职位:</label>
+        <label class="layui-form-label">职位:</label>
         <div class="layui-input-inline">
             <select name="jobId">
-
                 <option value=""></option>
                 <option th:each="j:${jobList}"
                         th:value="${j.jobId}"
@@ -64,7 +63,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>部门:</label>
+        <label class="layui-form-label">部门:</label>
         <div class="layui-input-inline">
             <select name="departmentId" lay-search>
                 <option value=""></option>
@@ -156,26 +155,26 @@
                 });
                 return false;
             }
-            if (data.jobId == '') {
-                layer.msg('职位不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
-
-                });
-                return false;
-            }
-            if (data.departmentId == '') {
-                layer.msg('部门不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
-
-                });
-                return false;
-            }
+            // if (data.jobId == '') {
+            //     layer.msg('职位不能为空', {
+            //         icon: 5,
+            //         shift: 6,//抖动效果
+            //         time: 1500
+            //     }, function () {
+            //
+            //     });
+            //     return false;
+            // }
+            // if (data.departmentId == '') {
+            //     layer.msg('部门不能为空', {
+            //         icon: 5,
+            //         shift: 6,//抖动效果
+            //         time: 1500
+            //     }, function () {
+            //
+            //     });
+            //     return false;
+            // }
 
 
             //获取当前iframe页面索引

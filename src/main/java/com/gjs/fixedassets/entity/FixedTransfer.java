@@ -94,4 +94,6 @@ public class FixedTransfer implements Serializable {
      */
     private Integer lastNode;
 
+    private String userName;
+
 }

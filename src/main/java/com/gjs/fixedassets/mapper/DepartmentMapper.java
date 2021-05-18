@@ -27,4 +27,7 @@ public interface DepartmentMapper {
 
     //修改部门信息
     void updateDepartment(Department department);
+
+    //根据部门负责人查
+    List<Department> selectdepartByManager(Integer managerId);
 }

@@ -46,6 +46,7 @@
         <div class="layui-input-inline">
             <select id="roleId" name="roleId">
                 <!--<option th:value="${user.roleId}" th:text="${rName}"></option>-->
+                <option th:value="${0}">--请输入--</option>
                 <option th:each="r:${roleList}"
                         th:value="${r.roleId}"
                         th:text="${r.roleName}"
@@ -54,10 +55,11 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>职位:</label>
+        <label class="layui-form-label">职位:</label>
         <div class="layui-input-inline">
             <select id="jobId" name="jobId">
                 <!--<option th:value="${user.jobId}" th:text="${jName}" hidden="hidden"></option>-->
+                <option th:value="${0}">--请输入--</option>
                 <option th:each="j:${jobList}"
                         th:value="${j.jobId}"
                         th:text="${j.jobName}"
@@ -66,10 +68,11 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label"><span style="color: red">*</span>部门:</label>
+        <label class="layui-form-label">部门:</label>
         <div class="layui-input-inline">
             <select name="departmentId">
                 <!--<option th:value="${user.departmentId}" th:text="${dName}" hidden="hidden"></option>-->
+                <option th:value="${0}">--请输入--</option>
                 <option th:each="d:${departmentList}"
                         th:value="${d.departmentId}"
                         th:text="${d.departmentName}"
@@ -101,11 +104,13 @@
         var form = layui.form,
             layer = layui.layer,
             $ = layui.jquery;
+
+
         form.val("editFilter", {
             "roleId": [[${user.roleId}]],
-            "departmentId": [[${user.departmentId}]],
+            "departmentId": [[${userDid}]],
             "isStatus": [[${user.isStatus}]],
-            "jobId": [[${user.jobId}]]
+            "jobId": [[${userJid}]]
         })
         // 提交验证
         form.on('submit(useradd)', function (data) {
@@ -147,26 +152,26 @@
                 });
                 return false;
             }
-            if (data.jobId == '') {
-                layer.msg('职位不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
-
-                });
-                return false;
-            }
-            if (data.departmentId == '') {
-                layer.msg('部门不能为空', {
-                    icon: 5,
-                    shift: 6,//抖动效果
-                    time: 1500
-                }, function () {
-
-                });
-                return false;
-            }
+            // if (data.jobId == '') {
+            //     layer.msg('职位不能为空', {
+            //         icon: 5,
+            //         shift: 6,//抖动效果
+            //         time: 1500
+            //     }, function () {
+            //
+            //     });
+            //     return false;
+            // }
+            // if (data.departmentId == '') {
+            //     layer.msg('部门不能为空', {
+            //         icon: 5,
+            //         shift: 6,//抖动效果
+            //         time: 1500
+            //     }, function () {
+            //
+            //     });
+            //     return false;
+            // }
             //获取当前iframe页面索引
             var currIframe = parent.layer.getFrameIndex(window.name);
             parent.layer.close(currIframe);

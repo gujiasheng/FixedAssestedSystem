@@ -12,6 +12,7 @@ import com.gjs.fixedassets.service.FixedTransferService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -97,6 +98,11 @@ public class FixedTransferServiceImpl implements FixedTransferService {
     @Override
     public List<FixedTransfer> selectMyTransferApplyList(Integer usePerson) {
         return fixedTransferMapper.selectMyTransferApplyList(usePerson);
+    }
+
+    @Override
+    public List<FixedTransfer> selectAllTransferRecordBycardId(Integer companyId, Integer fixedcardId, Integer page, Integer limit, Date startdate, Date enddate, Integer checkNode) {
+        return fixedTransferMapper.selectAllTransferRecordBycardId(companyId, fixedcardId, page, limit, startdate, enddate, checkNode);
     }
 
 }

@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.boot.autoconfigure.web.WebProperties;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -28,4 +29,7 @@ public interface FixedTransferMapper {
     List<FixedTransfer> selectMyTransferList(Integer usePerson);
 
     List<FixedTransfer> selectMyTransferApplyList(Integer usePerson);
+
+    //查询某个固定资产的所有领用记录
+    List<FixedTransfer> selectAllTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("page") Integer page, @Param("limit") Integer limit, @Param("startdate") Date startdate, @Param("enddate") Date enddate, @Param("checkNode") Integer checkNode);
 }

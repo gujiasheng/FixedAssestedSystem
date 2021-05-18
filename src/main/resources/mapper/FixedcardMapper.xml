@@ -187,5 +187,12 @@
         WHERE
         `fixedcard_id` = #{fixedcardId,jdbcType=INTEGER};
     </update>
+    <select id="selectFixedcardByUserId" resultMap="BaseResultMap">
+        SELECT *
+        FROM fixedcard
+        LEFT JOIN company ON fixedcard.company_id=company.company_id
+        where person_charge=#{userId,jdbcType=INTEGER}
+
+    </select>
 
 </mapper>

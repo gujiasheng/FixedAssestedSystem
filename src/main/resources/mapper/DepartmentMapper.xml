@@ -107,6 +107,11 @@
         `department_show_id` = #{departmentShowId,jdbcType=INTEGER}
         WHERE `department_id` = #{departmentId,jdbcType=INTEGER};
     </update>
+    <select id="selectdepartByManager" resultMap="BaseResultMap">
+        select *
+        from department
+        where department_manager = #{managerId,jdbcType=INTEGER};
+    </select>
 
 
 </mapper>

@@ -30,11 +30,11 @@
     <div class="layui-form-item">
         <label class="layui-form-label">负责人:</label>
         <div class="layui-input-inline">
+            <input type="hidden" name="oldManager" th:value="${department.departmentManager}">
             <select id="departmentManager" name="departmentManager" lay-search>
-                <option value="">工号——姓名</option>
+                <option value="0">姓名</option>
                 <option th:value="${department.departmentManager}"
-                        th:text="${department.departmentManagerObj.workId}+'----'+${department.departmentManagerObj.userName}"></option>
-
+                        th:text="${department.departmentManagerObj.userName}"></option>
             </select>
         </div>
     </div>
@@ -70,7 +70,8 @@
             type: "get",
             success: function (data) {
                 $.each(data, function (index, item) {
-                    $("#departmentManager").append("<option value='" + item.userId + "'>" + item.workId + '——' + item.userName + "</option>");
+                    // $("#departmentManager").append("<option value='" + item.userId + "'>" + item.workId + '——' + item.userName + "</option>");
+                    $("#departmentManager").append("<option value='" + item.userId + "'>" + item.userName + "</option>");
                 });
                 layui.form.render("select");
             }
@@ -86,6 +87,15 @@
             //提交验证错误提示
             if (data.departmentName == '') {
                 layer.msg('部门名不能为空', {
+                    icon: 5,
+                    anim: 6,//抖动效果
+                    time: 1500//持续时间
+                }, function () {
+                });
+                return false;
+            }
+            if (data.departmentManager == '0') {
+                layer.msg('部门负责人不能为空', {
                     icon: 5,
                     anim: 6,//抖动效果
                     time: 1500//持续时间

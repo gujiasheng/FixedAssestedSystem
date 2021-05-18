@@ -23,4 +23,6 @@ public interface FixedcardService {
     Fixedcard selectFixedByFixedCardId(@Param("fixedCardId") Integer fixedCardId);
 
     void updateFixedByFixedCardId(Fixedcard fixedCard);
+
+    List<Fixedcard> selectFixedcardByUserId(Integer userId);
 }

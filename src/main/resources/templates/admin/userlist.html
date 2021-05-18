@@ -206,8 +206,10 @@
 
                 });
             }
+            var layermsg1 = layer.msg('该用户已被引用!', {icon: 5});
+
             if (obj.event == 'del') {
-                layer.confirm('是否删除该用户?', {
+                var layconfirm1 = layer.confirm('是否删除该用户?', {
                     btn: ['确定', '取消'], //按钮
                     offset: '100px'
                 }, function () {
@@ -215,13 +217,18 @@
                         url: '/deleteUser' + userId,
                         type: "post",
                         success: function () {
-                            layer.msg('删除成功', {icon: 1});
+                            alert("删除成功!")
                             window.location.reload();
 
+                        }, error: function (data) {
+                            alert("该用户已被引用,禁止删除!")
+                            layer.close(layconfirm1)
+                            //   layer.msg('该用户已被引用!', {icon: 5});
                         }
                     })
 
                 }, function () {
+
                 });
             }
 

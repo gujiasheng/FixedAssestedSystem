@@ -49,4 +49,9 @@ public class FixedcardServiceImpl implements FixedcardService {
     public void updateFixedByFixedCardId(Fixedcard fixedCard) {
         fixedcardMapper.updateFixedByFixedCardId(fixedCard);
     }
+
+    @Override
+    public List<Fixedcard> selectFixedcardByUserId(Integer userId) {
+        return fixedcardMapper.selectFixedcardByUserId(userId);
+    }
 }

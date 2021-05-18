@@ -54,4 +54,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public void updateDepartment(Department department) {
         departmentMapper.updateDepartment(department);
     }
+
+    @Override
+    public List<Department> selectdepartByManager(Integer managerId) {
+        return departmentMapper.selectdepartByManager(managerId);
+    }
 }

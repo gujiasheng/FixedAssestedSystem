@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">职位:</label>
+                    <label class="layui-form-label"><span style="color: red">*</span>职位:</label>
                     <div class="layui-input-inline">
                         <select name="departmentId" lay-search>
                             <option th:value="${user.jobId}" th:text="${jName}"></option>
@@ -83,7 +83,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">性别</label>
                     <div class="layui-input-block">
-                        <div th:if="${user.gender}==2">
+                        <div th:if="${user.gender}!=1">
                             <input type="radio" name="gender" value="1" title="男">
                             <div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i>
                                 <div>男</div>
@@ -107,13 +107,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">头像</label>
-                    <div class="layui-upload">
-                        <button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>
+                <!--<div class="layui-form-item">-->
+                <!--<label class="layui-form-label">头像</label>-->
+                <!--<div class="layui-upload">-->
+                <!--<button type="button" class="layui-btn layui-btn-normal" id="test8">选择文件</button>-->
 
-                    </div>
-                </div>
+                <!--</div>-->
+                <!--</div>-->
 
                 <div class="layui-form-item">
                     <label class="layui-form-label">手机</label>

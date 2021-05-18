@@ -177,7 +177,7 @@
             layer.full(fixedList);
         });
 
-        // //点击编辑打开useredit子页面,使用layui的表格监听
+
         table.on('tool(FixedTable)', function (obj) {
             var data = obj.data;
             var fixedCardId = obj.data.fixedcardId;//每个对象的主键
@@ -189,9 +189,9 @@
                     offset: ['100px', '300px'],
                     fixed: false, //不固定
                     maxmin: true,
-                    title: '固定资产详情',
+                    title: '固定资产领用详情',
                     resize: false,
-                    content: '/tofixedcardedit1' + fixedCardId
+                    content: '/toTransferRecordlist' + fixedCardId
                 });
                 layer.full(layerEdit);
             }

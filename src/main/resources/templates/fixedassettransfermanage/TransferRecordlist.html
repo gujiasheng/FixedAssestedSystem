@@ -1,0 +1,130 @@
+<!--
+/*
+* @Description
+* 该固定资产所有领用记录
+* @Author 顾嘉晟
+* @Date  2021-05-10
+*/-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet " href="../css/public.css">
+    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css" type="text/css">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header " style="height:100%">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">日期范围:</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="startdate" id="startdate" placeholder="yyyy-MM-dd" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="enddate" id="enddate" placeholder="yyyy-MM-dd" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">领用节点:</label>
+                    <div class="layui-input-block">
+                        <select id="checkNode" name="chenkNode" lay-search>
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn" id="searchBTN" type="button">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <table id="userList" lay-filter="userTable"></table>
+            <!--templet内容-->
+            <script type="text/html" id="xuId">
+                <span>{{d.LAY_TABLE_INDEX+1}}</span>
+            </script>
+        </div>
+    </div>
+</div>
+
+
+<script src="../layui.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript" th:inline="javascript">
+    layui.use(['form', 'element', 'table', 'layer', 'laypage', 'jquery'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            table = layui.table,
+            element = layui.element,
+            $ = layui.jquery,
+            laydate = layui.laydate
+        ;
+        var fixedcardId = [[${fixedcardId}]]
+
+        //    表格数据展示
+        table.render(
+            {
+                elem: '#userList'//指定table
+                , url: '/selectAllTransferRecord'
+                , cols: [
+                    [
+                        {field: 'xuId', title: '序号', fixed: 'left', templet: '#xuId'}
+                        , {field: 'fixedTransferId2', title: '领用单号', fixed: 'left'}
+                        , {
+                        field: 'fixedName',
+                        title: '领用固定资产',
+                        templet: '<div>{{d.fixedcard.fixedName}}</div>',
+                        fixed: 'left'
+                    }
+                        , {field: 'chenkNodeName', title: '领用审核节点'}
+                        , {field: 'userName', title: '操作人'}
+                        , {field: 'checkTime', templet: '<div>{{d.checkRecordStatus.checkTime}}</div>', title: '操作日期'}
+                    ]
+                ]
+                , request: {
+                    pageName: 'page' //页码的参数名称，默认：page
+                    , limitName: 'limit' //每页数据量的参数名，默认：limit
+                    , fixedcardId: 'fixedcardId'
+                }
+                , limit: 5
+                , fixedcardId: fixedcardId
+                , page: true
+
+            }
+        )
+
+        //  点击搜索按钮，刷新表格
+        $("#searchBTN").click(function () {
+            table.reload('userList', {
+                where: {//查询条件传值到后台
+                    startdate: $('#startdate').val(),
+                    enddate: $('#enddate').val(),
+                    checkNode: $('#checkNode').val()
+                }
+            })
+        })
+
+        //点击编辑打开useredit子页面,使用layui的表格监听
+        table.on('tool(userTable)', function (obj) {
+            var data = obj.data;
+            var userId = obj.data.userId;//每个对象的主键
+        })
+    })
+
+</script>
+</body>
+</html>

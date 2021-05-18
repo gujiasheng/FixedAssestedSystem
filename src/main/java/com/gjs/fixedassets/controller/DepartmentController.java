@@ -194,8 +194,13 @@ public class DepartmentController {
      **/
     @PostMapping("/editDepartment")
     @ResponseBody
-    public String editDepartment(Model model, HttpSession session, Department department) {
+    public String editDepartment(Model model, HttpSession session, Department department, @RequestParam(required = false, defaultValue = "", value = "oldManager") Integer oldManager) {
         departmentService.updateDepartment(department);
+        if (department.getDepartmentManager() != oldManager) {
+            User user = userService.selectUserByUserId(department.getDepartmentManager());
+            user.setDepartmentId(department.getDepartmentId());
+            userService.updateUser(user);
+        }
         return null;
     }
 }

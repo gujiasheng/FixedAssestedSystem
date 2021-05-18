@@ -27,4 +27,6 @@ public interface FixedcardMapper {
     Fixedcard selectFixedByFixedCardId(@Param("fixedCardId") Integer fixedCardId);
 
     void updateFixedByFixedCardId(Fixedcard fixedCard);
+
+    List<Fixedcard> selectFixedcardByUserId(Integer userId);
 }

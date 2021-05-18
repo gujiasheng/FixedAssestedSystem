@@ -8,8 +8,8 @@ public enum Unit {
     PCS(2, "只"),
     PIECE(3, "片"),
     SQM(4, "m²"),
-    CAR(5, "辆");
-
+    CAR(5, "辆"),
+    TAII(6, "台");
 
     private Integer code;
     private String name;

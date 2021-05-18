@@ -20,6 +20,7 @@
         <result column="useMan" jdbcType="VARCHAR" property="useMan"/>
         <result column="useMan_id" jdbcType="VARCHAR" property="useManId"/>
         <result column="lastNode" jdbcType="INTEGER" property="lastNode"/>
+        <result column="user_name" jdbcType="VARCHAR" property="userName"/>
         <association property="receiver" javaType="com.gjs.fixedassets.entity.User">
             <id column="user_id" jdbcType="INTEGER" property="userId"/>
             <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -121,8 +122,6 @@
         WHERE
         company_id = #{companyId,jdbcType=INTEGER}
         ORDER BY fixedtransfer.fixed_transfer_id2 DESC
-
-
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="fixedTransferId" keyColumn="fixed_transfer_id"
             parameterType="FixedTransfer">
@@ -166,6 +165,21 @@
         left join fixedcard on fixedcard.fixedcard_id=fixedtransfer.fixedcard_id
         where fixedtransfer.use_person = #{usePerson,jdbcType=INTEGER}
         GROUP BY fixedtransfer.fixed_transfer_id2
+    </select>
+    <select id="selectAllTransferRecordBycardId" resultMap="BaseResultMap">
+        select *
+        from fixedtransfer
+        left join checkrecordstatus on fixedtransfer.fixed_transfer_id = checkrecordstatus.check_record_id
+        left join fixedcard on fixedcard.fixedcard_id = fixedtransfer.fixedcard_id
+        left join checknode on checknode.check_node_id = checkrecordstatus.check_node_id
+        left join user on user.user_id = checkrecordstatus.check_man
+        where fixedtransfer.company_id = #{companyId,jdbcType=INTEGER} and checkrecordstatus.check_type_id = 1 and
+        fixedtransfer.fixedcard_id = #{fixedcardId,jdbcType=INTEGER}
+        <if test="checkNode != null">and check_node_id = #{ checkNode,jdbcType=INTEGER}</if>
+        <if test="startdate != null">and check_time &gt;= '#{startdate,jdbcType=TIMESTAMP}'</if>
+        <if test="enddate != null">and check_time &lt;= '#{enddate,jdbcType=TIMESTAMP}'</if>
+        ORDER BY check_record_id desc,checkrecordstatus.check_node_id desc
+        Limit #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
     </select>
 
 
