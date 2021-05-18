@@ -10,6 +10,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 public class FixedTransfer implements Serializable {
     private static final long serialVersionUID = 1L;
+
+    /**
+     * 防止mybatis自动去重，伪主键
+     */
+    private Integer tag;
+
     /**
      * 领用单主键
      */

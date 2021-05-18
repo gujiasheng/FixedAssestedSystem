@@ -7,7 +7,7 @@ import java.util.Map;
 public enum FixedStatus {
     USEING(2, "使用中"),
     NOTUSE(1, "闲置"),
-    STOPUSING(3, "报废"),
+    STOPUSING(7, "报废"),
     MAINTAIN(4, "维修中"),
     UNUSE(5, "未使用"),
     APPLYING(6, "申请中");

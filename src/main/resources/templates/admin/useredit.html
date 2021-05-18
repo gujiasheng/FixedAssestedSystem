@@ -46,7 +46,7 @@
         <div class="layui-input-inline">
             <select id="roleId" name="roleId">
                 <!--<option th:value="${user.roleId}" th:text="${rName}"></option>-->
-                <option th:value="${0}">--请输入--</option>
+                <option th:value="${0}">请输入</option>
                 <option th:each="r:${roleList}"
                         th:value="${r.roleId}"
                         th:text="${r.roleName}"
@@ -59,7 +59,7 @@
         <div class="layui-input-inline">
             <select id="jobId" name="jobId">
                 <!--<option th:value="${user.jobId}" th:text="${jName}" hidden="hidden"></option>-->
-                <option th:value="${0}">--请输入--</option>
+                <option th:value="${0}">请输入</option>
                 <option th:each="j:${jobList}"
                         th:value="${j.jobId}"
                         th:text="${j.jobName}"
@@ -72,7 +72,7 @@
         <div class="layui-input-inline">
             <select name="departmentId">
                 <!--<option th:value="${user.departmentId}" th:text="${dName}" hidden="hidden"></option>-->
-                <option th:value="${0}">--请输入--</option>
+                <option th:value="${0}">请输入</option>
                 <option th:each="d:${departmentList}"
                         th:value="${d.departmentId}"
                         th:text="${d.departmentName}"

@@ -139,7 +139,7 @@
                 });
             }
             if (obj.event == 'del') {
-                layer.confirm('是否删除该部门?', {
+                var layerconfirm2 = layer.confirm('是否删除该部门?', {
                     btn: ['确定', '取消'], //按钮
                     offset: '100px'
                 }, function () {
@@ -147,9 +147,12 @@
                         url: '/deleteDepartment' + departmentId,
                         type: "post",
                         success: function () {
-                            layer.msg('删除成功', {icon: 1});
+                            alert("删除成功!");
                             window.location.reload();
 
+                        }, error: function () {
+                            alert("该部门已被引用,禁止删除!")
+                            layer.close(layerconfirm2);
                         }
                     })
 

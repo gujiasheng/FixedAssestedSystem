@@ -4,6 +4,7 @@ import com.gjs.fixedassets.entity.Department;
 import com.gjs.fixedassets.entity.FixedType;
 import com.gjs.fixedassets.entity.User;
 import com.gjs.fixedassets.mapper.DepartmentMapper;
+import com.gjs.fixedassets.mapper.UserMapper;
 import com.gjs.fixedassets.service.DepartmentService;
 import com.gjs.fixedassets.service.UserService;
 import com.mysql.cj.xdevapi.JsonArray;
@@ -179,8 +180,14 @@ public class DepartmentController {
      **/
     @PostMapping("/deleteDepartment{departmentId}")
     @ResponseBody
-    public String deleteDepartment(Model model, @PathVariable("departmentId") Integer departmentId) {
-        departmentService.deleteDepartment(departmentId);
+    public String deleteDepartment(Model model, @PathVariable("departmentId") Integer departmentId) throws Exception {
+        List<User> userList = userService.selectUserByDepartmentId(departmentId);
+        if (userList.size() != 0) {
+            throw new Exception("该部门已被引用！");
+        } else {
+            departmentService.deleteDepartment(departmentId);
+        }
+
         return null;
     }
 

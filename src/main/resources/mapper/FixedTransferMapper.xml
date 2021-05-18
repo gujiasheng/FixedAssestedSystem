@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gjs.fixedassets.mapper.FixedTransferMapper">
+    <!--mybatis会把resultMap的主键fixedTranser的主键当作去重标准，所以不能以Fixedtransfer为ResultMap 或者修改-->
     <resultMap id="BaseResultMap" type="com.gjs.fixedassets.entity.FixedTransfer">
         <!--@mbg.generated-->
         <!--@Table fixedtransfer-->
-        <id column="fixed_transfer_id" jdbcType="INTEGER" property="fixedTransferId"/>
+        <id column="tag" property="tag"/>
+        <result column="fixed_transfer_id" jdbcType="INTEGER" property="fixedTransferId"/>
         <result column="fixed_transfer_id2" jdbcType="INTEGER" property="fixedTransferId2"/>
         <result column="fixedcard_id" jdbcType="INTEGER" property="fixedcardId"/>
         <result column="check_type_id" jdbcType="INTEGER" property="checkTypeId"/>
@@ -167,12 +169,13 @@
         GROUP BY fixedtransfer.fixed_transfer_id2
     </select>
     <select id="selectAllTransferRecordBycardId" resultMap="BaseResultMap">
-        select *
+        select *,@tag:=@tag+1 as tag
         from fixedtransfer
         left join checkrecordstatus on fixedtransfer.fixed_transfer_id = checkrecordstatus.check_record_id
         left join fixedcard on fixedcard.fixedcard_id = fixedtransfer.fixedcard_id
         left join checknode on checknode.check_node_id = checkrecordstatus.check_node_id
-        left join user on user.user_id = checkrecordstatus.check_man
+        left join user on user.user_id = checkrecordstatus.check_man,
+        (select @tag:=0) t
         where fixedtransfer.company_id = #{companyId,jdbcType=INTEGER} and checkrecordstatus.check_type_id = 1 and
         fixedtransfer.fixedcard_id = #{fixedcardId,jdbcType=INTEGER}
         <if test="checkNode != null">and check_node_id = #{ checkNode,jdbcType=INTEGER}</if>
@@ -180,6 +183,21 @@
         <if test="enddate != null">and check_time &lt;= '#{enddate,jdbcType=TIMESTAMP}'</if>
         ORDER BY check_record_id desc,checkrecordstatus.check_node_id desc
         Limit #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
+    </select>
+    <select id="selectAllCountTransferRecordBycardId" resultMap="BaseResultMap">
+        select *,@tag:=@tag+1 as tag
+        from fixedtransfer
+        left join checkrecordstatus on fixedtransfer.fixed_transfer_id = checkrecordstatus.check_record_id
+        left join fixedcard on fixedcard.fixedcard_id = fixedtransfer.fixedcard_id
+        left join checknode on checknode.check_node_id = checkrecordstatus.check_node_id
+        left join user on user.user_id = checkrecordstatus.check_man,
+        (select @tag:=0) t
+        where fixedtransfer.company_id = #{companyId,jdbcType=INTEGER} and checkrecordstatus.check_type_id = 1 and
+        fixedtransfer.fixedcard_id = #{fixedcardId,jdbcType=INTEGER}
+        <if test="checkNode != null">and check_node_id = #{ checkNode,jdbcType=INTEGER}</if>
+        <if test="startdate != null">and check_time &gt;= '#{startdate,jdbcType=TIMESTAMP}'</if>
+        <if test="enddate != null">and check_time &lt;= '#{enddate,jdbcType=TIMESTAMP}'</if>
+        ORDER BY check_record_id desc,checkrecordstatus.check_node_id desc
     </select>
 
 

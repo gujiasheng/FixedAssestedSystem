@@ -32,6 +32,6 @@ public interface UserService {
 
     List<String> selectAllAccountName(Integer companyId);
 
-
+    List<User> selectUserByDepartmentId(Integer departId);
 
 }

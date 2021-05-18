@@ -102,7 +102,13 @@ public class FixedTransferServiceImpl implements FixedTransferService {
 
     @Override
     public List<FixedTransfer> selectAllTransferRecordBycardId(Integer companyId, Integer fixedcardId, Integer page, Integer limit, Date startdate, Date enddate, Integer checkNode) {
-        return fixedTransferMapper.selectAllTransferRecordBycardId(companyId, fixedcardId, page, limit, startdate, enddate, checkNode);
+        Integer startnum = (page - 1) * limit;
+        return fixedTransferMapper.selectAllTransferRecordBycardId(companyId, fixedcardId, startnum, limit, startdate, enddate, checkNode);
+    }
+
+    @Override
+    public List<FixedTransfer> selectAllCountTransferRecordBycardId(Integer companyId, Integer fixedcardId, Date startdate, Date enddate, Integer checkNode) {
+        return fixedTransferMapper.selectAllCountTransferRecordBycardId(companyId, fixedcardId, startdate, enddate, checkNode);
     }
 
 }

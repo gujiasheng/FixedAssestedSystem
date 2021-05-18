@@ -66,5 +66,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectAllAccountName(companyId);
     }
 
+    @Override
+    public List<User> selectUserByDepartmentId(Integer departId) {
+        return userMapper.selectUserByDepartmentId(departId);
+    }
+
 
 }

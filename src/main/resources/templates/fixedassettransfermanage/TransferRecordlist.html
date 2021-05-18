@@ -53,7 +53,9 @@
         </div>
 
         <div class="layui-card-body">
-            <table id="userList" lay-filter="userTable"></table>
+            <table id="tranList" lay-filter="userTable">
+
+            </table>
             <!--templet内容-->
             <script type="text/html" id="xuId">
                 <span>{{d.LAY_TABLE_INDEX+1}}</span>
@@ -71,14 +73,15 @@
             table = layui.table,
             element = layui.element,
             $ = layui.jquery,
-            laydate = layui.laydate
+            laydate = layui.laydate,
+            laypage = layui.laypage
         ;
-        var fixedcardId = [[${fixedcardId}]]
+        // var fixedcardId = [[${fixedcardId}]]
 
         //    表格数据展示
         table.render(
             {
-                elem: '#userList'//指定table
+                elem: '#tranList'//指定table
                 , url: '/selectAllTransferRecord'
                 , cols: [
                     [
@@ -93,15 +96,15 @@
                         , {field: 'chenkNodeName', title: '领用审核节点'}
                         , {field: 'userName', title: '操作人'}
                         , {field: 'checkTime', templet: '<div>{{d.checkRecordStatus.checkTime}}</div>', title: '操作日期'}
+
                     ]
                 ]
                 , request: {
                     pageName: 'page' //页码的参数名称，默认：page
                     , limitName: 'limit' //每页数据量的参数名，默认：limit
-                    , fixedcardId: 'fixedcardId'
+
                 }
                 , limit: 5
-                , fixedcardId: fixedcardId
                 , page: true
 
             }
@@ -118,11 +121,11 @@
             })
         })
 
-        //点击编辑打开useredit子页面,使用layui的表格监听
-        table.on('tool(userTable)', function (obj) {
-            var data = obj.data;
-            var userId = obj.data.userId;//每个对象的主键
-        })
+        // //点击编辑打开useredit子页面,使用layui的表格监听
+        // table.on('tool(userTable)', function (obj) {
+        //     var data = obj.data;
+        //     var userId = obj.data.userId;//每个对象的主键
+        // })
     })
 
 </script>

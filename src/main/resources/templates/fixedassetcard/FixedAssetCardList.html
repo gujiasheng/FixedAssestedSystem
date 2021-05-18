@@ -57,7 +57,7 @@
             <!--templet内容-->
             <script type="text/html" id="Fixedmanagetool">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+                <!--<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>-->
             </script>
         </div>
     </div>
@@ -89,7 +89,7 @@
                                 return "<span>闲置</span>"
                             } else if (data.useStatus == 2) {
                                 return "<span>使用中</span>"
-                            } else if (data.useStatus == 3) {
+                            } else if (data.useStatus == 7) {
                                 return "<span>报废</span>"
                             } else if (data.useStatus == 4) {
                                 return "<span>维修中</span>"

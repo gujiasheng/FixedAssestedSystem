@@ -25,4 +25,6 @@ public interface DepartmentService {
     void updateDepartment(Department department);
 
     List<Department> selectdepartByManager(Integer managerId);
+
+
 }

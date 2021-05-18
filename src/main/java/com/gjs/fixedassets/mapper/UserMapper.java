@@ -35,4 +35,6 @@ public interface UserMapper {
 
     //删除功能
     void deleteUser(Integer userId);
+
+    List<User> selectUserByDepartmentId(Integer departId);
 }

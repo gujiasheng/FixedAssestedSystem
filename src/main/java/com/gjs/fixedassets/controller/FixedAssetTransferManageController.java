@@ -3,6 +3,7 @@ package com.gjs.fixedassets.controller;
 import com.gjs.fixedassets.entity.*;
 import com.gjs.fixedassets.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -48,7 +49,8 @@ public class FixedAssetTransferManageController {
      * @Return
      **/
     @GetMapping("/toTransferRecordlist{fixedcardId}")
-    public String toTransferRecordlist(@PathVariable("fixedcardId") Integer fixedcardId, Model model) {
+    public String toTransferRecordlist(@PathVariable("fixedcardId") Integer fixedcardId, Model model, HttpSession session) {
+        session.setAttribute("fixedcardId", fixedcardId);
         model.addAttribute("fixedcardId", fixedcardId);
         return "fixedassettransfermanage/TransferRecordlist";
     }
@@ -74,9 +76,16 @@ public class FixedAssetTransferManageController {
         User loginUser = (User) object;
         User user = userService.selectUserByUserId(loginUser.getUserId());
 
+        //获取当前固定资产卡片的id
+        fixedcardId = (Integer) session.getAttribute("fixedcardId");
+
+
         List<FixedTransfer> fixedtransferList = fixedTransferService.selectAllTransferRecordBycardId(user.getCompanyId(), fixedcardId, page, limit, startdate, enddate, checkNode);
 //        fixedtransferList.get(0).getCheckRecordStatus().getCheckTime()
-        int transferCount = fixedtransferList.size();
+        //查询所有结果数量
+        List<FixedTransfer> fixedtransferCount = fixedTransferService.selectAllCountTransferRecordBycardId(user.getCompanyId(), fixedcardId, startdate, enddate, checkNode);
+
+        int transferCount = fixedtransferCount.size();
         //用layui的table渲染数据的json有格式要求，需要封装一下
         Map<String, Object> map = new HashMap<>();
         map.put("code", 0);

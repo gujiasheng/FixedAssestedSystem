@@ -32,4 +32,7 @@ public interface FixedTransferMapper {
 
     //查询某个固定资产的所有领用记录
     List<FixedTransfer> selectAllTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("page") Integer page, @Param("limit") Integer limit, @Param("startdate") Date startdate, @Param("enddate") Date enddate, @Param("checkNode") Integer checkNode);
+
+    //查询所有数量
+    List<FixedTransfer> selectAllCountTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("startdate") Date startdate, @Param("enddate") Date enddate, @Param("checkNode") Integer checkNode);
 }
