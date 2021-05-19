@@ -127,7 +127,7 @@
 
                     <select type="text" id="companyId" name="companyId" placeholder="请选择公司" maxlength="24"
                             autocomplete="off">
-                        <option>--请选择公司--</option>
+                        <option th:value="${0}">--请选择公司--</option>
                         <option th:each="l:${list}" th:value="${l.companyId}" th:text="${l.companyName}"></option>
                     </select>
                 </div>
@@ -179,7 +179,7 @@
                 });
                 return false;
             }
-            if (data.companyId == '') {
+            if (data.companyId == '0') {
                 layer.msg('请选择公司', {
                     icon: 5,
                     shift: 6,//抖动效果

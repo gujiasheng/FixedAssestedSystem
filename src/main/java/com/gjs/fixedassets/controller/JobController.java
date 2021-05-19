@@ -138,8 +138,13 @@ public class JobController {
 
     @PostMapping("/deleteJob{jobId}")
     @ResponseBody
-    public String deleteDepartment(Model model, @PathVariable("jobId") Integer jobId) {
-        jobService.deleteJob(jobId);
+    public String deleteDepartment(Model model, @PathVariable("jobId") Integer jobId) throws Exception {
+        List<User> userList = jobService.selectUserByJob(jobId);
+        if (userList.size() > 0) {
+            throw new Exception("该岗位已被引用");
+        } else {
+            jobService.deleteJob(jobId);
+        }
         return null;
     }
 

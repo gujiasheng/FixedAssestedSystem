@@ -102,4 +102,5 @@ public class FixedTransfer implements Serializable {
 
     private String userName;
 
+    private CheckNode checkNode;
 }

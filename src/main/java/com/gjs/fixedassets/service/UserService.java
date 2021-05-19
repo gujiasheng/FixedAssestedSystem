@@ -34,4 +34,5 @@ public interface UserService {
 
     List<User> selectUserByDepartmentId(Integer departId);
 
+    List<User> selectAllUserX(Integer companyId);
 }

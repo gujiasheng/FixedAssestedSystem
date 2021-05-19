@@ -43,6 +43,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(User user) {
+
+        user.setIsStatus(1);
         userMapper.addUser(user);
     }
 
@@ -69,6 +71,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> selectUserByDepartmentId(Integer departId) {
         return userMapper.selectUserByDepartmentId(departId);
+    }
+
+    @Override
+    public List<User> selectAllUserX(Integer companyId) {
+        return userMapper.selectAllUserX(companyId);
     }
 
 

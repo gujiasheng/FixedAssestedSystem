@@ -37,4 +37,6 @@ public interface UserMapper {
     void deleteUser(Integer userId);
 
     List<User> selectUserByDepartmentId(Integer departId);
+
+    List<User> selectAllUserX(Integer companyId);
 }

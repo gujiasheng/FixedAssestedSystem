@@ -23,6 +23,7 @@
         <result column="useMan_id" jdbcType="VARCHAR" property="useManId"/>
         <result column="lastNode" jdbcType="INTEGER" property="lastNode"/>
         <result column="user_name" jdbcType="VARCHAR" property="userName"/>
+        <result column="check_node_name" jdbcType="VARCHAR" property="checkNodeName"/>
         <association property="receiver" javaType="com.gjs.fixedassets.entity.User">
             <id column="user_id" jdbcType="INTEGER" property="userId"/>
             <result column="user_name" jdbcType="VARCHAR" property="userName"/>
@@ -80,6 +81,12 @@
             <result column="check_man" jdbcType="INTEGER" property="checkMan"/>
             <result column="check_time" jdbcType="DATE" property="checkTime"/>
         </association>
+        <association property="checkNode" javaType="com.gjs.fixedassets.entity.CheckNode">
+            <id column="check_node_id" jdbcType="INTEGER" property="checkNodeId"/>
+            <result column="chenk_node_name" jdbcType="VARCHAR" property="chenkNodeName"/>
+            <result column="check_node_order" jdbcType="INTEGER" property="checkNodeOrder"/>
+            <result column="check_type_id" jdbcType="INTEGER" property="checkTypeId"/>
+        </association>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
@@ -90,11 +97,12 @@
     <select id="selectFixedTransferByCompanyIdPage" resultType="com.gjs.fixedassets.entity.Fixedcard">
         select *
         from fixedcard
-        where fixedcard.company_id = #{companyId,jdbcType=INTEGER} and fixedcard.use_status=1
+        where fixedcard.company_id = #{companyId,jdbcType=INTEGER}
         <if test="fixedId != null and fixedId != ''">and fixedcard.fixed_id=#{fixedId,jdbcType=VARCHAR}</if>
         <if test="fixedName != null and fixedName != ''">and fixedcard.fixed_name LIKE
             CONCAT('%',#{fixedName,jdbcType=VARCHAR},'%')
         </if>
+        order by use_status asc
         LIMIT #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
     </select>
     <select id="selectFixedTransferCount" resultType="com.gjs.fixedassets.entity.Fixedcard">
@@ -179,8 +187,8 @@
         where fixedtransfer.company_id = #{companyId,jdbcType=INTEGER} and checkrecordstatus.check_type_id = 1 and
         fixedtransfer.fixedcard_id = #{fixedcardId,jdbcType=INTEGER}
         <if test="checkNode != null">and check_node_id = #{ checkNode,jdbcType=INTEGER}</if>
-        <if test="startdate != null">and check_time &gt;= '#{startdate,jdbcType=TIMESTAMP}'</if>
-        <if test="enddate != null">and check_time &lt;= '#{enddate,jdbcType=TIMESTAMP}'</if>
+        <if test="param5 != null">and check_time &gt;= #{param5,jdbcType=VARCHAR}</if>
+        <if test="param6 != null">and check_time &lt;= #{param6,jdbcType=VARCHAR}</if>
         ORDER BY check_record_id desc,checkrecordstatus.check_node_id desc
         Limit #{page,jdbcType=INTEGER},#{limit,jdbcType=INTEGER}
     </select>
@@ -194,9 +202,9 @@
         (select @tag:=0) t
         where fixedtransfer.company_id = #{companyId,jdbcType=INTEGER} and checkrecordstatus.check_type_id = 1 and
         fixedtransfer.fixedcard_id = #{fixedcardId,jdbcType=INTEGER}
-        <if test="checkNode != null">and check_node_id = #{ checkNode,jdbcType=INTEGER}</if>
-        <if test="startdate != null">and check_time &gt;= '#{startdate,jdbcType=TIMESTAMP}'</if>
-        <if test="enddate != null">and check_time &lt;= '#{enddate,jdbcType=TIMESTAMP}'</if>
+        <if test="checkNode != null">and checkrecordstatus.check_node_id = #{ checkNode,jdbcType=INTEGER}</if>
+        <if test="param3 != null">and check_time &gt;= #{param3,jdbcType=VARCHAR}</if>
+        <if test="param4 != null">and check_time &lt;= #{param4,jdbcType=VARCHAR}</if>
         ORDER BY check_record_id desc,checkrecordstatus.check_node_id desc
     </select>
 

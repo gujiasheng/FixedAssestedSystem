@@ -25,24 +25,22 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">日期范围:</label>
                     <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="startdate" id="startdate" placeholder="yyyy-MM-dd" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" name="startdate" id="startdate" class="layui-input">
                     </div>
                     <div class="layui-form-mid">-</div>
                     <div class="layui-input-inline" style="width: 100px;">
-                        <input type="text" name="enddate" id="enddate" placeholder="yyyy-MM-dd" autocomplete="off"
-                               class="layui-input">
+                        <input type="text" name="enddate" id="enddate" class="layui-input">
                     </div>
                 </div>
 
-                <div class="layui-inline">
-                    <label class="layui-form-label">领用节点:</label>
-                    <div class="layui-input-block">
-                        <select id="checkNode" name="chenkNode" lay-search>
+                <!--<div class="layui-inline">-->
+                <!--<label class="layui-form-label">领用节点:</label>-->
+                <!--<div class="layui-input-block">-->
+                <!--<select id="checkNode" name="chenkNode" lay-search>-->
 
-                        </select>
-                    </div>
-                </div>
+                <!--</select>-->
+                <!--</div>-->
+                <!--</div>-->
 
                 <div class="layui-inline">
                     <button class="layui-btn" id="searchBTN" type="button">
@@ -67,7 +65,7 @@
 
 <script src="../layui.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript" th:inline="javascript">
-    layui.use(['form', 'element', 'table', 'layer', 'laypage', 'jquery'], function () {
+    layui.use(['form', 'element', 'table', 'layer', 'laypage', 'jquery', 'laydate'], function () {
         var form = layui.form,
             layer = layui.layer,
             table = layui.table,
@@ -76,6 +74,16 @@
             laydate = layui.laydate,
             laypage = layui.laypage
         ;
+
+        laydate.render({
+            elem: '#startdate' //指定元素
+
+        });
+        laydate.render({
+            elem: '#enddate' //指定元素
+
+        });
+
         // var fixedcardId = [[${fixedcardId}]]
 
         //    表格数据展示
@@ -93,7 +101,7 @@
                         templet: '<div>{{d.fixedcard.fixedName}}</div>',
                         fixed: 'left'
                     }
-                        , {field: 'chenkNodeName', title: '领用审核节点'}
+                        , {field: 'checkNodeName', title: '领用审核节点', templet: '<div>{{d.checkNode.chenkNodeName}}</div>'}
                         , {field: 'userName', title: '操作人'}
                         , {field: 'checkTime', templet: '<div>{{d.checkRecordStatus.checkTime}}</div>', title: '操作日期'}
 
@@ -112,7 +120,7 @@
 
         //  点击搜索按钮，刷新表格
         $("#searchBTN").click(function () {
-            table.reload('userList', {
+            table.reload('tranList', {
                 where: {//查询条件传值到后台
                     startdate: $('#startdate').val(),
                     enddate: $('#enddate').val(),

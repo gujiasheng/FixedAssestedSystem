@@ -2,6 +2,7 @@ package com.gjs.fixedassets.service.impl;
 
 import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.entity.Job;
+import com.gjs.fixedassets.entity.User;
 import com.gjs.fixedassets.mapper.JobMapper;
 import com.gjs.fixedassets.service.JobService;
 import org.springframework.stereotype.Service;
@@ -54,4 +55,10 @@ public class JobServiceImpl implements JobService {
     public void updateJob(Job job) {
         jobMapper.updateJob(job);
     }
+
+    @Override
+    public List<User> selectUserByJob(Integer jobId) {
+        return jobMapper.selectUserByJob(jobId);
+    }
+
 }

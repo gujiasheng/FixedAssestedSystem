@@ -132,7 +132,7 @@
                 });
             }
             if (obj.event == 'del') {
-                layer.confirm('是否删除该部门?', {
+                var layerconfirm2 = layer.confirm('是否删除该岗位?', {
                     btn: ['确定', '取消'], //按钮
                     offset: '100px'
                 }, function () {
@@ -140,9 +140,13 @@
                         url: '/deleteJob' + jobId,
                         type: "post",
                         success: function () {
-                            layer.msg('删除成功', {icon: 1});
+                            // layer.msg('删除成功', {icon: 1});
+                            alert("删除成功！")
                             window.location.reload();
 
+                        }, error: function () {
+                            alert("该岗位已被引用,禁止删除!")
+                            layer.close(layerconfirm2);
                         }
                     })
 

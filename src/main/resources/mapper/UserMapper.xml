@@ -154,5 +154,10 @@
         from user
         where department_id = #{departId,jdbcType=INTEGER};
     </select>
+    <select id="selectAllUserX" resultMap="BaseResultMap">
+        select *
+        from user
+        where company_id=#{companyId,jdbcType=INTEGER}
+    </select>
 
 </mapper>

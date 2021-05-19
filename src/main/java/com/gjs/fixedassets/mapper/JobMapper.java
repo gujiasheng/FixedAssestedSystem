@@ -2,6 +2,7 @@ package com.gjs.fixedassets.mapper;
 
 import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.entity.Job;
+import com.gjs.fixedassets.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.boot.autoconfigure.batch.BatchProperties;
@@ -27,4 +28,6 @@ public interface JobMapper {
     void deleteJob(Integer jobId);
 
     void updateJob(Job job);
+
+    List<User> selectUserByJob(Integer jobId);
 }

@@ -80,12 +80,14 @@
                                     return "<span>闲置</span>"
                                 } else if (data.useStatus == 2) {
                                     return "<span>使用中</span>"
-                                } else if (data.useStatus == 3) {
+                                } else if (data.useStatus == 7) {
                                     return "<span>报废</span>"
                                 } else if (data.useStatus == 4) {
                                     return "<span>维修中</span>"
                                 } else if (data.useStatus == 5) {
                                     return "<span>未使用</span>"
+                                } else if (data.useStatus == 6) {
+                                    return "<span>申请中</span>"
                                 }
                             }
                         }
@@ -177,16 +179,39 @@
                 layer.full(layerEdit);
             }
             else if (obj.event == 'apply') {
-                var layerApply = layer.open({
-                    type: 2,
-                    offset: ['100px', '300px'],
-                    fixed: false, //不固定
-                    maxmin: true,
-                    title: '资产领用申请',
-                    resize: false,
-                    content: '/toFixedTransferCheck' + fixedCardId
-                });
-                layer.full(layerApply);
+                if (data.useStatus == 2) {
+                    layer.confirm('该固定资产正在使用中，是否申请领用?', {
+                        btn: ['确定', '取消'], //按钮
+                        offset: '100px'
+                    }, function () {
+                        var layerApply = layer.open({
+                            type: 2,
+                            offset: ['100px', '300px'],
+                            fixed: false, //不固定
+                            maxmin: true,
+                            title: '资产领用申请',
+                            resize: false,
+                            content: '/toFixedTransferCheck' + fixedCardId
+                        });
+                        layer.full(layerApply);
+                    })
+                } else if (data.useStatus == 1) {
+                    var layerApply = layer.open({
+                        type: 2,
+                        offset: ['100px', '300px'],
+                        fixed: false, //不固定
+                        maxmin: true,
+                        title: '资产领用申请',
+                        resize: false,
+                        content: '/toFixedTransferCheck' + fixedCardId
+                    });
+                    layer.full(layerApply);
+                } else {
+                    layer.alert('该固定资产当前无法被领用', {
+                        offset: ['100px', '300px'],
+                        icon: 6
+                    })
+                }
             }
         })
 

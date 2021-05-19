@@ -2,6 +2,7 @@ package com.gjs.fixedassets.service;
 
 import com.gjs.fixedassets.entity.Fixedcard;
 import com.gjs.fixedassets.entity.Job;
+import com.gjs.fixedassets.entity.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface JobService {
     void deleteJob(Integer jobId);
 
     void updateJob(Job job);
+
+    List<User> selectUserByJob(Integer jobId);
 }

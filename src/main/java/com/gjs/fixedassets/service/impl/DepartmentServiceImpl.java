@@ -3,7 +3,9 @@ package com.gjs.fixedassets.service.impl;
 import com.gjs.fixedassets.entity.Department;
 import com.gjs.fixedassets.entity.User;
 import com.gjs.fixedassets.mapper.DepartmentMapper;
+import com.gjs.fixedassets.mapper.UserMapper;
 import com.gjs.fixedassets.service.DepartmentService;
+import com.gjs.fixedassets.service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -13,6 +15,8 @@ import java.util.List;
 public class DepartmentServiceImpl implements DepartmentService {
     @Resource
     private DepartmentMapper departmentMapper;
+
+    private UserMapper userMapper;
 
     @Override
     public List<Department> selectDepartmentByCompanyId(Integer companyId, Integer page, Integer limit, Integer departmentId) {
@@ -37,7 +41,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void addDepartment(Department department) {
+
         departmentMapper.addDepartment(department);
+        if (department.getDepartmentManager() != null) {
+            User user = userMapper.selectUserByUserId(department.getDepartmentManager());
+            user.setDepartmentId(department.getDepartmentId());
+            userMapper.updateUser(user);
+        }
     }
 
     @Override

@@ -50,8 +50,10 @@ public interface FixedTransferService {
     List<FixedTransfer> selectMyTransferApplyList(Integer usePerson);
 
     //查询某个固定资产的所有领用记录
-    List<FixedTransfer> selectAllTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("page") Integer page, @Param("limit") Integer limit, @Param("startdate") Date startdate, @Param("enddate") Date enddate, @Param("checkNode") Integer checkNode);
+//    List<FixedTransfer> selectAllTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("page") Integer page, @Param("limit") Integer limit, @Param("startdate") Date startdate, @Param("enddate") Date enddate, @Param("checkNode") Integer checkNode);
+    List<FixedTransfer> selectAllTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("page") Integer page, @Param("limit") Integer limit, @Param("startdate") String startdate, @Param("enddate") String enddate, @Param("checkNode") Integer checkNode);
 
-    List<FixedTransfer> selectAllCountTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("startdate") Date startdate, @Param("enddate") Date enddate, @Param("checkNode") Integer checkNode);
+    //    List<FixedTransfer> selectAllCountTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("startdate") Date startdate, @Param("enddate") Date enddate, @Param("checkNode") Integer checkNode);
+    List<FixedTransfer> selectAllCountTransferRecordBycardId(@Param("companyId") Integer companyId, @Param("fixedcardId") Integer fixedcardId, @Param("startdate") String startdate, @Param("enddate") String enddate, @Param("checkNode") Integer checkNode);
 
 }

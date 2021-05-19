@@ -80,8 +80,8 @@ public class UserController {
         model.addAttribute("jobList", jobList);
         List<String> accountNameList = userService.selectAllAccountName(user.getCompanyId());
         model.addAttribute("anl", accountNameList);
-        List<String> selectAllUserByCompanyId = userService.selectAllAccountName(user.getCompanyId());
-        model.addAttribute("allacc", selectAllUserByCompanyId);
+//        List<User> selectAllUserByCompanyId = userService.selectAllUserByCompanyId(user.getCompanyId());
+//        model.addAttribute("allacc", selectAllUserByCompanyId);
         return "/admin/useradd";
     }
     /*
@@ -95,7 +95,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/selectAllUserByCompanyId")
     public Map<String, Object> selectAllUserByCompanyId(@RequestParam(required = false, defaultValue = "1") Integer page,
-                                                        @RequestParam(required = false, defaultValue = "5") Integer limit,
+                                                        @RequestParam(required = false, defaultValue = "3") Integer limit,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchUserName") String userName,//查询条件
                                                         @RequestParam(required = false, defaultValue = "", value = "searchUserPhone") Integer phone,
                                                         @RequestParam(required = false, defaultValue = "", value = "searchdepartmentId") Integer departmentId,
@@ -162,17 +162,21 @@ public class UserController {
      * @Return
      **/
     @PostMapping("/addUser")
-    public String addUser(User user, HttpSession session) {
+    @ResponseBody
+    public void addUser(User user, HttpSession session) throws Exception {
 //        System.out.println(user);
         Object object = session.getAttribute("user");
         User loginUser = (User) object;
         User user1 = userService.selectUserByUserId(loginUser.getUserId());
-
         user.setCompanyId(user1.getCompanyId());
-        user.setIsStatus(1);
+        List<User> userList = userService.selectAllUserX(user1.getCompanyId());
+        for (User user2 : userList) {
+            if ((user2.getAccountName()).equals(user.getAccountName())) {
+                throw new Exception("账号重复，请重新填写！");
+            }
+        }
         userService.addUser(user);
-
-        return "redirect:/touseradd";
+//        return "redirect:/touseradd";
     }
 
     /*
